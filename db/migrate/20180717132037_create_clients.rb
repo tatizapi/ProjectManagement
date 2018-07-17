@@ -3,7 +3,6 @@ class CreateClients < ActiveRecord::Migration[5.2]
     create_table :clients do |t|
       t.string :country
       t.string :company
-      t.timestamps
     end
   end
 end
