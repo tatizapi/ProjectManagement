@@ -10,12 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_133819) do
-
-  create_table "clients", force: :cascade do |t|
-    t.string "country"
-    t.string "company"
-  end
+ActiveRecord::Schema.define(version: 2018_07_18_060603) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -35,6 +30,9 @@ ActiveRecord::Schema.define(version: 2018_07_17_133819) do
     t.text "first_name"
     t.text "last_name"
     t.text "picture"
+    t.string "country"
+    t.string "company"
+    t.string "type"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

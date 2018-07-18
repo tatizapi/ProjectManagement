@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :rememberable, :trackable#, :validatable
 
-  #scope :clients, -> { where(type: 'Client') } 
+  scope :clients, -> { where(type: 'Client') }
 
   def email_required?
     false
