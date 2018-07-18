@@ -11,6 +11,7 @@ class ClientsController < ApplicationController
     upload
 
     @client = Client.new(client_params)
+    @client.picture = File.basename(params[:client][:picture].original_filename)
     if @client.save
       redirect_to clients_path
     else
