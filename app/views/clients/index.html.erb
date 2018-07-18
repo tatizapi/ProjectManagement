@@ -1,3 +1,24 @@
-<h1>Hello from client</h1>
+<h1>Clients</h1>
+
+<table border="solid">
+  <tr>
+    <th>Name</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Country</th>
+    <th>Company</th>
+    <th></th>
+
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= client.first_name + " " + client.last_name %></td>
+        <td><%= client.username %></td>
+        <td><%= client.email %></td>
+        <td><%= client.country %></td>
+        <td><%= client.company %></td>
+        <td><%= image_tag "/uploads/dog.jpg", :size => "50x50" %></td>
+    <% end %>
+
+</table><br>
 
 <%= link_to 'Add new client', new_client_path %>
