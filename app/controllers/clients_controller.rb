@@ -8,6 +8,8 @@ class ClientsController < ApplicationController
   end
 
   def create
+    upload
+
     @client = Client.new(client_params)
     if @client.save
       redirect_to clients_path
@@ -18,8 +20,15 @@ class ClientsController < ApplicationController
 
   private
   def client_params
-    params.require(:client).permit(:first_name, :last_name, :username,
-                                    :password, :email, :picture, :country,
-                                    :company)
+    params.require(:client).permit(:first_name, :last_name, :username, :password,
+                                    :email, :picture, :country, :company)
+  end
+
+  def upload
+    uploaded_io = params[:client][:picture]
+    File.open(Rails.root.join('public', 'uploads',
+              uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
   end
 end
