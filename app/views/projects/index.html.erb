@@ -1,3 +1,26 @@
-<h1>Hello from projects</h1>
+<h1>Projects</h1>
+
+<table border="solid">
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Attachments</th>
+    <th colspan="2">Actions</th>
+
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.description %></td>
+        <td><% project.attachments.each do |attachment| %>
+              <%= link_to attachment.file.identifier, attachment.url,
+                      target: :_blank %><br>
+            <% end %>
+        </td>
+        <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <td><%= link_to 'Delete', project_path(project), method: :delete,
+                                      data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
+</table><br>
 
 <%= link_to 'New Project', new_project_path %>
