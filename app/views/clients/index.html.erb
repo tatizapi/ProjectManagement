@@ -8,6 +8,7 @@
     <th>Country</th>
     <th>Company</th>
     <th></th>
+    <th colspan="2">Actions</th>
 
     <% @clients.each do |client| %>
       <tr>
@@ -16,9 +17,12 @@
         <td><%= client.email %></td>
         <td><%= client.country %></td>
         <td><%= client.company %></td>
-        <td><%= image_tag "/uploads/dog.jpg", :size => "50x50" %></td>
+        <td><%= image_tag "/uploads/" + client.picture, :size => "50x50" %></td>
+        <td><%= link_to 'Edit', edit_client_path(client) %></td>
+        <td><%= link_to 'Destroy', client_path(client), method: :delete,
+                                      data: { confirm: 'Are you sure?' } %>
     <% end %>
 
 </table><br>
 
-<%= link_to 'Add new client', new_client_path %>
+<%= link_to 'New client', new_client_path %>

@@ -5,9 +5,10 @@ class User < ApplicationRecord
 
   scope :clients, -> { where(type: 'Client') }
 
-  validates :first_name, :last_name, :password, :username, presence: true
-  validates :password, length: { minimum: 6 }
-  validates :username, length: { minimum: 3 }
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :password, presence: true, length: { minimum: 6 }, :on => :create
+  validates :username, presence: true, length: { minimum: 3 }
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   def email_required?

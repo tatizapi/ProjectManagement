@@ -3,9 +3,13 @@ class ClientsController < ApplicationController
     @clients = Client.all
   end
 
+  def show
+  end
+
   def new
     @client = Client.new
   end
+
 
   def create
     upload
@@ -19,10 +23,33 @@ class ClientsController < ApplicationController
     end
   end
 
+  def edit
+    @client = Client.find(params[:id])
+  end
+
+  def update
+    @client = Client.find(params[:id])
+    if !params[:client][:picture].nil?
+      @client.picture = File.basename(params[:client][:picture].original_filename)
+      params[:client].delete(:picture)
+    end
+    if @client.update(client_params)
+      redirect_to clients_path
+    else
+      render 'new'
+    end
+  end
+
+  def destroy
+    @client = Client.find(params[:id])
+    @client.destroy
+    redirect_to clients_path
+  end
+
   private
   def client_params
     params.require(:client).permit(:first_name, :last_name, :username, :password,
-                                    :email, :picture, :country, :company)
+                                    :email, :country, :company)
   end
 
   def upload

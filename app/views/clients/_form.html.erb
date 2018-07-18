@@ -1,0 +1,60 @@
+<%= form_with model: @client, local: true do |form| %>
+
+  <% if @client.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@client.errors.count, "error") %> prohibited
+      this article from being saved:
+    </h2>
+    <ul>
+      <% @client.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <p>
+    <%= form.label :first_name %><br>
+    <%= form.text_field :first_name %>
+  </p>
+
+  <p>
+    <%= form.label :last_name %><br>
+    <%= form.text_field :last_name %>
+  </p>
+
+  <p>
+    <%= form.label :username %><br>
+    <%= form.text_field :username %>
+  </p>
+
+  <p>
+    <%= form.label :password %><br>
+    <%= form.text_field :password %>
+  </p>
+
+  <p>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+  </p>
+
+  <p>
+    <%= form.label :country %><br>
+    <%= form.text_field :country %>
+  </p>
+
+  <p>
+    <%= form.label :company %><br>
+    <%= form.text_field :company %>
+  </p>
+
+  <p>
+    <%= form.label :picture %><br>
+    <%= form.file_field :picture %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
