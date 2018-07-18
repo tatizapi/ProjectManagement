@@ -1,0 +1,78 @@
+1..10  -> from 1 to 10 inclusive
+1...10 -> from 1 to 9
+
+
+blocks, procs, and lambdas:
+    A block is just a bit of code between do..end or {}. It's not an object on its own, but it can be passed to methods like .each or .select.
+    A proc is a saved block we can use over and over.
+    A lambda is just like a proc, only it cares about the number of arguments it gets and it returns to its calling method rather than returning immediately.
+BLOCK: ints = odds_n_ends.select{ |x| x.is_a? Integer }
+PROC:  under_100 = Proc.new { |x| x < 100 }
+       youngsters = ages.select(&under_100)
+
+
+
+Instance variables: start with '@' and belong to the objects
+Class variables: start with '@@' and belong to the class
+Global variables: start with '$'
+
+
+Methods are public by default in Ruby
+
+
+Commands
+- rails new <Project name>
+- run 'bundle install' (have to be in the app folder)
+- rails server (then visit http://localhost:3000) -> This will fire up Puma, a web server distributed with Rails by default
+- rails generate controller <Controller name>
+- rails generate model <Model name>
+- rails db:migrate -> saves the changes made in the database
+- resources :<controller name> -> maps URLs to the controller's seven standard actions
+- rake routes -> view all of the new URLs that the resourse route created
+- rake db:seed -> to seed the database with the data in db/seeds.rb.
+
+
+
+We use render in a controller when we want to respond within the current request, and redirect_to when we want to spawn a new request.
+
+
+
+pluralize -> rails helper that takes a number and a string as its arguments. If the number is greater than one, the string will be automatically pluralized.
+
+
+???
+--------------------
+Passing the article object to the method, will automagically create url for submitting the edited article form. This option tells Rails that we want this form to be submitted via the PATCH HTTP method which is the HTTP method you're expected to use to update resources according to the REST protocol.
+
+The arguments to form_with could be model objects, say, model: @article which would cause the helper to fill in the form with the fields of the object. Passing in a symbol scope (scope: :article) just creates the fields but without anything filled into them. More details can be found in form_with documentation.
+-----------------
+
+
+DIFFERENCE BETWEEN <%= %> AND <% %>
+<b>Names of all the people</b>
+<% @people.each do |person| %>
+  Name: <%= person.name %><br/>
+<% end %>
+The loop is setup in regular embedding tags <% %>, and the name is written using the output embedding tag <%= %>
+
+
+REQUIREMENTS
+- add file 
+- edit pe comment
+- reply la coomment 
+- utilizatorul sa modifice doar propriile articole si comentarii
+- minim 50 caractere pe context, fara js
+- devise manual
+
+
+TUTORIAL FOR PARAMETERS
+http://guides.rubyonrails.org/action_controller_overview.html#parameters
+
+
+TO ADD A NEW COLUMN TO AN EXISTING TABLE:
+rails generate migration add_email_to_users email:string
+rake db:migrate
+
+DROP EVERYTHING AND CREATE IT AGAIN
+rails db:drop db:create db:migrate
+
