@@ -17,7 +17,7 @@
         <td><%= client.email %></td>
         <td><%= client.country %></td>
         <td><%= client.company %></td>
-        <td><%= image_tag "/uploads/" + client.picture, :size => "50x50" %></td>
+        <td><%= image_tag client.attachment_url, :size => "50x50" %></td>
         <td><%= link_to 'Edit', edit_client_path(client) %></td>
         <td><%= link_to 'Destroy', client_path(client), method: :delete,
                                       data: { confirm: 'Are you sure?' } %>
