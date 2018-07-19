@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :rememberable, :trackable#, :validatable
 
   scope :clients, -> { where(type: 'Client') }
+  scope :employees, -> { where(type: 'Employee') }
 
   mount_uploader :attachment, AttachmentUploader
 
@@ -22,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def self.types
-      %w(Client)
+      %w(Client Employee)
   end
 
 end

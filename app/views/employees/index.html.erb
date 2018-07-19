@@ -1,0 +1,26 @@
+<h1>Employees</h1>
+
+<table border="solid">
+  <tr>
+    <th>Name</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Function</th>
+    <th></th>
+    <th colspan="2">Actions</th>
+
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.first_name + " " + employee.last_name %></td>
+        <td><%= employee.username %></td>
+        <td><%= employee.email %></td>
+        <td><%= employee.function %></td>
+        <td><%= image_tag employee.attachment_url, :size => "50x50" %></td>
+        <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+        <td><%= link_to 'Delete', employee_path(employee), method: :delete,
+                                      data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
+</table><br>
+
+<%= link_to 'New employee', new_employee_path %>
