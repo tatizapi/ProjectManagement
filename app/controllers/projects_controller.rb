@@ -36,9 +36,25 @@ class ProjectsController < ApplicationController
   end
 
   def assign
-    #@clients = Client.all
-
     @project = Project.find(params[:id])
+  end
+
+  def make_assign
+    @project = Project.find(params[:id])
+    @employee = Employee.find(params[:project][:roles][:employee_id])
+
+    @project.clients = Client.find(params[:project][:clients_projects][:client_id])
+
+    role_params = Hash.new
+    role_params[:project_id] = @project.id
+    role_params[:employee_id] = @employee.id
+    role_params[:role] = "projectmanager"
+    @role = Role.new(role_params)
+    if @role.save
+      redirect_to projects_path
+    else
+      render 'new'
+    end
   end
 
 

@@ -1,12 +1,31 @@
 <h1>Hello from assign</h1>
 
-<%= form_with model: @project, local: true do |form| %>
+<%= form_with model: @project, :url => make_assign_to_project_path, local: true do |form| %>
   <p>
+    <%= form.label "assign client(s)" %><br>
     <%= form.label "select one or more clients" %><br>
-    <%= form.select :client_id,
+    <%#= form.select :clients_ids,
                     Client.all.collect { |c| c.first_name + " " + c.last_name },
                     {},
                     { :multiple => true } %>
+    <%= form.fields_for :clients_projects do |builder| %>
+      <%= builder.collection_select(:client_id, Client.all, :id, :full_name,
+                                    { include_hidden: false },
+                                    { :multiple => true }) %>
+    <% end %>
   </p>
+
+  <p>
+    <%= form.label "assign project manager" %><br>
+    <%#= form.select :employee_id,
+                    Employee.all.collect { |e| e.first_name + " " + e.last_name },
+                    { :prompt => "Select one employee" } %>
+
+    <%= form.fields_for :roles do |builder| %>
+      <%= builder.collection_select(:employee_id, Employee.all, :id, :full_name) %>
+    <% end %>
+  </p>
+
+  <%= form.submit :Assign %>
 
 <% end %>
