@@ -30,9 +30,15 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @client = Project.find(params[:id])
-    @client.destroy
+    @project = Project.find(params[:id])
+    @project.destroy
     redirect_to projects_path
+  end
+
+  def assign
+    #@clients = Client.all
+
+    @project = Project.find(params[:id])
   end
 
 

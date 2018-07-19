@@ -1,0 +1,12 @@
+<h1>Hello from assign</h1>
+
+<%= form_with model: @project, local: true do |form| %>
+  <p>
+    <%= form.label "select one or more clients" %><br>
+    <%= form.select :client_id,
+                    Client.all.collect { |c| c.first_name + " " + c.last_name },
+                    {},
+                    { :multiple => true } %>
+  </p>
+
+<% end %>

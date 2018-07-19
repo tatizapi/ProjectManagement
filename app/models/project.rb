@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
-  has_many :clients
+  has_and_belongs_to_many :clients
 
   mount_uploaders :attachments, AttachmentUploader
   serialize :attachments, JSON
