@@ -3,4 +3,6 @@ class Project < ApplicationRecord
 
   mount_uploaders :attachments, AttachmentUploader
   serialize :attachments, JSON
+
+  validates :title, presence: true, :on => :create
 end

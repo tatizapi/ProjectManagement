@@ -29,7 +29,7 @@ class ClientsController < ApplicationController
     if @client.update(client_params)
       redirect_to clients_path
     else
-      render 'new'
+      render 'edit'
     end
   end
 
