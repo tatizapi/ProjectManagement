@@ -5,6 +5,8 @@
     <th>Title</th>
     <th>Description</th>
     <th>Attachments</th>
+    <th>Clients</th>
+    <th>Project Manager</th>
     <th colspan="3">Actions</th>
 
     <% @projects.each do |project| %>
@@ -16,17 +18,27 @@
                       target: :_blank %><br>
             <% end %>
         </td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Delete', project_path(project), method: :delete,
+        <td><% project.clients.each do |client| %>
+              <%= client.full_name %><br>
+            <% end %>
+        </td>
+        <td><% role = project.roles.where(:role => "projectmanager").take %>
+              <% if !role.nil? %>
+                <%= role.employee.full_name %>
+              <% end %>
+        </td>
+
+        <td><%= link_to 'Edit', edit_admin_project_path(project) %></td>
+        <td><%= link_to 'Delete', admin_project_path(project), method: :delete,
                                       data: { confirm: 'Are you sure?' } %>
-        <td><%= link_to 'Assign', assign_to_project_path(project) %></td>
+        <td><%= link_to 'Assign', admin_assign_to_project_path(project) %></td>
     <% end %>
 
 </table><br>
 
 
 <p>
-  <%= link_to 'New project', new_project_path %>
+  <%= link_to 'New project', new_admin_project_path %>
 </p>
 
 <p>

@@ -1,8 +1,9 @@
 <h1>Hello from assign</h1>
 
-<%= form_with model: @project, :url => make_assign_to_project_path, local: true do |form| %>
+<%= form_with model: @project, :url => admin_make_assign_to_project_path, local: true do |form| %>
+
+  <h4><%= form.label "assign client(s)" %></h4>
   <p>
-    <%= form.label "assign client(s)" %><br>
     <%= form.label "select one or more clients" %><br>
     <%#= form.select :clients_ids,
                     Client.all.collect { |c| c.first_name + " " + c.last_name },
@@ -15,8 +16,9 @@
     <% end %>
   </p>
 
+  <h4><%= form.label "assign project manager" %></h4>
   <p>
-    <%= form.label "assign project manager" %><br>
+    <%= form.label "select one employee" %><br>
     <%#= form.select :employee_id,
                     Employee.all.collect { |e| e.first_name + " " + e.last_name },
                     { :prompt => "Select one employee" } %>

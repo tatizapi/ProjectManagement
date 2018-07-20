@@ -16,8 +16,8 @@
         <td><%= employee.email %></td>
         <td><%= employee.function %></td>
         <td><%= image_tag employee.attachment_url, :size => "50x50" %></td>
-        <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-        <td><%= link_to 'Delete', employee_path(employee), method: :delete,
+        <td><%= link_to 'Edit', edit_admin_employee_path(employee) %></td>
+        <td><%= link_to 'Delete', admin_employee_path(employee), method: :delete,
                                       data: { confirm: 'Are you sure?' } %>
     <% end %>
 
@@ -25,7 +25,7 @@
 
 
 <p>
-  <%= link_to 'New employee', new_employee_path %>
+  <%= link_to 'New employee', new_admin_employee_path %>
 </p>
 
 <p>

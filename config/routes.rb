@@ -7,13 +7,23 @@ Rails.application.routes.draw do
 
   resources :admin, only: [:index]
 
-  scope '/admin' do
+  # scope '/admin' do
+  #   resources :clients
+  #   resources :projects
+  #   resources :employees
+  #   get '/projects/assign/:id' => 'projects#assign', as: :assign_to_project
+  #   patch 'projects/assign/:id' => 'projects#make_assign', as: :make_assign_to_project
+  # end
+
+  namespace :admin do
     resources :clients
     resources :projects
     resources :employees
     get '/projects/assign/:id' => 'projects#assign', as: :assign_to_project
     patch 'projects/assign/:id' => 'projects#make_assign', as: :make_assign_to_project
   end
+
+  resource :client
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
