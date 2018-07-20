@@ -15,7 +15,10 @@
         <td><%= employee.username %></td>
         <td><%= employee.email %></td>
         <td><%= employee.function %></td>
-        <td><%= image_tag employee.attachment_url, :size => "50x50" %></td>
+        <td><% if !employee.attachment_url.nil? %>
+              <%= image_tag employee.attachment_url, :size => "50x50" %>
+            <% end %>
+        </td>
         <td><%= link_to 'Edit', edit_admin_employee_path(employee) %></td>
         <td><%= link_to 'Delete', admin_employee_path(employee), method: :delete,
                                       data: { confirm: 'Are you sure?' } %>

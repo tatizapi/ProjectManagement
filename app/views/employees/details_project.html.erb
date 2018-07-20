@@ -1,0 +1,34 @@
+<%= form_with model: @project, local: true do |form| %>
+  <p>
+    <h1><b>Project:</b> <%= form.label @project.title %></h1>
+  </p>
+
+  <p>
+    <b>Description: </b><%= form.label @project.description %>
+  </p>
+
+  <p>
+    <b>Developers</b><br>
+    <% @project_developers_roles.each do |role| %>
+      <%= role.employee.full_name %><br>
+    <% end %>
+  </p>
+
+  <p>
+    <b>Testers</b><br>
+    <% @project_testers_roles.each do |role| %>
+      <%= role.employee.full_name %><br>
+    <% end %>
+  </p>
+
+<% end %>
+
+<%= form_with model: @project, local: true do |form| %>
+  <p><b>Add more developers</b></p>
+  <%= form.fields_for @available_employees do |builder| %>
+    <%= builder.collection_select(:id, @available_employees, :id, :full_name,
+                                  { include_hidden: false },
+                                  { :multiple => true }) %>
+  <% end %>
+
+<% end %>
