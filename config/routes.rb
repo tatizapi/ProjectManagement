@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
   resources :employees
   get '/employees/project/:id' => 'employees#details_project', as: :details_project
-
+  post'/employees/project/:id' => 'employees#add_new_employees', as: :add_new_employees
+  #post'/employees/project/:id' => 'employees#add_new_developers', as: :add_new_developers
+  #post'/employees/project/:id' => 'employees#add_new_testers', as: :add_new_testers
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
