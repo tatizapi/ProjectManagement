@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :rememberable, :trackable#, :registerable, :validatable
+  devise :database_authenticatable, :rememberable, :trackable#, :registerable, :validatable
 
   scope :clients, -> { where(type: 'Client') }
   scope :employees, -> { where(type: 'Employee') }

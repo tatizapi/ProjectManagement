@@ -23,7 +23,8 @@ Rails.application.routes.draw do
     patch 'projects/assign/:id' => 'projects#make_assign', as: :make_assign_to_project
   end
 
-  resource :client
+  resources :clients
+  resources :employees
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
