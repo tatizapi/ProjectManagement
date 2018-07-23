@@ -18,13 +18,13 @@
 
   <h4><%= form.label "assign project manager" %></h4>
   <p>
-    <%= form.label "select one employee" %><br>
     <%#= form.select :employee_id,
                     Employee.all.collect { |e| e.first_name + " " + e.last_name },
                     { :prompt => "Select one employee" } %>
 
     <%= form.fields_for :roles do |builder| %>
-      <%= builder.collection_select(:employee_id, Employee.all, :id, :full_name) %>
+      <%= builder.collection_select(:employee_id, @available_employees, :id, :full_name,
+                                     :prompt => 'select one employee') %>
     <% end %>
   </p>
 

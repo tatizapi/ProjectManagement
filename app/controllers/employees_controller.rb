@@ -16,7 +16,7 @@ class EmployeesController < ApplicationController
     @available_employees = Employee.all - @project.employees
   end
 
-  def add_new_employees
+  def add_new_project_employees
     @project = Project.find(params[:id])
 
     if !params[:developers].nil?
@@ -29,8 +29,8 @@ class EmployeesController < ApplicationController
         role_params[:role] = "developer"
         @role = Role.new(role_params)
         @role.save
-        redirect_to details_project_path
       end
+      redirect_to details_project_path
     else
       if !params[:testers].nil?
         employees_ids_array = params[:testers][:id]
@@ -42,9 +42,9 @@ class EmployeesController < ApplicationController
           role_params[:role] = "tester"
           @role = Role.new(role_params)
           @role.save
-          redirect_to details_project_path
         end
       end
+      redirect_to details_project_path
     end
 
   end

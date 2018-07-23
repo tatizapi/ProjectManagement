@@ -23,7 +23,7 @@
 
 <% end %>
 
-<%= form_with :url => add_new_employees_path, local: true do |form| %>
+<%= form_with :url => add_new_project_employees_path, local: true do |form| %>
   <p><b>Add more developers</b></p>
   <%= form.fields_for :developers do |builder| %>
     <%= builder.collection_select(:id, @available_employees, :id, :full_name,
@@ -33,7 +33,7 @@
   <%= form.submit("Add") %>
 <% end %>
 
-<%= form_with :url => add_new_employees_path, local: true do |form| %>
+<%= form_with :url => add_new_project_employees_path, local: true do |form| %>
   <p><b>Add more testers</b></p>
   <%= form.fields_for :testers do |builder| %>
     <%= builder.collection_select(:id, @available_employees, :id, :full_name,
@@ -42,3 +42,7 @@
     <% end %><br>
   <%= form.submit("Add") %>
 <% end %>
+
+<p>
+  <%= link_to "New task", new_task_path(@project) %>
+</p>

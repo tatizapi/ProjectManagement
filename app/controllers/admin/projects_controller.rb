@@ -38,48 +38,51 @@ module Admin
 
     def assign
       @project = Project.find(params[:id])
+      @available_employees = Employee.all - @project.employees
     end
 
     def make_assign
       @project = Project.find(params[:id])
-      @employee = Employee.find(params[:project][:roles][:employee_id])
 
       if !params[:project][:clients_projects].nil?
         @project.clients = Client.find(params[:project][:clients_projects][:client_id])
       end
 
-      role_params = Hash.new
-      role_params[:project_id] = @project.id
-      role_params[:employee_id] = @employee.id
-      role_params[:role] = "projectmanager"
+      if params[:project][:roles][:employee_id] != ""
+        @employee = Employee.find(params[:project][:roles][:employee_id])
 
-      role = Role.find_by(project_id: params[:id], role: "projectmanager")
-      if role.nil? #role doesn't exist in the database
-        @role = Role.new(role_params)
-        if @role.save
-          redirect_to admin_projects_path
-        else
-          render 'assign'
+        role_params = Hash.new
+        role_params[:project_id] = @project.id
+        role_params[:employee_id] = @employee.id
+        role_params[:role] = "projectmanager"
+
+        role = Role.find_by(project_id: params[:id], role: "projectmanager")
+        if role.nil? #role doesn't exist in the database
+          @role = Role.new(role_params)
+          if @role.save
+            redirect_to admin_projects_path
+          else
+            render 'assign'
+          end
+        else #project has assigned a project manager
+          @role = role
+          if @role.update(role_params)
+            redirect_to admin_projects_path
+          else
+            render 'assign'
+          end
         end
-      else #project has assigned a project manager
-        @role = role
-        if @role.update(role_params)
-          redirect_to admin_projects_path
-        else
-          render 'assign'
-        end
+
+      else
+        redirect_to admin_projects_path
       end
+
     end
 
 
     private
     def project_params
       params.require(:project).permit(:title, :description, {attachments: []})
-    end
-
-    def projectmanager_already_assigned
-      role = Role.find_by(project_id: params[:id])
-      return role.role == "projectmanager"
     end
 
   end
