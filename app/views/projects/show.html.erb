@@ -1,4 +1,4 @@
-<%= form_with local: true do |form| %>
+<%= form_with model: @project, local: true do |form| %>
   <p>
     <h1><b>Project:</b> <%= form.label @project.title %></h1>
   </p>
@@ -23,7 +23,7 @@
 
 <% end %>
 
-<%= form_with :url => add_new_project_employees_path, local: true do |form| %>
+<%= form_with :url => { :controller => "projects", :action => "add_developers" } do |form| %>
   <p><b>Add more developers</b></p>
   <%= form.fields_for :developers do |builder| %>
     <%= builder.collection_select(:id, @available_employees, :id, :full_name,
@@ -33,7 +33,7 @@
   <%= form.submit("Add") %>
 <% end %>
 
-<%= form_with :url => add_new_project_employees_path, local: true do |form| %>
+<%= form_with url: '/add_testers' do |form| %>
   <p><b>Add more testers</b></p>
   <%= form.fields_for :testers do |builder| %>
     <%= builder.collection_select(:id, @available_employees, :id, :full_name,
@@ -44,5 +44,5 @@
 <% end %>
 
 <p>
-  <%= link_to "New task", new_task_path(@project) %>
+  <%= link_to "New task", new_project_task_path(@project) %>
 </p>

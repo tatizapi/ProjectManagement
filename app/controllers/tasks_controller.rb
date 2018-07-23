@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
 
+    #nu sunt sigura daca partea de aici arata ok avand in vedere ca e in index
     @project = Project.find(params[:project_id])
     project_developers_roles = @project.roles.where(:role => "developer")
     @project_developers = []
@@ -20,9 +21,8 @@ class TasksController < ApplicationController
 
     @task.status = "todo"
 
-
     if @task.save
-      redirect_to details_project_path(@project)
+      redirect_to project_path(@project)
     else
       redirect_to new_task_path
     end

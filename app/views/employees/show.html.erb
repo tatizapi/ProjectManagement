@@ -1,0 +1,17 @@
+<h1>Hello from employee show</h1>
+
+<h2 style="text-decoration: underline">Roles</h2>
+<h3>Project manager on projects:</h3>
+<% @roles_projectmanager.each do |role| %>
+  <%= link_to role.project.title, project_path(role.project.id) %><br>
+<% end %>
+
+<h3>Developer on projects:</h3>
+<% @roles_developer.each do |role| %>
+  <%= role.project.title %><br>
+<% end %>
+
+<h3>Tester on projects:</h3>
+<% @roles_tester.each do |role| %>
+  <%= role.project.title %><br>
+<% end %>

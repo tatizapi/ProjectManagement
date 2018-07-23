@@ -1,17 +1,38 @@
 <h1>Hello employee!</h1>
 
-<h2 style="text-decoration: underline">Roles</h2>
-<h3>Project manager on projects:</h3>
-<% @roles_projectmanager.each do |role| %>
-  <%= link_to role.project.title, details_project_path(role.project.id) %><br>
-<% end %>
+<% if current_user.type == "Admin" %>
+  <table border="solid">
+    <tr>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Function</th>
+      <th></th>
+      <th colspan="2">Actions</th>
 
-<h3>Developer on projects:</h3>
-<% @roles_developer.each do |role| %>
-  <%= role.project.title %><br>
-<% end %>
+      <% @employees.each do |employee| %>
+        <tr>
+          <td><%= employee.first_name + " " + employee.last_name %></td>
+          <td><%= employee.username %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.function %></td>
+          <td><% if !employee.attachment_url.nil? %>
+                <%= image_tag employee.attachment_url, :size => "50x50" %>
+              <% end %>
+          </td>
+          <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+          <td><%= link_to 'Delete', employee_path(employee), method: :delete,
+                                        data: { confirm: 'Are you sure?' } %>
+      <% end %>
 
-<h3>Tester on projects:</h3>
-<% @roles_tester.each do |role| %>
-  <%= role.project.title %><br>
+  </table><br>
+
+
+  <p>
+    <%= link_to 'New employee', new_employee_path %>
+  </p>
+
+  <p>
+    <%= link_to "Back", root_path, class: 'back-button' %>
+  </p>
 <% end %>
