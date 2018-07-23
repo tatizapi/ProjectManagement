@@ -52,11 +52,22 @@ module Admin
       role_params[:project_id] = @project.id
       role_params[:employee_id] = @employee.id
       role_params[:role] = "projectmanager"
-      @role = Role.new(role_params)
-      if @role.save
-        redirect_to admin_projects_path
-      else
-        render 'assign'
+
+      role = Role.find_by(project_id: params[:id], role: "projectmanager")
+      if role.nil? #role doesn't exist in the database
+        @role = Role.new(role_params)
+        if @role.save
+          redirect_to admin_projects_path
+        else
+          render 'assign'
+        end
+      else #project has assigned a project manager
+        @role = role
+        if @role.update(role_params)
+          redirect_to admin_projects_path
+        else
+          render 'assign'
+        end
       end
     end
 
@@ -65,5 +76,11 @@ module Admin
     def project_params
       params.require(:project).permit(:title, :description, {attachments: []})
     end
+
+    def projectmanager_already_assigned
+      role = Role.find_by(project_id: params[:id])
+      return role.role == "projectmanager"
+    end
+
   end
 end
