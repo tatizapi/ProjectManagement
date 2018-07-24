@@ -1,28 +1,82 @@
-<%= form_with model: @project, local: true do |form| %>
-  <p>
-    <h1><b>Project:</b> <%= form.label @project.title %></h1>
-  </p>
+<%= render 'left_sidebar' %>
 
-  <p>
-    <b>Description: </b><%= form.label @project.description %>
-  </p>
+<div class="main">
+  <% if current_user.type == "Admin" %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-7 col-lg-7">
 
-  <p>
-    <b>Developers</b><br>
-    <% @project_developers_roles.each do |role| %>
-      <%= role.employee.full_name %><br>
+          <table class="table table-user-information">
+            <tbody>
+              <tr>
+                <td><b>Title:<b></td>
+                <td><%= @project.title %></td>
+              </tr>
+              <tr>
+                <td><b>Description:</b></td>
+                <td><%= @project.description %></td>
+              </tr>
+              <tr>
+                <td><b>Clients:</b></td>
+                <td>
+                  <% @project.clients.each do |client| %>
+                    <%= client.full_name %><br>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Project manager:</b></td>
+                <td>
+                  <% role = @project.roles.where(:role => "projectmanager").take %>
+                      <% if !role.nil? %>
+                        <%= role.employee.full_name %>
+                      <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Developers:</b></td>
+                <td>
+                  <% @project_developers_roles.each do |role| %>
+                    <%= role.employee.full_name %><br>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Testers:</b></td>
+                <td>
+                  <% @project_testers_roles.each do |role| %>
+                    <%= role.employee.full_name %><br>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td><b>Attachments:</b></td>
+                <td><% @project.attachments.each do |attachment| %>
+                      <%= link_to attachment.file.identifier, attachment.url,
+                              target: :_blank %><br>
+                    <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <%= link_to edit_project_path(@project), class: 'btn btn-warning', title: 'Edit project' do %>
+            <i class="glyphicon glyphicon-edit"></i>
+          <% end %>
+          <%= link_to project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete project' do %>
+            <i class="glyphicon glyphicon-remove"></i>
+          <% end %>
+          <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
+            <i class="glyphicon glyphicon-list-alt"></i>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
     <% end %>
-  </p>
+</div>
 
-  <p>
-    <b>Testers</b><br>
-    <% @project_testers_roles.each do |role| %>
-      <%= role.employee.full_name %><br>
-    <% end %>
-  </p>
-
-<% end %>
-
+<!--
 <%= form_with :url => { :controller => "projects", :action => "add_developers" } do |form| %>
   <p><b>Add more developers</b></p>
   <%= form.fields_for :developers do |builder| %>
@@ -42,7 +96,4 @@
     <% end %><br>
   <%= form.submit("Add") %>
 <% end %>
-
-<p>
-  <%= link_to "New task", new_project_task_path(@project) %>
-</p>
+-->

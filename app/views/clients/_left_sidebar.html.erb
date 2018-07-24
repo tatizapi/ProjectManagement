@@ -1,6 +1,6 @@
 <div class="sidenav">
   <% Client.all.each do |client| %>
-    <%= link_to client.first_name + " " + client.last_name, client_path(client) %></a>
+    <%= link_to client.full_name, client_path(client) %></a>
   <% end %>
 
   <div class="footer">

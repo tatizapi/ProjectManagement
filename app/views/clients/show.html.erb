@@ -6,39 +6,47 @@
     <div class="container-fluid">
       <div class="row">
         <% if !@client.attachment_url.nil? %>
-          <div class="col-md-3 col-lg-3" align="center"><%= image_tag @client.attachment_url, :size => "200x200", class: "img-circle img-responsive"%> </div>
+          <div class="col-md-2 col-lg-2" align="center"><%= image_tag @client.attachment_url, :size => "200x200", class: "img-circle img-responsive"%> </div>
         <% end %>
 
-        <div class=" col-md-9 col-lg-9">
+        <div class="col-md-9  col-lg-9">
           <table class="table table-user-information">
             <tbody>
               <tr>
-                <td>Name:</td>
+                <td><b>Name:</b></td>
                 <td><%= @client.first_name + " " + @client.last_name %></td>
               </tr>
               <tr>
-                <td>Username:</td>
+                <td><b>Username:</b></td>
                 <td><%= @client.username %></td>
               </tr>
               <tr>
-                <td>Company:</td>
+                <td><b>Company:</b></td>
                 <td><%= @client.company %></td>
               </tr>
               <tr>
-                <td>Country:</td>
+                <td><b>Country:</b></td>
                 <td><%= @client.country %></td>
               </tr>
               <tr>
-                <td>Email</td>
+                <td><b>Email:</b></td>
                 <td><%= @client.email %></td>
+              </tr>
+              <tr>
+                <td><b>Projects:</b></td>
+                <td>
+                  <% @client.projects.each do |project| %>
+                    <%= project.title %><br>
+                  <% end %>
+                </td>
               </tr>
             </tbody>
           </table>
 
-          <%= link_to edit_client_path(@client), class: "btn btn-sm btn-warning", title: 'Edit client' do %>
+          <%= link_to edit_client_path(@client), class: "btn btn-warning", title: 'Edit client' do %>
             <i class="glyphicon glyphicon-edit"></i>
           <% end %>
-          <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger", title: 'Delete client' do %>
+          <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete client' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
 

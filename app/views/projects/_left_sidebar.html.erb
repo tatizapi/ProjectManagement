@@ -1,0 +1,9 @@
+<div class="sidenav">
+  <% Project.all.each do |project| %>
+    <%= link_to project.title, project_path(project) %></a>
+  <% end %>
+
+  <div class="footer">
+    <%= link_to 'Add new project', new_project_path %>
+  </div>
+</div>
