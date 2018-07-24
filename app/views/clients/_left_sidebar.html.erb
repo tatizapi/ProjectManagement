@@ -1,0 +1,5 @@
+<div class="sidenav">
+  <% Client.all.each do |client| %>
+    <%= link_to client.first_name + " " + client.last_name, client_path(client) %></a>
+  <% end %>
+</div>

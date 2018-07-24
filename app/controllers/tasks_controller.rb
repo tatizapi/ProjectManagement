@@ -18,7 +18,6 @@ class TasksController < ApplicationController
     @project.tasks << @task
     @employee = Employee.find(params[:task][:developers][:developer_id])
     @employee.tasks << @task
-
     @task.status = "todo"
 
     if @task.save
