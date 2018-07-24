@@ -2,4 +2,8 @@
   <% Client.all.each do |client| %>
     <%= link_to client.first_name + " " + client.last_name, client_path(client) %></a>
   <% end %>
+
+  <div class="footer">
+    <%= link_to 'Add new client', new_client_path %>
+  </div>
 </div>

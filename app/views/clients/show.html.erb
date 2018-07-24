@@ -3,11 +3,13 @@
 
 <div class="main">
   <% if current_user.type == "Admin" %>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3 col-lg-3" align="center"><%= image_tag @client.attachment_url, :size => "100x100", class: "img-circle img-responsive"%> </div>
+        <% if !@client.attachment_url.nil? %>
+          <div class="col-md-3 col-lg-3" align="center"><%= image_tag @client.attachment_url, :size => "200x200", class: "img-circle img-responsive"%> </div>
+        <% end %>
 
-        <div class=" col-md-9 col-lg-9 ">
+        <div class=" col-md-9 col-lg-9">
           <table class="table table-user-information">
             <tbody>
               <tr>
@@ -39,46 +41,9 @@
           <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger", title: 'Delete client' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
+
         </div>
       </div>
     </div>
-  </div>
-
-
-<!--
-    <table border="solid">
-      <tr>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Country</th>
-        <th>Company</th>
-        <th></th>
-        <th colspan="2">Actions</th>
-
-        <% Client.all.each do |client| %>
-          <tr>
-            <td><%= client.first_name + " " + client.last_name %></td>
-            <td><%= client.username %></td>
-            <td><%= client.email %></td>
-            <td><%= client.country %></td>
-            <td><%= client.company %></td>
-            <td><%= image_tag client.attachment_url, :size => "50x50" %></td>
-            <td><%= link_to 'Edit', edit_client_path(client) %></td>
-            <td><%= link_to 'Delete', client_path(client), method: :delete,
-                                          data: { confirm: 'Are you sure?' } %>
-        <% end %>
-
-    </table><br>
-
-    <p>
-      <%= link_to 'New client', new_client_path %>
-    </p>
-
-    <p>
-      <%= link_to "Back", root_path, class: 'back-button' %>
-    </p>
-
-  <% end %>
--->
+    <% end %>
 </div>
