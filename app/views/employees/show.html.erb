@@ -1,17 +1,75 @@
-<h1>Hello from employee show</h1>
+<%= render 'left_sidebar' %>
 
-<h2 style="text-decoration: underline">Roles</h2>
-<h3>Project manager on projects:</h3>
-<% @roles_projectmanager.each do |role| %>
-  <%= link_to role.project.title, project_path(role.project.id) %><br>
-<% end %>
+<div class="main">
+  <% if current_user.type == "Admin" %>
 
-<h3>Developer on projects:</h3>
-<% @roles_developer.each do |role| %>
-  <%= role.project.title %><br>
-<% end %>
+    <div class="container-fluid">
+      <div class="row">
+        <% if !@employee.attachment_url.nil? %>
+          <div class="col-md-2 col-lg-2" align="center"><%= image_tag @employee.attachment_url, :size => "200x200", class: "img-circle img-responsive"%> </div>
+        <% end %>
 
-<h3>Tester on projects:</h3>
-<% @roles_tester.each do |role| %>
-  <%= role.project.title %><br>
-<% end %>
+        <div class="col-md-9  col-lg-9">
+          <table class="table table-user-information">
+            <tbody>
+              <tr>
+                <td><b>Name:</b></td>
+                <td><%= @employee.full_name %></td>
+              </tr>
+              <tr>
+                <td><b>Username:</b></td>
+                <td><%= @employee.username %></td>
+              </tr>
+              <tr>
+                <td><b>Function:</b></td>
+                <td><%= @employee.function %></td>
+              </tr>
+              <tr>
+                <td><b>Email:</b></td>
+                <td><%= @employee.email %></td>
+              </tr>
+              <tr>
+                <td><b>Roles:</b></td>
+                <td>
+                  <% @roles.each do |role| %>
+                    <%= role.project.title %> -> <%= role.role %>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <%= link_to edit_employee_path(@employee), class: "btn btn-warning", title: 'Edit employee' do %>
+            <i class="glyphicon glyphicon-edit"></i>
+          <% end %>
+          <%= link_to employee_path(@employee), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete employee' do %>
+            <i class="glyphicon glyphicon-remove"></i>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+
+  <% if current_user.type == "Employee" %>
+
+    <h2 style="text-decoration: underline">Roles</h2>
+    <h3>Project manager on projects:</h3>
+    <% @roles_projectmanager.each do |role| %>
+      <%= link_to role.project.title, project_path(role.project.id) %><br>
+    <% end %>
+
+    <h3>Developer on projects:</h3>
+    <% @roles_developer.each do |role| %>
+      <%= role.project.title %><br>
+    <% end %>
+
+    <h3>Tester on projects:</h3>
+    <% @roles_tester.each do |role| %>
+      <%= role.project.title %><br>
+    <% end %>
+
+  <% end %>
+
+</div>

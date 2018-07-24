@@ -4,10 +4,16 @@ class EmployeesController < ApplicationController
   end
 
   def show
-    @employee = Employee.find(current_user.id)
-    @roles_projectmanager = @employee.roles.where(:role => "projectmanager")
-    @roles_developer = @employee.roles.where(:role => "developer")
-    @roles_tester = @employee.roles.where(:role => "tester")
+    case current_user.type
+    when 'Admin'
+      @employee = Employee.find(params[:id])
+      @roles = @employee.roles
+    when 'Employee'
+      @employee = Employee.find(current_user.id)
+      @roles_projectmanager = @employee.roles.where(:role => "projectmanager")
+      @roles_developer = @employee.roles.where(:role => "developer")
+      @roles_tester = @employee.roles.where(:role => "tester")
+    end
   end
 
   def new
@@ -30,7 +36,7 @@ class EmployeesController < ApplicationController
   def update
     @employee = Employee.find(params[:id])
     if @employee.update(employee_params)
-      redirect_to employees_path
+      redirect_to employee_path(@employee)
     else
       render 'edit'
     end

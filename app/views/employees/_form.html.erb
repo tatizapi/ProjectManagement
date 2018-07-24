@@ -1,57 +1,80 @@
-<%= form_with model: @employee, local: true do |form| %>
+<%= form_with model: @employee, local: true, class: 'form-horizontal' do |form| %>
 
   <% if @employee.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@employee.errors.count, "error") %> prohibited
-        this employee from being saved:
-      </h2>
-      <ul>
-        <% @employee.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@employee.errors.count, "error") %> prohibited
+      this employee from being saved:
+    </h2>
+    <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
 
-  <p>
-    <%= form.label :first_name %><br>
-    <%= form.text_field :first_name %>
-  </p>
+  <div class="container-fluid">
+    <div class="form-group required">
+      <%= form.label :first_name, class: 'control-label col-sm-1'%>
+      <div class="col-sm-4">
+        <%= form.text_field :first_name, class: 'form-control' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :last_name %><br>
-    <%= form.text_field :last_name %>
-  </p>
+    <div class="form-group required">
+      <%= form.label :last_name, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.text_field :last_name, class: 'form-control' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :username %><br>
-    <%= form.text_field :username %>
-  </p>
+    <div class="form-group required">
+      <%= form.label :username, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.text_field :username, class: 'form-control' %>
+        <small class='form-text text-muted'>Must contain at least 3 letters</small>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :password %><br>
-    <%= form.text_field :password %>
-  </p>
+    <div class="form-group required">
+      <%= form.label :password, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.text_field :password, class: 'form-control' %>
+        <small class='form-text text-muted'>Must contain at least 6 letters</small>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :email %><br>
-    <%= form.text_field :email %>
-  </p>
+    <div class="form-group">
+      <%= form.label :email, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.text_field :email, class: 'form-control', placeholder: 'example@email.com' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :function %><br>
-    <%= form.text_field :function %>
-  </p>
+    <div class="form-group">
+      <%= form.label :function, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.text_field :function, class: 'form-control' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :picture %><br>
-    <%= form.file_field :attachment %>
-  </p>
+    <div class="form-group">
+      <%= form.label :profile_picture, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.file_field :attachment, class: 'form-control-file' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.submit %>
-  </p>
+    <br>
+    <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-1">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
 
+    <br>
+    <p><span style="color:red">* </span>fileds are mandatory</p>
 
+  </div>
 <% end %>
