@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   resources :clients
   resources :projects do
     resources :tasks
+    resources :dashboard, only: [:index]
   end
   resources :employees
   # resources :tasks
-  resources :dashboard, only: [:index]
 
   get '/projects/:id/add_employees' => 'projects#add_employees', as: :add_employees
   post '/projects/:id/add_developers' => 'projects#add_developers'

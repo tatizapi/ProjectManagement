@@ -1,7 +1,7 @@
 <div class="main">
   <% if current_user.type == "Employee" %>
     <ul class="nav nav-tabs">
-     <li class="active"><%= link_to 'Project details', project_path(@project) %></li>
-     <li><%= link_to 'Dashboard', dashboard_index_path %></li>
+     <li><%= link_to 'Project details', project_path(@project) %></li>
+     <li><%= link_to 'Dashboard', project_dashboard_index_path(@project) %></li>
     </ul>
   <% end %>

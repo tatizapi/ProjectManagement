@@ -68,7 +68,7 @@
               <i class="glyphicon glyphicon-remove"></i>
             <% end %>
 
-          <% elsif current_user.type == "Employee" %>
+          <% elsif current_user.type == "Employee" && Role.find_by(project_id: @project.id, employee_id: current_user.id).role == "projectmanager"%>
 
             <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
               <i class="glyphicon glyphicon-list-alt"></i>
