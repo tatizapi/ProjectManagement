@@ -1,7 +1,6 @@
 <%= render 'left_sidebar' %>
+<%= render 'tabs' %>
 
-<div class="main">
-  <% if current_user.type == "Admin" %>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-7 col-lg-7">
@@ -60,40 +59,27 @@
             </tbody>
           </table>
 
-          <%= link_to edit_project_path(@project), class: 'btn btn-warning', title: 'Edit project' do %>
-            <i class="glyphicon glyphicon-edit"></i>
-          <% end %>
-          <%= link_to project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete project' do %>
-            <i class="glyphicon glyphicon-remove"></i>
-          <% end %>
-          <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
-            <i class="glyphicon glyphicon-list-alt"></i>
+          <% if current_user.type == "Admin" %>
+
+            <%= link_to edit_project_path(@project), class: 'btn btn-warning', title: 'Edit project' do %>
+              <i class="glyphicon glyphicon-edit"></i>
+            <% end %>
+            <%= link_to project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete project' do %>
+              <i class="glyphicon glyphicon-remove"></i>
+            <% end %>
+
+          <% elsif current_user.type == "Employee" %>
+
+            <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
+              <i class="glyphicon glyphicon-list-alt"></i>
+            <% end %>
+            <%= link_to add_employees_path, class: 'btn btn-success', title: 'Add developers and testers' do %>
+              <i class="glyphicon glyphicon-plus"></i>
+            <% end %>
+
           <% end %>
 
         </div>
       </div>
     </div>
-    <% end %>
 </div>
-
-<!--
-<%= form_with :url => { :controller => "projects", :action => "add_developers" } do |form| %>
-  <p><b>Add more developers</b></p>
-  <%= form.fields_for :developers do |builder| %>
-    <%= builder.collection_select(:id, @available_employees, :id, :full_name,
-                                  { include_hidden: false },
-                                  { :multiple => true }) %>
-    <% end %><br>
-  <%= form.submit("Add") %>
-<% end %>
-
-<%= form_with url: '/add_testers' do |form| %>
-  <p><b>Add more testers</b></p>
-  <%= form.fields_for :testers do |builder| %>
-    <%= builder.collection_select(:id, @available_employees, :id, :full_name,
-                                  { include_hidden: false },
-                                  { :multiple => true }) %>
-    <% end %><br>
-  <%= form.submit("Add") %>
-<% end %>
--->

@@ -1,9 +1,29 @@
 <div class="sidenav">
-  <% Project.all.each do |project| %>
-    <%= link_to project.title, project_path(project) %></a>
-  <% end %>
+  <% if current_user.type == "Admin" %>
 
-  <div class="footer">
-    <%= link_to 'Add new project', new_project_path %>
-  </div>
+    <% Project.all.each do |project| %>
+      <%= link_to project.title, project_path(project) %>
+    <% end %>
+
+    <div class="footer">
+      <%= link_to 'Add new project', new_project_path %>
+    </div>
+
+  <% elsif current_user.type == "Employee" %>
+    <h3>Project manager</h3>
+    <% Employee.find(current_user.id).roles.where(:role => "projectmanager").each do |role| %>
+      <%= link_to role.project.title, project_path(role.project.id) %>
+    <% end %>
+
+    <h3>Developer</h3>
+    <% Employee.find(current_user.id).roles.where(:role => "developer").each do |role| %>
+      <%= link_to role.project.title, project_path(role.project.id) %>
+    <% end %>
+
+    <h3>Tester</h3>
+    <% Employee.find(current_user.id).roles.where(:role => "tester").each do |role| %>
+      <%= link_to role.project.title, project_path(role.project.id) %>
+    <% end %>
+
+  <% end %>
 </div>
