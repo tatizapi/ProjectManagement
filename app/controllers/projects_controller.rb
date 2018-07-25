@@ -14,23 +14,32 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+
+    @available_employees = Employee.all - @project.employees
   end
 
   def create
     @project = Project.new(project_params)
-    if @project.save
-      redirect_to projects_path
-    else
+    if !@project.save
       render 'new'
     end
+
+    add_projectmanager_role
+    # add_developers
+    # add_testers
+
+    redirect_to project_path(@project)
   end
 
   def edit
     @project = Project.find(params[:id])
+
+    @available_employees = Employee.all
   end
 
   def update
     @project = Project.find(params[:id])
+    update_projectmanager_role
     if @project.update(project_params)
       redirect_to project_path(@project)
     else
@@ -44,89 +53,63 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  def assign
-    @project = Project.find(params[:id])
-    @available_employees = Employee.all - @project.employees
-  end
-
-  def make_assign
-    @project = Project.find(params[:id])
-
-    if !params[:project][:clients_projects].nil?
-      @project.clients = Client.find(params[:project][:clients_projects][:client_id])
-    end
-
-    if params[:project][:roles][:employee_id] != ""
-      @employee = Employee.find(params[:project][:roles][:employee_id])
-
-      role_params = Hash.new
-      role_params[:project_id] = @project.id
-      role_params[:employee_id] = @employee.id
-      role_params[:role] = "projectmanager"
-
-      role = Role.find_by(project_id: params[:id], role: "projectmanager")
-      if role.nil? #role doesn't exist in the database
-        @role = Role.new(role_params)
-        if @role.save
-          redirect_to projects_path
-        else
-          render 'assign'
-        end
-      else #project has assigned a project manager
-        @role = role
-        if @role.update(role_params)
-          redirect_to projects_path
-        else
-          render 'assign'
-        end
-      end
-
-    else
-      redirect_to projects_path
-    end
-
-  end
-
-  def add_developers
-    @project = Project.find(params[:id])
-
-    if !params[:developers].nil?
-      employees_ids_array = params[:developers][:id]
-      employees_ids_array.each do |employee_id|
-        employee = Employee.find(employee_id)
-        role_params = Hash.new
-        role_params[:project_id] = @project.id
-        role_params[:employee_id] = employee_id
-        role_params[:role] = "developer"
-        @role = Role.new(role_params)
-        @role.save
+  def add_projectmanager_role
+    if params[:project][:employees][:projectmanager_id] != ""
+      @role = Role.new(projectmanager_role_params)
+      if !@role.save
+        render 'new'
       end
     end
-    redirect_to project_path
   end
 
-  def add_testers
-    @project = Project.find(params[:id])
-
-    if !params[:testers].nil?
-      employees_ids_array = params[:testers][:id]
-      employees_ids_array.each do |employee_id|
-        employee = Employee.find(employee_id)
-        role_params = Hash.new
-        role_params[:project_id] = @project.id
-        role_params[:employee_id] = employee_id
-        role_params[:role] = "tester"
-        @role = Role.new(role_params)
-        @role.save
+  def update_projectmanager_role
+    if params[:project][:employees][:projectmanager_id] != ""
+      @role = @project.roles.where(:role => "projectmanager").take
+      if !@role.update(projectmanager_role_params)
+        render 'new'
       end
     end
-    redirect_to project_path
   end
+
+  def projectmanager_role_params
+    @employee = Employee.find(params[:project][:employees][:projectmanager_id])
+    role_params = Hash.new
+    role_params[:project_id] = @project.id
+    role_params[:employee_id] = @employee.id
+    role_params[:role] = "projectmanager"
+    role_params
+  end
+
+  # def add_developers
+  #   if !params[:project][:developer_ids].nil?
+  #     params[:project][:developer_ids].each do |developer_id|
+  #       role_params = Hash.new
+  #       role_params[:project_id] = @project.id
+  #       role_params[:employee_id] = developer_id
+  #       role_params[:role] = "developer"
+  #       @role = Role.new(role_params)
+  #       @role.save
+  #     end
+  #   end
+  # end
+  #
+  # def add_testers
+  #   if !params[:project][:tester_ids].nil?
+  #     params[:project][:tester_ids].each do |tester_id|
+  #       role_params = Hash.new
+  #       role_params[:project_id] = @project.id
+  #       role_params[:employee_id] = tester_id
+  #       role_params[:role] = "tester"
+  #       @role = Role.new(role_params)
+  #       @role.save
+  #     end
+  #   end
+  # end
 
 
   private
   def project_params
-    params.require(:project).permit(:title, :description, {attachments: []})
+    params.require(:project).permit(:title, :description, {attachments: []}, client_ids:[])
   end
 
 end

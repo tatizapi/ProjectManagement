@@ -1,37 +1,69 @@
-<%= form_with model: [@project, @task], local: true do |form| %>
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
+<%= form_with model: [@project, @task], local: true, class: 'form-horizontal' do |form| %>
 
-  <p>
-    <%= form.label :description %><br>
-    <%= form.text_field :description %>
-  </p>
+  <% if @task.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:
+    </h2>
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
 
-  <p>
-    <%= form.label :priority %><br>
-      <%= form.radio_button :priority, 'low', :checked => true %>
-      <%= form.label :priority_low, 'Low' %><br>
-      <%= form.radio_button :priority, 'medium' %>
-      <%= form.label :priority_medium, 'Medium' %><br>
-      <%= form.radio_button :priority, 'high' %>
-      <%= form.label :priority_high, 'High' %>
-  </p>
+  <div class="container-fluid">
+    <div class="form-group required">
+      <%= form.label :title, class: 'control-label col-sm-1'%>
+      <div class="col-sm-4">
+        <%= form.text_field :title, class: 'form-control' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.label :attachments %>
-    <%= form.file_field :attachments, multiple: true %>
-  </p>
+    <div class="form-group">
+      <%= form.label :description, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.text_field :description, class: 'form-control' %>
+      </div>
+    </div>
 
-    <%= form.fields_for :developers do |builder| %>
-      <%= builder.collection_select(:developer_id, @project_developers, :id, :full_name,
-                                     :prompt => 'select one developer') %>
-    <% end %>
+    <div class="form-group">
+      <%= form.label :priority, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.radio_button :priority, 'low', :checked => true %>
+        <%= form.label :priority_low, 'Low' %><br>
+        <%= form.radio_button :priority, 'medium' %>
+        <%= form.label :priority_medium, 'Medium' %><br>
+        <%= form.radio_button :priority, 'high' %>
+        <%= form.label :priority_high, 'High' %>
+      </div>
+    </div>
 
-  <p>
-    <%= form.submit %>
-  </p>
+    <div class="form-group">
+      <%= form.label :attachments, class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.file_field :attachments, class: 'form-control-file', multiple: true  %>
+      </div>
+    </div>
 
+    <div class="form-group required">
+      <%= form.label 'Developer', class: 'control-label col-sm-1' %>
+      <div class="col-sm-4">
+        <%= form.select :developer_id, @project_developers_roles.collect { |role| [role.employee.full_name, role.employee.id] },
+                                      prompt: 'select one developer' %>
+      </div>
+    </div>
 
+    <br>
+    <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-1">
+        <%= form.submit "Save" %>
+      </div>
+    </div>
+
+    <br>
+    <p><span style="color:red">* </span>fields are mandatory</p>
+
+  </div>
 <% end %>

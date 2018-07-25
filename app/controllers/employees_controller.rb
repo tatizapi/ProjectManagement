@@ -48,38 +48,6 @@ class EmployeesController < ApplicationController
     redirect_to employees_path
   end
 
-  def add_new_project_employees
-    # @project = Project.find(params[:id])
-    #
-    # if !params[:developers].nil?
-    #   employees_ids_array = params[:developers][:id]
-    #   employees_ids_array.each do |employee_id|
-    #     employee = Employee.find(employee_id)
-    #     role_params = Hash.new
-    #     role_params[:project_id] = @project.id
-    #     role_params[:employee_id] = employee_id
-    #     role_params[:role] = "developer"
-    #     @role = Role.new(role_params)
-    #     @role.save
-    #   end
-    #   redirect_to details_project_path
-    # else
-    #   if !params[:testers].nil?
-    #     employees_ids_array = params[:testers][:id]
-    #     employees_ids_array.each do |employee_id|
-    #       employee = Employee.find(employee_id)
-    #       role_params = Hash.new
-    #       role_params[:project_id] = @project.id
-    #       role_params[:employee_id] = employee_id
-    #       role_params[:role] = "tester"
-    #       @role = Role.new(role_params)
-    #       @role.save
-    #     end
-    #   end
-    #   redirect_to details_project_path
-    # end
-  end
-
   private
   def employee_params
     params.require(:employee).permit(:first_name, :last_name, :username,

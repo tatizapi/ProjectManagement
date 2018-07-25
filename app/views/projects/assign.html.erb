@@ -5,10 +5,6 @@
   <h4><%= form.label "assign client(s)" %></h4>
   <p>
     <%= form.label "select one or more clients" %><br>
-    <%#= form.select :clients_ids,
-                    Client.all.collect { |c| c.first_name + " " + c.last_name },
-                    {},
-                    { :multiple => true } %>
     <%= form.fields_for :clients_projects do |builder| %>
       <%= builder.collection_select(:client_id, Client.all, :id, :full_name,
                                     { include_hidden: false },
@@ -18,10 +14,6 @@
 
   <h4><%= form.label "assign project manager" %></h4>
   <p>
-    <%#= form.select :employee_id,
-                    Employee.all.collect { |e| e.first_name + " " + e.last_name },
-                    { :prompt => "Select one employee" } %>
-
     <%= form.fields_for :roles do |builder| %>
       <%= builder.collection_select(:employee_id, @available_employees, :id, :full_name,
                                      :prompt => 'select one employee') %>
