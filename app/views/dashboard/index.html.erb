@@ -1,15 +1,50 @@
 <%= render 'projects/left_sidebar' %>
 <%= render 'projects/tabs' %>
 
-<div class="container">
-  <table class="table table-borderless">
-    <thread>
+<div class="container-fluid">
+  <table class="dashboard-table table table-borderless">
+    <thead>
       <tr>
-        <th>TODO</th>
-        <th>In progress</th>
-        <th>Complete</th>
-        <th>Done</th>
+        <th class="col-lg-3">TODO</th>
+        <th class="col-lg-3">In progress</th>
+        <th class="col-lg-3">Complete</th>
+        <th class="col-lg-3">Done</th>
       </tr>
-    </thread>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <% @tasks_todo.each do |task| %>
+            <div class="row">
+              <%= render partial: 'ticket', locals: {task: task} %>
+            </div>
+          <% end %>
+        </td>
+        <td>
+          <% @tasks_inprogress.each do |task| %>
+            <div class="row">
+              <%= render partial: 'ticket', locals: {task: task} %>
+            </div>
+          <% end %>
+        </td>
+        <td>
+          <% @tasks_complete.each do |task| %>
+            <div class="row">
+              <%= render partial: 'ticket', locals: {task: task} %>
+            </div>
+          <% end %>
+        </td>
+        <td>
+          <% @tasks_done.each do |task| %>
+            <div class="row">
+              <%= render partial: 'ticket', locals: {task: task} %>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+
+    </tbody>
   </table>
 </div>
+
+ <div class="shadow p-3 mb-5 bg-white rounded">Regular shadow</div>

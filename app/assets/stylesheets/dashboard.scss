@@ -1,5 +1,21 @@
-// table th + th { border-left:2px solid blue; }
-// table td + td { border-left:2px solid blue; }
-//
-// .table th { text-align: center; }
-// .table td { text-align: center; }
+//dashboard
+.dashboard-table th + th { border-left:2px solid #2196F3; }
+.dashboard-table td + td { border-left:2px solid #2196F3; }
+
+.dashboard-table th { text-align: center; color: #2196F3; font-size: 18px;}
+.dashboard-table td { text-align: center; }
+
+.dashboard-table { width: 100px; }
+
+.table-borderless td,
+.table-borderless th {
+    border-top: none !important //to remove lines between rows
+}
+
+.panel {
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
