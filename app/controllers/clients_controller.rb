@@ -1,10 +1,11 @@
 class ClientsController < ApplicationController
+  before_action :find_client_by_url_id, only: [:show, :edit, :update, :destroy]
+
   def index
     @clients = Client.all
   end
 
   def show
-    @client = Client.find(params[:id])
   end
 
   def new
@@ -14,18 +15,16 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     if @client.save
-      redirect_to clients_path
+      redirect_to client_path(@client)
     else
       render 'new'
     end
   end
 
   def edit
-    @client = Client.find(params[:id])
   end
 
   def update
-    @client = Client.find(params[:id])
     if @client.update(client_params)
       redirect_to client_path(@client)
     else
@@ -34,7 +33,6 @@ class ClientsController < ApplicationController
   end
 
   def destroy
-    @client = Client.find(params[:id])
     @client.destroy
     redirect_to clients_path
   end
@@ -43,6 +41,10 @@ class ClientsController < ApplicationController
   def client_params
     params.require(:client).permit(:first_name, :last_name, :username, :password,
                                       :attachment, :email, :country, :company)
+  end
+
+  def find_client_by_url_id
+    @client = Client.find(params[:id])
   end
 
 end

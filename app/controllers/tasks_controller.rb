@@ -1,13 +1,13 @@
 class TasksController < ApplicationController
+  before_action :find_current_project, only: [:new, :create]
+
   def new
     @task = Task.new
-    @project = Project.find(params[:project_id])
     @project_developers_roles = @project.roles.where(:role => "developer")
   end
 
   def create
     @task = Task.new(task_params)
-    @project = Project.find(params[:project_id])
     @project.tasks << @task
     if params[:task][:developer_id] != ""
       @employee = Employee.find(params[:task][:developer_id])
@@ -26,5 +26,9 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :description, :priority,
                                   {attachments: []}, :project_id, :developers)
+  end
+
+  def find_current_project
+    @project = Project.find(params[:project_id])
   end
 end

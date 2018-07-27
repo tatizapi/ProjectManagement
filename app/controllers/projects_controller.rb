@@ -1,19 +1,18 @@
 class ProjectsController < ApplicationController
+  before_action :find_project_by_url_id, only: [:show, :edit, :update, :destroy]
+  before_action :get_employees, only: [:new, :edit]
+
   def index
     @projects = Project.all
   end
 
   def show
-    @project = Project.find(params[:id])
-
     @project_testers_roles = @project.roles.where(:role => "tester")
     @project_developers_roles = @project.roles.where(:role => "developer")
   end
 
   def new
     @project = Project.new
-
-    @available_employees = Employee.all - @project.employees
   end
 
   def create
@@ -23,20 +22,13 @@ class ProjectsController < ApplicationController
     end
 
     add_projectmanager_role
-    # add_developers
-    # add_testers
-
     redirect_to project_path(@project)
   end
 
   def edit
-    @project = Project.find(params[:id])
-
-    @available_employees = Employee.all
   end
 
   def update
-    @project = Project.find(params[:id])
     update_projectmanager_role
     if @project.update(project_params)
       redirect_to project_path(@project)
@@ -46,11 +38,11 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
     redirect_to projects_path
   end
 
+  #in lucru
   def add_employees
     @project = Project.find(params[:id])
     @available_employees = Employee.all - @project.employees
@@ -94,6 +86,14 @@ class ProjectsController < ApplicationController
   private
   def project_params
     params.require(:project).permit(:title, :description, {attachments: []}, client_ids:[])
+  end
+
+  def find_project_by_url_id
+    @project = Project.find(params[:id])
+  end
+
+  def get_employees
+    @employees = Employee.all
   end
 
   def add_projectmanager_role
