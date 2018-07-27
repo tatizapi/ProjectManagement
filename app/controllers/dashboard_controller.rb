@@ -7,18 +7,22 @@ class DashboardController < ApplicationController
     @tasks_complete = @project.tasks.where(status: 'complete')
     @tasks_done = @project.tasks.where(status: 'done')
 
-    get_employees_filtered_by_role
+    #left sidebar
+    case current_user.type
+    when "Admin"
+      @projects = Project.all
+    when "Employee"
+      @projects_projectmanager_role,
+      @projects_developer_role,
+      @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+    end
+
   end
 
   private
+
   def find_current_project
     @project = Project.find(params[:project_id])
-  end
-
-  def get_employees_filtered_by_role
-    @projectmanager_roles = Employee.find(current_user.id).roles.where(:role => "projectmanager")
-    @developer_roles = Employee.find(current_user.id).roles.where(:role => "developer")
-    @tester_roles = Employee.find(current_user.id).roles.where(:role => "tester")
   end
 
 end

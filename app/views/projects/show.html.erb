@@ -67,7 +67,7 @@
           <% end %>
         <% end %>
 
-        <% if current_user.is_projectmanager(@project) %>
+        <% if current_user.can_add_tasks(@project) %>
           <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
             <i class="glyphicon glyphicon-list-alt"></i>
           <% end %>

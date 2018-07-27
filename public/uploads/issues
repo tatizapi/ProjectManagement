@@ -1,5 +1,7 @@
 - daca se uploadeaza doua imagini cu acelasi nume, in public/uploads a doua imagine salvata o va suprascrie pe prima
 - cand se da pe edit si se aleg noi attachmenturi, cele de dinainte se sterg
 - cand admin vede toti clientii, poate sa vada el si parolele lor? *
-- de schimbat interfata la admin -> projects (model in caiet)
-- de scris mai frumos metoda details_project din EmployeesController *
+
+
+
+

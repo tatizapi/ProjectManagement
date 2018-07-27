@@ -1,32 +1,36 @@
 class TasksController < ApplicationController
   before_action :find_current_project, only: [:new, :create]
+  #before_action :get_employees_filtered_by_role, only: [:new, :create]
 
   def new
     @task = Task.new
     @project_developers_roles = @project.roles.where(:role => "developer")
-    get_employees_filtered_by_role
+
+    @projects = Project.all
   end
 
   def create
-    @task = Task.new(task_params)
-    @project.tasks << @task
-    if params[:task][:developer_id] != ""
-      @employee = Employee.find(params[:task][:developer_id])
-      @employee.tasks << @task
-    end
-    @task.status = "todo"
-
+    # begin
+    #   Task.create!(task_params.merge(project_id: params[:project_id], status: "todo"))
+    # rescue => e
+    #   puts "!! e: #{e.inspect}"
+    #   #render 'new'
+    #   redirect_to new_project_task_path
+    #   return false
+    # end
+    @project_developers_roles = @project.roles.where(:role => "developer")
+    @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo"))
     if @task.save
       redirect_to project_path(@project)
     else
-      redirect_to new_project_task_path
+      render 'new'
     end
   end
 
   private
   def task_params
     params.require(:task).permit(:title, :description, :priority,
-                                  {attachments: []}, :project_id, :developers)
+                                  {attachments: []}, :project_id, :developers, :employee_id)
   end
 
   def find_current_project

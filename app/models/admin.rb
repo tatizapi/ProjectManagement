@@ -9,6 +9,10 @@ class Admin < User
     true
   end
 
+  def can_add_tasks(project)
+    true
+  end
+
 #employee --------------------------------------------------
   def can_see_all_employees
     true
@@ -28,16 +32,7 @@ class Admin < User
   end
 
 
-
   def can_see_his_profile
-    false
-  end
-
-  def is_projectmanager(project)
-    false
-  end
-
-  def can_see_dashboard
     false
   end
 

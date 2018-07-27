@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :find_client_by_url_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_clients, only: [:index, :show, :edit, :new]
+  before_action :get_clients, only: [:index, :show, :new, :create, :edit, :update]
 
   def index
   end
@@ -14,6 +14,7 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(client_params)
+
     if @client.save
       redirect_to client_path(@client)
     else
@@ -38,6 +39,7 @@ class ClientsController < ApplicationController
   end
 
   private
+
   def client_params
     params.require(:client).permit(:first_name, :last_name, :username, :password,
                                       :attachment, :email, :country, :company)
@@ -50,5 +52,4 @@ class ClientsController < ApplicationController
   def get_clients
     @clients = Client.all
   end
-
 end

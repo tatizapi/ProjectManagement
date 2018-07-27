@@ -50,7 +50,7 @@
     <div class="form-group required">
       <%= form.label 'Developer', class: 'control-label col-sm-1' %>
       <div class="col-sm-4">
-        <%= form.select :developer_id, @project_developers_roles.collect { |role| [role.employee.full_name, role.employee.id] },
+        <%= form.select :employee_id, @project_developers_roles.collect { |role| [role.employee.full_name, role.employee.id] },
                                       prompt: 'select one developer' %>
       </div>
     </div>

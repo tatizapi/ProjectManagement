@@ -30,4 +30,52 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+#project ---------------------------------------------------
+  def can_see_all_projects
+    false
+  end
+
+  def can_modify_project
+    false
+  end
+
+  def can_see_project_roles
+    true
+  end
+
+  def can_add_tasks(project)
+    false
+  end
+
+#employee --------------------------------------------------
+  def can_see_all_employees
+    false
+  end
+
+  def can_modify_employee
+    false
+  end
+
+  def is_projectmanager(project)
+    false
+  end
+
+#client -----------------------------------------------------
+  def can_see_all_clients
+    false
+  end
+
+  def can_modify_client
+    false
+  end
+
+
+  def can_see_his_profile
+    true
+  end
+
+  def can_see_dashboard
+    true
+  end
+
 end

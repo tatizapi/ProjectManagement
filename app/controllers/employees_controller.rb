@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :find_employee_by_url_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_employees, only: [:index, :show, :edit, :new]
+  before_action :get_employees, only: [:index, :create, :show, :edit, :new]
 
   def index
   end
