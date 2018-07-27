@@ -1,83 +1,80 @@
 <%= render 'left_sidebar' %>
 <%= render 'tabs' %>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-7 col-lg-7">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-7 col-lg-7">
 
-          <table class="table table-user-information">
-            <tbody>
-              <tr>
-                <td><b>Title:<b></td>
-                <td><%= @project.title %></td>
-              </tr>
-              <tr>
-                <td><b>Description:</b></td>
-                <td><%= @project.description %></td>
-              </tr>
-              <tr>
-                <td><b>Clients:</b></td>
-                <td>
-                  <% @project.clients.each do |client| %>
-                    <%= client.full_name %><br>
-                  <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Project manager:</b></td>
-                <td>
-                  <% role = @project.roles.where(:role => "projectmanager").take %>
-                      <% if !role.nil? %>
-                        <%= role.employee.full_name %>
-                      <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Developers:</b></td>
-                <td>
-                  <% @project_developers_roles.each do |role| %>
-                    <%= role.employee.full_name %><br>
-                  <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Testers:</b></td>
-                <td>
-                  <% @project_testers_roles.each do |role| %>
-                    <%= role.employee.full_name %><br>
-                  <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td><b>Attachments:</b></td>
-                <td><% @project.attachments.each do |attachment| %>
-                      <%= link_to attachment.file.identifier, attachment.url,
+      <table class="table table-user-information">
+        <tbody>
+          <tr>
+            <td><b>Title:<b></td>
+            <td><%= @project.title %></td>
+          </tr>
+          <tr>
+            <td><b>Description:</b></td>
+            <td><%= @project.description %></td>
+          </tr>
+          <tr>
+            <td><b>Clients:</b></td>
+            <td>
+              <% @project.clients.each do |client| %>
+                  <%= client.full_name %><br>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Project manager:</b></td>
+            <td>
+              <% role = @project.roles.where(:role => "projectmanager").take %>
+                  <%= role.employee.full_name %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Developers:</b></td>
+            <td>
+              <% @project_developers_roles.each do |role| %>
+                <%= role.employee.full_name %><br>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Testers:</b></td>
+            <td>
+              <% @project_testers_roles.each do |role| %>
+                <%= role.employee.full_name %><br>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Attachments:</b></td>
+            <td>
+              <% @project.attachments.each do |attachment| %>
+                <%= link_to attachment.file.identifier, attachment.url,
                               target: :_blank %><br>
-                    <% end %>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-          <% if current_user.type == "Admin" %>
-
-            <%= link_to edit_project_path(@project), class: 'btn btn-warning', title: 'Edit project' do %>
-              <i class="glyphicon glyphicon-edit"></i>
-            <% end %>
-            <%= link_to project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete project' do %>
-              <i class="glyphicon glyphicon-remove"></i>
-            <% end %>
-
-          <% elsif current_user.type == "Employee" && Role.find_by(project_id: @project.id, employee_id: current_user.id).role == "projectmanager"%>
-
-            <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
-              <i class="glyphicon glyphicon-list-alt"></i>
-            <% end %>
-            <%= link_to add_employees_path, class: 'btn btn-success', title: 'Add developers and testers' do %>
-              <i class="glyphicon glyphicon-plus"></i>
-            <% end %>
-
+        <% if current_user.can_modify_project %>
+          <%= link_to edit_project_path(@project), class: 'btn btn-warning', title: 'Edit project' do %>
+            <i class="glyphicon glyphicon-edit"></i>
           <% end %>
+          <%= link_to project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete project' do %>
+            <i class="glyphicon glyphicon-remove"></i>
+          <% end %>
+        <% end %>
+
+        <% if current_user.is_projectmanager(@project) %>
+          <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
+            <i class="glyphicon glyphicon-list-alt"></i>
+          <% end %>
+          <%= link_to add_employees_path, class: 'btn btn-success', title: 'Add developers and testers' do %>
+            <i class="glyphicon glyphicon-plus"></i>
+          <% end %>
+        <% end %>
 
         </div>
       </div>

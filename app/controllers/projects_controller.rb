@@ -1,14 +1,28 @@
 class ProjectsController < ApplicationController
   before_action :find_project_by_url_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_employees, only: [:new, :edit]
+  before_action :get_employees, only: [:new, :edit] #for project manager dropdown
+  before_action :get_projects, only: [:new, :edit]
 
   def index
-    @projects = Project.all
+    case current_user.type
+    when 'Admin'
+      get_projects
+    when 'Employee'
+      get_employees_filtered_by_role
+    end
   end
 
   def show
     @project_testers_roles = @project.roles.where(:role => "tester")
     @project_developers_roles = @project.roles.where(:role => "developer")
+
+    #poate fi inlocuit cu "index" ?
+    case current_user.type
+    when 'Admin'
+      get_projects
+    when 'Employee'
+      get_employees_filtered_by_role
+    end
   end
 
   def new
@@ -46,6 +60,8 @@ class ProjectsController < ApplicationController
   def add_employees
     @project = Project.find(params[:id])
     @available_employees = Employee.all - @project.employees
+
+    get_employees_filtered_by_role
   end
 
   def add_developers
@@ -82,7 +98,7 @@ class ProjectsController < ApplicationController
     redirect_to project_path(@project)
   end
 
-
+#-------------------------------------------------------------------------------
   private
   def project_params
     params.require(:project).permit(:title, :description, {attachments: []}, client_ids:[])
@@ -94,6 +110,16 @@ class ProjectsController < ApplicationController
 
   def get_employees
     @employees = Employee.all
+  end
+
+  def get_projects
+    @projects = Project.all
+  end
+
+  def get_employees_filtered_by_role
+    @projectmanager_roles = Employee.find(current_user.id).roles.where(:role => "projectmanager")
+    @developer_roles = Employee.find(current_user.id).roles.where(:role => "developer")
+    @tester_roles = Employee.find(current_user.id).roles.where(:role => "tester")
   end
 
   def add_projectmanager_role

@@ -18,11 +18,19 @@
       <nav class="navbar navbar-default" style="background-color: #eee">
         <div class="container-fluid">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span>
-              <%= current_user.username %>
-            </a></li>
             <li>
-              <%= link_to 'Log out', destroy_user_session_path, :method => :delete %>
+              <% if current_user.can_see_his_profile %>
+                <%= link_to employee_path(current_user.id) do %>
+                  <i class="glyphicon glyphicon-user"><%= current_user.full_name %></i>
+                <% end %>
+              <% else %> <!-- if it's admin -->
+                <a><i class="glyphicon glyphicon-user"> admin</i></a>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to destroy_user_session_path, :method => :delete do %>
+                <i class="glyphicon glyphicon-log-out"> Log out</i>
+              <% end %>
             </li>
           </ul>
         </div>

@@ -1,21 +1,12 @@
 class EmployeesController < ApplicationController
-  before_action :find_employee_by_url_id, only: [:edit, :update, :destroy]
+  before_action :find_employee_by_url_id, only: [:show, :edit, :update, :destroy]
+  before_action :get_employees, only: [:index, :show, :edit, :new]
 
   def index
-    @employees = Employee.all
   end
 
   def show
-    case current_user.type
-    when 'Admin'
-      find_employee_by_url_id
-      @roles = @employee.roles
-    when 'Employee'
-      @employee = Employee.find(current_user.id)
-      @roles_projectmanager = @employee.roles.where(:role => "projectmanager")
-      @roles_developer = @employee.roles.where(:role => "developer")
-      @roles_tester = @employee.roles.where(:role => "tester")
-    end
+    @roles = @employee.roles
   end
 
   def new
@@ -55,5 +46,9 @@ class EmployeesController < ApplicationController
 
   def find_employee_by_url_id
     @employee = Employee.find(params[:id])
+  end
+
+  def get_employees
+    @employees = Employee.all
   end
 end

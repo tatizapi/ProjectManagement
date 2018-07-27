@@ -2,7 +2,6 @@
 <%= render 'left_sidebar' %>
 
 <div class="main">
-  <% if current_user.type == "Admin" %>
     <div class="container-fluid">
       <div class="row">
         <% if !@client.attachment_url.nil? %>
@@ -43,15 +42,16 @@
             </tbody>
           </table>
 
+        <% if current_user.can_modify_client %>
           <%= link_to edit_client_path(@client), class: "btn btn-warning", title: 'Edit client' do %>
             <i class="glyphicon glyphicon-edit"></i>
           <% end %>
           <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete client' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
+        <% end %>
 
         </div>
       </div>
     </div>
-    <% end %>
 </div>

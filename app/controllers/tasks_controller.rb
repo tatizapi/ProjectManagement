@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @project_developers_roles = @project.roles.where(:role => "developer")
+    get_employees_filtered_by_role
   end
 
   def create
@@ -31,4 +32,11 @@ class TasksController < ApplicationController
   def find_current_project
     @project = Project.find(params[:project_id])
   end
+
+  def get_employees_filtered_by_role
+    @projectmanager_roles = Employee.find(current_user.id).roles.where(:role => "projectmanager")
+    @developer_roles = Employee.find(current_user.id).roles.where(:role => "developer")
+    @tester_roles = Employee.find(current_user.id).roles.where(:role => "tester")
+  end
+
 end

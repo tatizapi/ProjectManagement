@@ -1,8 +1,6 @@
 <%= render 'left_sidebar' %>
 
 <div class="main">
-  <% if current_user.type == "Admin" %>
-
     <div class="container-fluid">
       <div class="row">
         <% if !@employee.attachment_url.nil? %>
@@ -39,37 +37,17 @@
             </tbody>
           </table>
 
-          <%= link_to edit_employee_path(@employee), class: "btn btn-warning", title: 'Edit employee' do %>
-            <i class="glyphicon glyphicon-edit"></i>
-          <% end %>
-          <%= link_to employee_path(@employee), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete employee' do %>
-            <i class="glyphicon glyphicon-remove"></i>
+          <% if current_user.can_modify_employee %>
+            <%= link_to edit_employee_path(@employee), class: "btn btn-warning", title: 'Edit employee' do %>
+              <i class="glyphicon glyphicon-edit"></i>
+            <% end %>
+
+            <%= link_to employee_path(@employee), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete employee' do %>
+              <i class="glyphicon glyphicon-remove"></i>
+            <% end %>
           <% end %>
 
         </div>
       </div>
     </div>
-
-  <% end %>
-
-  <% if current_user.type == "Employee" %>
-
-    <h2 style="text-decoration: underline">Roles</h2>
-    <h3>Project manager on projects:</h3>
-    <% @roles_projectmanager.each do |role| %>
-      <%= link_to role.project.title, project_path(role.project.id) %><br>
-    <% end %>
-
-    <h3>Developer on projects:</h3>
-    <% @roles_developer.each do |role| %>
-      <%= role.project.title %><br>
-    <% end %>
-
-    <h3>Tester on projects:</h3>
-    <% @roles_tester.each do |role| %>
-      <%= role.project.title %><br>
-    <% end %>
-
-  <% end %>
-
 </div>

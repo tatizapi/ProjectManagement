@@ -1,8 +1,8 @@
 class ClientsController < ApplicationController
   before_action :find_client_by_url_id, only: [:show, :edit, :update, :destroy]
+  before_action :get_clients, only: [:index, :show, :edit, :new]
 
   def index
-    @clients = Client.all
   end
 
   def show
@@ -45,6 +45,10 @@ class ClientsController < ApplicationController
 
   def find_client_by_url_id
     @client = Client.find(params[:id])
+  end
+
+  def get_clients
+    @clients = Client.all
   end
 
 end
