@@ -1,4 +1,27 @@
 <div class="panel panel-info">
-   <div class="panel-heading"><%= task.title %></div>
-   <div class="panel-body"><%= task.description %></div>
+
+  <div class="panel-heading">
+      <h5><b><%= task.title %></b></h5>
+      <h6 class="task-time"><%= task.created_at.strftime("%d.%m, %I:%M%p") %><br></h6>
+  </div>
+
+   <div class="panel-body">
+     <% if task.priority == "medium" %>
+       <h6 class="card-subtitle mb-2 text-muted" style="color:#990066">
+         <%= task.priority.upcase %>
+       </h6><br>
+
+     <% elsif task.priority == "high" %>
+       <h6 class="card-subtitle mb-2 text-muted" style="color:#FF0000">
+         <%= task.priority.upcase %>
+       </h6><br>
+
+     <% else %>
+       <h6 class="card-subtitle mb-2 text-muted">
+         <%= task.priority.upcase %>
+       </h6><br>
+     <% end %>
+
+     <%= task.description %>
+   </div>
  </div>

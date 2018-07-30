@@ -22,7 +22,7 @@ class TasksController < ApplicationController
     # end
     @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo"))
     if @task.save
-      redirect_to project_path(@project)
+      redirect_to project_dashboard_index_path(@project)
     else
       render 'new'
     end
