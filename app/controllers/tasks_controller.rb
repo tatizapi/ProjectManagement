@@ -20,7 +20,9 @@ class TasksController < ApplicationController
     #   redirect_to new_project_task_path
     #   return false
     # end
-    @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo"))
+    #Time.zone = 'Europe/Bucharest'
+    @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo",
+                      created_at: DateTime.current))
     if @task.save
       redirect_to project_dashboard_index_path(@project)
     else
