@@ -1,10 +1,9 @@
 class User < ApplicationRecord
+  enum type: { User: 0, Admin: 1, Employee: 2, Client: 3}
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :rememberable, :trackable#, :registerable, :validatable
-
-  scope :clients, -> { where(type: 'Client') }
-  scope :employees, -> { where(type: 'Employee') }
 
   mount_uploader :attachment, AttachmentUploader
 
@@ -20,10 +19,6 @@ class User < ApplicationRecord
 
   def will_save_change_to_email?
     false
-  end
-
-  def self.types
-      %w(Client Employee)
   end
 
   def full_name
