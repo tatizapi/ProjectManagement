@@ -26,23 +26,22 @@
           <tr>
             <td><b>Project manager:</b></td>
             <td>
-              <% role = @project.roles.where(:role => "projectmanager").take %>
-                  <%= role.employee.full_name %>
+              <%= @projectmanager.full_name %>
             </td>
           </tr>
           <tr>
             <td><b>Developers:</b></td>
             <td>
-              <% @project_developers_roles.each do |role| %>
-                <%= role.employee.full_name %><br>
+              <% @developers.each do |developer| %>
+                <%= developer.full_name %><br>
               <% end %>
             </td>
           </tr>
           <tr>
             <td><b>Testers:</b></td>
             <td>
-              <% @project_testers_roles.each do |role| %>
-                <%= role.employee.full_name %><br>
+              <% @testers.each do |tester| %>
+                <%= tester.full_name %><br>
               <% end %>
             </td>
           </tr>

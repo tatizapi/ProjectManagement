@@ -7,5 +7,30 @@ class Project < ApplicationRecord
   mount_uploaders :attachments, AttachmentUploader
   serialize :attachments, JSON
 
-  validates :title, presence: true, :on => :create
+  validates :title, presence: true
+
+  def get_projectmanager
+     self.roles.where(:role => "projectmanager").take.employee
+  end
+
+  def get_developers
+    developers =  []
+
+    self.roles.where(:role => "developer").each do |role|
+      developers.push(role.employee)
+    end
+
+    developers
+  end
+
+  def get_testers
+    testers = []
+
+    self.roles.where(:role => "tester").each do |role|
+      testers.push(role.employee)
+    end
+
+    testers
+  end
+
 end

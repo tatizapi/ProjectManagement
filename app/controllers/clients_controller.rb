@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :find_client_by_url_id, only: [:show, :edit, :update, :destroy]
+  before_action :find_client_by_id, only: [:show, :edit, :update, :destroy]
   before_action :get_clients, only: [:index, :show, :new, :create, :edit, :update]
 
   def index
@@ -45,11 +45,12 @@ class ClientsController < ApplicationController
                                       :attachment, :email, :country, :company)
   end
 
-  def find_client_by_url_id
+  def find_client_by_id
     @client = Client.find(params[:id])
   end
 
   def get_clients
     @clients = Client.all
   end
+  
 end

@@ -1,28 +1,24 @@
 class ProjectsController < ApplicationController
-  before_action :find_project_by_url_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_employees, only: [:new, :create, :edit] #for project manager dropdown
-  before_action :get_projects, only: [:index, :create, :new, :edit]
+  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy]
+  before_action :get_projects, only: [:new, :create, :edit, :update]
+
+  #for project manager dropdown
+  before_action :get_employees, only: [:new, :create, :edit, :update]
+
+  #for clients check boxes
+  before_action :get_clients, only: [:new, :create, :edit, :update]
+
+  #index and show are common for admin and employee
+  before_action :setup_left_sidebar, only: [:index, :show]
+
 
   def index
-    case current_user.type
-    when 'Admin'
-      get_projects
-    when 'Employee'
-      get_employees_filtered_by_role
-    end
   end
 
   def show
-    @project_testers_roles = @project.roles.where(:role => "tester")
-    @project_developers_roles = @project.roles.where(:role => "developer")
-
-    #poate fi inlocuit cu "index" ?
-    case current_user.type
-    when 'Admin'
-      get_projects
-    when 'Employee'
-      get_employees_filtered_by_role
-    end
+    @projectmanager = @project.get_projectmanager
+    @developers = @project.get_developers
+    @testers = @project.get_testers
   end
 
   def new
@@ -41,12 +37,13 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    #to have a selected employee on dropdown
+    @projectmanager = @project.get_projectmanager
   end
 
   def update
-    update_projectmanager_role
-
     if @project.update(project_params)
+      update_projectmanager_role
       redirect_to project_path(@project)
     else
       render 'edit'
@@ -107,7 +104,7 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:title, :description, {attachments: []}, client_ids:[])
   end
 
-  def find_project_by_url_id
+  def find_project_by_id
     @project = Project.find(params[:id])
   end
 
@@ -119,36 +116,34 @@ class ProjectsController < ApplicationController
     @projects = Project.all
   end
 
-  def get_employees_filtered_by_role #de mutat in model
-    @projectmanager_roles = Employee.find(current_user.id).roles.where(:role => "projectmanager")
-    @developer_roles = Employee.find(current_user.id).roles.where(:role => "developer")
-    @tester_roles = Employee.find(current_user.id).roles.where(:role => "tester")
+  def get_clients
+    @clients = Client.all
+  end
+
+  def setup_left_sidebar
+    case current_user.type
+    when 'Admin'
+      get_projects
+    when 'Employee'
+      @projects_projectmanager_role,
+      @projects_developer_role,
+      @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+    end
   end
 
   def add_projectmanager_role
-    if params[:project][:employees][:projectmanager_id] != ""
-      @role = Role.new(projectmanager_role_params)
-    else
-      render 'new'
-    end
+    @role = Role.new(projectmanager_role_params)
+    @role.save
   end
 
   def update_projectmanager_role
-    if params[:project][:employees][:projectmanager_id] != ""
-      @role = @project.roles.where(:role => "projectmanager").take
-      if !@role.update(projectmanager_role_params)
-        render 'new'
-      end
-    end
+    @role = @project.roles.where(:role => "projectmanager").take
+    @role.update(projectmanager_role_params)
   end
 
   def projectmanager_role_params
-    @employee = Employee.find(params[:project][:employees][:projectmanager_id])
-    role_params = Hash.new
-    role_params[:project_id] = @project.id
-    role_params[:employee_id] = @employee.id
-    role_params[:role] = "projectmanager"
-    role_params
+    @employee = Employee.find(params[:project][:employee_id])
+    role_params = { "project_id": @project.id, "employee_id": @employee.id, "role": "projectmanager" }
   end
 
 end

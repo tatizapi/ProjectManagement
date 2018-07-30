@@ -69,7 +69,7 @@ class User < ApplicationRecord
     false
   end
 
-
+#others ----------------------------------------------------
   def can_see_his_profile
     true
   end

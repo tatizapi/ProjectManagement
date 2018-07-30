@@ -1,6 +1,6 @@
 class EmployeesController < ApplicationController
-  before_action :find_employee_by_url_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_employees, only: [:index, :create, :show, :edit, :new]
+  before_action :find_employee_by_id, only: [:show, :edit, :update, :destroy]
+  before_action :get_employees, only: [:index, :show, :new, :create, :edit, :update]
 
   def index
   end
@@ -15,6 +15,7 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(employee_params)
+
     if @employee.save
       redirect_to employee_path(@employee)
     else
@@ -44,7 +45,7 @@ class EmployeesController < ApplicationController
                                        :password, :email, :function, :attachment)
   end
 
-  def find_employee_by_url_id
+  def find_employee_by_id
     @employee = Employee.find(params[:id])
   end
 
