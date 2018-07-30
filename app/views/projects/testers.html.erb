@@ -1,0 +1,18 @@
+<%= render 'left_sidebar' %>
+<%= render 'tabs' %>
+
+<%= form_with :url => { :controller => "projects", :action => "manage_testers" } do |form| %>
+  <h3>Manage testers</h3>
+  <%= form.collection_check_boxes :tester_ids, @available_employees, :id, :full_name,
+       { include_hidden: false } do |f| %>
+    <div class="collection-check-box">
+    <% if f.object.is_tester(@project) %>
+      <%= f.check_box(checked: true) %>
+      <% else %>
+      <%= f.check_box %>
+    <% end %>
+    <%= f.label %>
+    </div>
+   <% end %><br>
+   <%= form.submit("Save") %>
+<% end %>

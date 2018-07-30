@@ -15,9 +15,10 @@ Rails.application.routes.draw do
   resources :employees
   # resources :tasks
 
-  get '/projects/:id/add_employees' => 'projects#add_employees', as: :add_employees
-  post '/projects/:id/add_developers' => 'projects#add_developers'
-  post '/projects/:id/add_testers' => 'projects#add_testers'
+  get 'projects/:id/developers' => 'projects#developers', as: :project_developers
+  get 'projects/:id/testers' => 'projects#testers', as: :project_testers
+  post '/projects/:id/developers' => 'projects#manage_developers'
+  post '/projects/:id/testers' => 'projects#manage_testers'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

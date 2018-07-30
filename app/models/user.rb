@@ -37,11 +37,7 @@ class User < ApplicationRecord
   def can_see_project_roles
     true
   end
-
-  def can_add_tasks(project)
-    false
-  end
-
+  
 #employee --------------------------------------------------
   def can_see_all_employees
     false

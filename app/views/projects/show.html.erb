@@ -30,7 +30,13 @@
             </td>
           </tr>
           <tr>
-            <td><b>Developers:</b></td>
+            <td><b>Developers:</b><br>
+              <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
+                <%= link_to project_developers_path(@project), class: 'btn btn-success', title: 'Manage developers' do %>
+                  <i class="glyphicon glyphicon-pencil"></i>
+                <% end %>
+              <% end %>
+            </td>
             <td>
               <% @developers.each do |developer| %>
                 <%= developer.full_name %><br>
@@ -38,7 +44,13 @@
             </td>
           </tr>
           <tr>
-            <td><b>Testers:</b></td>
+            <td><b>Testers:</b><br>
+              <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
+                <%= link_to project_testers_path(@project), class: 'btn btn-success', title: 'Manage developers' do %>
+                  <i class="glyphicon glyphicon-pencil"></i>
+                <% end %>
+              <% end %>
+            </td>
             <td>
               <% @testers.each do |tester| %>
                 <%= tester.full_name %><br>
@@ -66,12 +78,9 @@
           <% end %>
         <% end %>
 
-        <% if current_user.can_add_tasks(@project) %>
+        <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
           <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
             <i class="glyphicon glyphicon-list-alt"></i>
-          <% end %>
-          <%= link_to add_employees_path, class: 'btn btn-success', title: 'Add developers and testers' do %>
-            <i class="glyphicon glyphicon-plus"></i>
           <% end %>
         <% end %>
 

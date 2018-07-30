@@ -1,15 +1,18 @@
 class ProjectsController < ApplicationController
-  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy]
+  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy,
+                                            :developers, :testers,
+                                            :manage_developers, :manage_testers]
   before_action :get_projects, only: [:new, :create, :edit, :update]
 
   #for project manager dropdown
-  before_action :get_employees, only: [:new, :create, :edit, :update]
+  before_action :get_employees, only: [:new, :create, :edit, :update,
+                                       :developers, :testers]
 
   #for clients check boxes
   before_action :get_clients, only: [:new, :create, :edit, :update]
 
   #index and show are common for admin and employee
-  before_action :setup_left_sidebar, only: [:index, :show]
+  before_action :setup_left_sidebar, only: [:index, :show, :developers, :testers]
 
 
   def index
@@ -55,25 +58,20 @@ class ProjectsController < ApplicationController
     redirect_to projects_path
   end
 
-  #in lucru
-  def add_employees
-    @project = Project.find(params[:id])
-    @available_employees = Employee.all - @project.employees
-
-    #get_employees_filtered_by_role
-    @projects = Project.all
+  def developers
+    @available_employees = Employee.all - @project.get_testers - Array(@project.get_projectmanager)
   end
 
-  def add_developers
-    @project = Project.find(params[:id])
+  def testers
+    @available_employees = Employee.all - @project.get_developers - Array(@project.get_projectmanager)
+  end
+
+  def manage_developers
+    destroy_existing_developers
 
     if !params[:developer_ids].nil?
       params[:developer_ids].each do |developer_id|
-        role_params = Hash.new
-        role_params[:project_id] = @project.id
-        role_params[:employee_id] = developer_id
-        role_params[:role] = "developer"
-        @role = Role.new(role_params)
+        @role = Role.new(developer_role_params(developer_id))
         @role.save
       end
     end
@@ -81,16 +79,12 @@ class ProjectsController < ApplicationController
     redirect_to project_path(@project)
   end
 
-  def add_testers
-    @project = Project.find(params[:id])
+  def manage_testers
+    destroy_existing_testers
 
     if !params[:tester_ids].nil?
       params[:tester_ids].each do |tester_id|
-        role_params = Hash.new
-        role_params[:project_id] = @project.id
-        role_params[:employee_id] = tester_id
-        role_params[:role] = "tester"
-        @role = Role.new(role_params)
+        @role = Role.new(tester_role_params(tester_id))
         @role.save
       end
     end
@@ -144,6 +138,30 @@ class ProjectsController < ApplicationController
   def projectmanager_role_params
     @employee = Employee.find(params[:project][:employee_id])
     role_params = { "project_id": @project.id, "employee_id": @employee.id, "role": "projectmanager" }
+  end
+
+  def destroy_existing_developers
+    @project.roles.each do |role|
+      if role.role == "developer"
+        role.destroy
+      end
+    end
+  end
+
+  def destroy_existing_testers
+    @project.roles.each do |role|
+      if role.role == "tester"
+        role.destroy
+      end
+    end
+  end
+
+  def developer_role_params(developer_id)
+    role_params = { "project_id": @project.id, "employee_id": developer_id, "role": "developer" }
+  end
+
+  def tester_role_params(developer_id)
+    role_params = { "project_id": @project.id, "employee_id": developer_id, "role": "tester" }
   end
 
 end

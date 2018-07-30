@@ -3,7 +3,7 @@ class Employee < User
   has_many :projects, :through => :roles
   has_many :tasks
 
-  def can_add_tasks(project)
+  def is_projectmanager(project)
     role = Role.find_by(project_id: project.id, employee_id: self.id)
     role.role == "projectmanager"
   end
@@ -26,6 +26,26 @@ class Employee < User
     end
 
     return projects_projectmanager_role, projects_developer_role, projects_tester_role
+  end
+
+  def is_developer(project)
+    role = Role.find_by(project_id: project.id, employee_id: self.id)
+
+    if role.nil?
+      return false
+    elsif role.role == "developer"
+      return true
+    end
+  end
+
+  def is_tester(project)
+    role = Role.find_by(project_id: project.id, employee_id: self.id)
+    
+    if role.nil?
+      return false
+    elsif role.role == "tester"
+      return true
+    end
   end
 
 end
