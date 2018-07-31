@@ -21,10 +21,6 @@ class TasksController < ApplicationController
     end
   end
 
-  def change_status
-
-  end
-
   private
   def task_params
     params.require(:task).permit(:title, :description, :priority, {attachments: []},

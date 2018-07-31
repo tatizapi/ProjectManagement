@@ -22,7 +22,13 @@
       </h6><br>
     <% end %>
 
-    <%= task.description %><br>
+    <p><%= task.description %></p>
+
+    <p>
+    <% task.attachments.each do |attachment| %>
+      <%= link_to attachment.file.identifier, attachment.url, target: :_blank %><br>
+    <% end %>
+    </p>
 
     <% if current_user.can_change_status(@project, task) %>
 

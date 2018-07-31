@@ -76,3 +76,14 @@ rake db:migrate
 DROP EVERYTHING AND CREATE IT AGAIN
 rails db:drop db:create db:migrate
 
+
+     # begin
+     #   Task.create!(task_params.merge(project_id: params[:project_id], status: "todo"))
+     # rescue => e
+     #   puts "!! e: #{e.inspect}"
+     #   #render 'new'
+     #   redirect_to new_project_task_path
+     #   return false
+     # end
+     #Time.zone = 'Europe/Bucharest'
+
