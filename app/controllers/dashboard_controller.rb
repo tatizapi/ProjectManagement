@@ -24,13 +24,16 @@ class DashboardController < ApplicationController
     case task.status
     when "todo"
       task.update_column(:status, "inprogress")
+      task.update_column(:started_at, Time.now)
     when "inprogress"
       task.update_column(:status, "complete")
+      task.update_column(:completed_at, Time.now)
     when "complete"
       if params[:set_todo]
         task.update_column(:status, "todo")
       else
         task.update_column(:status, "done")
+        task.update_column(:ended_at, Time.now)
       end
     end
 
