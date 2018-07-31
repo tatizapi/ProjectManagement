@@ -9,6 +9,10 @@ class Admin < User
     true
   end
 
+  def can_change_status
+    true
+  end
+
 #employee --------------------------------------------------
   def can_see_all_employees
     true

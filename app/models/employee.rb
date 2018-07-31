@@ -4,7 +4,7 @@ class Employee < User
   has_many :tasks
 
   def is_projectmanager(project)
-    role = Role.find_by(project_id: project.id, employee_id: self.id)
+    role = get_role(project)
     role.role == "projectmanager"
   end
 
@@ -29,7 +29,7 @@ class Employee < User
   end
 
   def is_developer(project)
-    role = Role.find_by(project_id: project.id, employee_id: self.id)
+    role = get_role(project)
 
     if role.nil?
       return false
@@ -39,11 +39,26 @@ class Employee < User
   end
 
   def is_tester(project)
-    role = Role.find_by(project_id: project.id, employee_id: self.id)
-    
+    role = get_role(project)
+
     if role.nil?
       return false
     elsif role.role == "tester"
+      return true
+    end
+  end
+
+  def get_role(project)
+    Role.find_by(project_id: project.id, employee_id: self.id)
+  end
+
+  def can_change_status(project, task)
+    role = get_role(project)
+
+    if self.id == task.employee_id && role.role == "developer" &&
+       (task.status == "todo" || task.status == "inprogress")
+      return true
+    elsif role.role == "tester" && task.status == "complete"
       return true
     end
   end

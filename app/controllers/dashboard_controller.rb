@@ -16,7 +16,27 @@ class DashboardController < ApplicationController
       @projects_developer_role,
       @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
     end
+  end
 
+  def change_status
+    task = Task.find(params[:task_id])
+
+    case task.status
+    when "todo"
+      task.update_column(:status, "inprogress")
+    when "inprogress"
+      task.update_column(:status, "complete")
+    when "complete"
+      if params[:set_todo]
+        task.update_column(:status, "todo")
+      else
+        task.update_column(:status, "done")
+      end
+    end
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

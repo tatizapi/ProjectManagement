@@ -12,15 +12,6 @@ class TasksController < ApplicationController
   end
 
   def create
-    # begin
-    #   Task.create!(task_params.merge(project_id: params[:project_id], status: "todo"))
-    # rescue => e
-    #   puts "!! e: #{e.inspect}"
-    #   #render 'new'
-    #   redirect_to new_project_task_path
-    #   return false
-    # end
-    #Time.zone = 'Europe/Bucharest'
     @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo",
                       created_at: DateTime.current))
     if @task.save
@@ -28,6 +19,10 @@ class TasksController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def change_status
+
   end
 
   private

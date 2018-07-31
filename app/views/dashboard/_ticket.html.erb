@@ -1,27 +1,44 @@
 <div class="panel panel-info">
 
   <div class="panel-heading">
-      <h5><b><%= task.title %></b></h5>
-      <h6 class="task-time"><%= task.created_at.strftime("%d.%m, %H:%M") %><br></h6>
+    <h5><b><%= task.title %></b></h5>
+    <h6 class="task-time"><%= task.created_at.strftime("%d %^b, %H:%M") %><br></h6>
   </div>
 
-   <div class="panel-body">
-     <% if task.priority == "medium" %>
-       <h6 class="card-subtitle mb-2 text-muted" style="color:#990066">
-         <%= task.priority.upcase %>
-       </h6><br>
+  <div class="panel-body">
+    <% if task.priority == "medium" %>
+      <h6 class="card-subtitle mb-2 text-muted" style="color:#990066">
+        <%= task.priority.upcase %>
+      </h6><br>
 
-     <% elsif task.priority == "high" %>
-       <h6 class="card-subtitle mb-2 text-muted" style="color:#FF0000">
-         <%= task.priority.upcase %>
-       </h6><br>
+    <% elsif task.priority == "high" %>
+      <h6 class="card-subtitle mb-2 text-muted" style="color:#FF0000">
+        <%= task.priority.upcase %>
+      </h6><br>
 
-     <% else %>
-       <h6 class="card-subtitle mb-2 text-muted">
-         <%= task.priority.upcase %>
-       </h6><br>
-     <% end %>
+    <% else %>
+      <h6 class="card-subtitle mb-2 text-muted">
+        <%= task.priority.upcase %>
+      </h6><br>
+    <% end %>
 
-     <%= task.description %>
+    <%= task.description %><br>
+
+    <% if current_user.can_change_status(@project, task) %>
+
+      <% if current_user.is_tester(@project) %>
+        <%= link_to change_status_path(@project, :task_id => task.id, :set_todo => true),
+            method: :put, remote: true do %>
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        <% end %>
+      <% end %>
+
+      <%= link_to change_status_path(@project, :task_id => task.id),
+              method: :put, remote: true do %>
+          <i class="glyphicon glyphicon-chevron-right"></i>
+        <% end %>
+
+    <% end %>
    </div>
+
  </div>

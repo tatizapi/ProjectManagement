@@ -46,7 +46,7 @@
           <tr>
             <td><b>Testers:</b><br>
               <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
-                <%= link_to project_testers_path(@project), class: 'btn btn-success', title: 'Manage developers' do %>
+                <%= link_to project_testers_path(@project), class: 'btn btn-success', title: 'Manage testers' do %>
                   <i class="glyphicon glyphicon-pencil"></i>
                 <% end %>
               <% end %>
@@ -79,7 +79,7 @@
         <% end %>
 
         <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
-          <%= link_to new_project_task_path(@project), class: 'btn btn-info', title: 'Add task' do %>
+          <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info', title: 'Add task' do %>
             <i class="glyphicon glyphicon-list-alt"></i>
           <% end %>
         <% end %>

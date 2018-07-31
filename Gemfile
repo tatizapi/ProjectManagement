@@ -7,6 +7,7 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.0'
 gem 'devise'
 gem 'carrierwave'
+gem 'jquery-rails'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server

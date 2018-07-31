@@ -2,7 +2,8 @@
 <%= render 'tabs' %>
 
 <%= form_with :url => { :controller => "projects", :action => "manage_developers" } do |form| %>
-  <h3>Manage developers</h3>
+  <h2>Manage developers</h2>
+  <h4>Check to add and uncheck to delete developers from the project</h4>
   <%= form.collection_check_boxes :developer_ids, @available_employees, :id, :full_name,
        { include_hidden: false } do |f| %>
     <div class="collection-check-box">
