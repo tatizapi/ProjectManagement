@@ -1,0 +1,6 @@
+<%= form_with model: [@task, @comment] do |form| %>
+  <!-- <h5>New comment</h5> -->
+  <%= form.text_area :body %><br>
+  <%= form.file_field :attachments, multiple: true %><br>
+  <%= form.submit("Submit") %>
+<% end %>

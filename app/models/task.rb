@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  has_many :comments
   belongs_to :employee
   belongs_to :project
 

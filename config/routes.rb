@@ -12,7 +12,10 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
   end
   resources :employees
-  # resources :tasks
+
+  resources :tasks, only: [:show] do
+    resources :comments
+  end
 
   get 'projects/:id/developers' => 'projects#developers', as: :project_developers
   get 'projects/:id/testers' => 'projects#testers', as: :project_testers
@@ -22,8 +25,6 @@ Rails.application.routes.draw do
   #not sure this is the right way to do it
   #voiam doar ca o actiune din controller sa se execute in momentul in care se apasa pe un buton
   put '/projects/:id/dashboard/change_status' => 'dashboard#change_status', as: :change_status
-
-
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

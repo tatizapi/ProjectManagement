@@ -1,0 +1,9 @@
+var comment_form_id = '#comment-form' + <%= @task.id %>
+console.log(comment_form_id)
+
+if ($(comment_form_id).is(':visible')) {
+    $(comment_form_id).slideUp(350);
+} else {
+  $(comment_form_id).html("<%= j (render 'form') %>");
+  $(comment_form_id).slideDown(350);
+}

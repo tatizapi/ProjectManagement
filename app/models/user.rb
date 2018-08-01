@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   enum type: { User: 0, Admin: 1, Employee: 2, Client: 3}
 
+  has_many :comments
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :rememberable, :trackable#, :registerable, :validatable
@@ -37,7 +39,7 @@ class User < ApplicationRecord
   def can_see_project_roles
     true
   end
-  
+
 #employee --------------------------------------------------
   def can_see_all_employees
     false
@@ -48,6 +50,14 @@ class User < ApplicationRecord
   end
 
   def is_projectmanager(project)
+    false
+  end
+
+  def is_tester(project)
+    false
+  end
+
+  def is_developer(project)
     false
   end
 

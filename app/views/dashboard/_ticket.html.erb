@@ -25,26 +25,38 @@
     <p><%= task.description %></p>
 
     <p>
-    <% task.attachments.each do |attachment| %>
-      <%= link_to attachment.file.identifier, attachment.url, target: :_blank %><br>
-    <% end %>
+      <% task.attachments.each do |attachment| %>
+        <%= link_to attachment.file.identifier, attachment.url, target: :_blank %><br>
+      <% end %>
     </p>
+
+    <%= link_to task_comments_path(task), :title => "Show comments" do %>
+        <i class="glyphicon glyphicon-align-left">&nbsp</i>
+    <% end %>
+
+    <%= link_to new_task_comment_path(task), remote: true, :title => "Add comment" do %>
+        <i class="glyphicon glyphicon-comment">&nbsp</i>
+    <% end %>
 
     <% if current_user.can_change_status(@project, task) %>
 
+      <%= link_to change_status_path(@project, :task_id => task.id),
+              method: :put, remote: true, class: 'right' do %>
+          <i class="glyphicon glyphicon-chevron-right"></i>
+        <% end %>
+
       <% if current_user.is_tester(@project) %>
         <%= link_to change_status_path(@project, :task_id => task.id, :set_todo => true),
-            method: :put, remote: true do %>
+            method: :put, remote: true, class: 'right' do %>
             <i class="glyphicon glyphicon-chevron-left"></i>
         <% end %>
       <% end %>
 
-      <%= link_to change_status_path(@project, :task_id => task.id),
-              method: :put, remote: true do %>
-          <i class="glyphicon glyphicon-chevron-right"></i>
-        <% end %>
-
     <% end %>
+
+    <% comment_form_id = "comment-form" + task.id.to_s %>
+    <div id=<%= comment_form_id %> style="display:none"></div>
+
    </div>
 
  </div>

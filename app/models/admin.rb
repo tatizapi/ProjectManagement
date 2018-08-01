@@ -9,7 +9,7 @@ class Admin < User
     true
   end
 
-  def can_change_status
+  def can_change_status(project, task)
     true
   end
 
