@@ -37,3 +37,10 @@
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+//navigation bar - doesn't work and with !important looks weird
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}

@@ -1,10 +1,16 @@
 <% @comments.each do |comment| %>
-  <b><%= comment.user.username %>:</b><br>
+  <b style="color:#167FD2"><%= comment.user.username %>:</b><br>
   <%= comment.body %>
+
+  <% comment.attachments.each do |attachment| %>
+    <br><%= link_to attachment.file.identifier, attachment.url, target: :_blank %>
+  <% end %>
+
   <% if current_user.can_delete_comment(comment) %>
-    <%= link_to task_comment_path(comment.task, comment), method: :delete,
+    <%= link_to task_comment_path(comment.task, comment), class: 'right', method: :delete,
                 data: { confirm: 'Are you sure?' }, title: 'Delete comment' do %>
       <i class="glyphicon glyphicon-remove"></i>
     <% end %>
-  <% end %><br>
+  <% end %><br><br>
+
 <% end %>

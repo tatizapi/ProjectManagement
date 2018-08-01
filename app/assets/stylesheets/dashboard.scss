@@ -16,8 +16,6 @@
   text-align: left;
   margin-left: 20px;
   margin-right: 20px;
-
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .panel-heading h5, h6 {
@@ -33,12 +31,6 @@
   float: right;
 }
 
-
-//comments
-.show-comments a {
-  float: right;
-}
-
-.show-comments b {
-  color: #2196F3
+.panel-body a {
+  margin-right: 15px;
 }
