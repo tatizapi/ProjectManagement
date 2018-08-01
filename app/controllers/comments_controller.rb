@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :get_current_task, only: [:new, :create]
+  before_action :get_current_task, only: [:index, :new, :create]
 
   def index
     @comments = @task.comments

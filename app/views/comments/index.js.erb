@@ -1,0 +1,8 @@
+var show_comments_form_id = '#show-comments-form' + <%= @task.id %>
+
+if ($(show_comments_form_id).is(':visible')) {
+    $(show_comments_form_id).slideUp(350);
+} else {
+  $(show_comments_form_id).html("<%= j (render 'show_form') %>");
+  $(show_comments_form_id).slideDown(350);
+}

@@ -36,10 +36,6 @@ class DashboardController < ApplicationController
         task.update_column(:ended_at, Time.now)
       end
     end
-
-    respond_to do |format|
-      format.js
-    end
   end
 
   private

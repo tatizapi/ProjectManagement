@@ -30,7 +30,7 @@
       <% end %>
     </p>
 
-    <%= link_to task_comments_path(task), :title => "Show comments" do %>
+    <%= link_to task_comments_path(task), remote: true, :title => "Show comments" do %>
         <i class="glyphicon glyphicon-align-left">&nbsp</i>
     <% end %>
 
@@ -54,8 +54,12 @@
 
     <% end %>
 
-    <% comment_form_id = "comment-form" + task.id.to_s %>
-    <div id=<%= comment_form_id %> style="display:none"></div>
+    <% add_comment_form_id = "add-comment-form" + task.id.to_s %>
+    <div id=<%= add_comment_form_id %> style="display:none"></div>
+
+    <br>
+    <% show_comments_form_id = "show-comments-form" + task.id.to_s %>
+    <div id=<%= show_comments_form_id %> style="display:none"></div>
 
    </div>
 
