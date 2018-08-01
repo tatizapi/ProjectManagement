@@ -13,7 +13,7 @@ class Admin < User
     true
   end
 
-  def can_delete_task(project)
+  def can_modify_task(project)
     true
   end
 

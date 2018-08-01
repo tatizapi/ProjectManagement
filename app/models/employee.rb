@@ -8,7 +8,7 @@ class Employee < User
     role.role == "projectmanager"
   end
 
-  def can_delete_task(project)
+  def can_modify_task(project)
     is_projectmanager(project)
   end
 

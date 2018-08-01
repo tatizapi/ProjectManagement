@@ -6,5 +6,5 @@ class Task < ApplicationRecord
   mount_uploaders :attachments, AttachmentUploader
   serialize :attachments, JSON
 
-  validates :title, presence: true, :on => :create
+  validates :title, presence: true
 end

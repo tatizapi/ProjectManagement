@@ -38,9 +38,13 @@
         <i class="glyphicon glyphicon-comment">&nbsp</i>
     <% end %>
 
-    <% if current_user.can_delete_task(task.project) %>
+    <% if current_user.can_modify_task(task.project) %>
       <%= link_to project_task_path(task.project, task), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete task' do %>
-        <i class="glyphicon glyphicon-remove"></i>
+        <i class="glyphicon glyphicon-remove">&nbsp</i>
+      <% end %>
+
+      <%= link_to edit_project_task_path(task.project, task), title: 'Edit task' do %>
+        <i class="glyphicon glyphicon-edit "></i>
       <% end %>
     <% end %>
 

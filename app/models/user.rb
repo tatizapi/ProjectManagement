@@ -40,7 +40,7 @@ class User < ApplicationRecord
     true
   end
 
-  def can_delete_task(project)
+  def can_modify_task(project)
     false
   end
 
