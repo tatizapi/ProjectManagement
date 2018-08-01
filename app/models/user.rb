@@ -40,6 +40,10 @@ class User < ApplicationRecord
     true
   end
 
+  def can_delete_task(project)
+    false
+  end
+
 #employee --------------------------------------------------
   def can_see_all_employees
     false

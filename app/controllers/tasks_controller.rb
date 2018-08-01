@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :find_current_project, only: [:new, :create]
+  before_action :find_current_project, only: [:new, :create, :destroy]
 
   #for developers dropdown
   before_action :get_developers, only: [:new, :create]
@@ -21,7 +21,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def destroy
+    task = Task.find(params[:id])
+    task.destroy
+    redirect_to project_dashboard_index_path(@project)
+  end
+
   private
+
   def task_params
     params.require(:task).permit(:title, :description, :priority, {attachments: []},
                                   :project_id, :developers, :employee_id)

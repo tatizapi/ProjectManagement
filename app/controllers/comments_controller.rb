@@ -14,7 +14,6 @@ class CommentsController < ApplicationController
                                                 task_id: @task.id ))
     @comment.save
     redirect_to project_dashboard_index_path(@task.project_id)
-
   end
 
   private

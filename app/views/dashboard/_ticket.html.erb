@@ -38,6 +38,12 @@
         <i class="glyphicon glyphicon-comment">&nbsp</i>
     <% end %>
 
+    <% if current_user.can_delete_task(task.project) %>
+      <%= link_to project_task_path(task.project, task), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete task' do %>
+        <i class="glyphicon glyphicon-remove"></i>
+      <% end %>
+    <% end %>
+
     <% if current_user.can_change_status(@project, task) %>
 
       <%= link_to change_status_path(@project, :task_id => task.id),

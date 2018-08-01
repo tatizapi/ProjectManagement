@@ -13,6 +13,10 @@ class Admin < User
     true
   end
 
+  def can_delete_task(project)
+    true
+  end
+
 #employee --------------------------------------------------
   def can_see_all_employees
     true
