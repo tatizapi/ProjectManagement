@@ -1,4 +1,10 @@
 <% @comments.each do |comment| %>
   <b><%= comment.user.username %>:</b><br>
-  <%= comment.body %><br>
+  <%= comment.body %>
+  <% if current_user.can_delete_comment(comment) %>
+    <%= link_to task_comment_path(comment.task, comment), method: :delete,
+                data: { confirm: 'Are you sure?' }, title: 'Delete comment' do %>
+      <i class="glyphicon glyphicon-remove"></i>
+    <% end %>
+  <% end %><br>
 <% end %>

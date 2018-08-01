@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :get_current_task, only: [:index, :new, :create]
+  before_action :get_current_task, only: [:index, :new, :create, :destroy]
 
   def index
     @comments = @task.comments
@@ -13,6 +13,12 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params.merge(user_id: current_user.id,
                                                 task_id: @task.id ))
     @comment.save
+    redirect_to project_dashboard_index_path(@task.project_id)
+  end
+
+  def destroy
+    comment = Comment.find(params[:id])
+    comment.destroy
     redirect_to project_dashboard_index_path(@task.project_id)
   end
 

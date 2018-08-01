@@ -12,6 +12,10 @@ class Employee < User
     is_projectmanager(project)
   end
 
+  def can_delete_comment(comment)
+    self.id == comment.user_id
+  end
+
   def self.get_employees_filtered_by_role(employee_id)
     projects_projectmanager_role = []
     projects_developer_role = []

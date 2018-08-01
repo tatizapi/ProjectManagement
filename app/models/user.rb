@@ -44,6 +44,10 @@ class User < ApplicationRecord
     false
   end
 
+  def can_delete_comment(comment)
+    false
+  end
+
 #employee --------------------------------------------------
   def can_see_all_employees
     false
