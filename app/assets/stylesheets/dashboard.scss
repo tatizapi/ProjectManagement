@@ -34,3 +34,10 @@
 .panel-body a {
   margin-right: 15px;
 }
+
+
+//comments
+.comment-image:hover {
+  transform: scale(20);
+  z-index: 10;
+}

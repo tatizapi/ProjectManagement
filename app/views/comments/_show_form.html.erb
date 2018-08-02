@@ -1,16 +1,25 @@
 <% @comments.each do |comment| %>
+  <br>
   <b style="color:#167FD2"><%= comment.user.username %>:</b><br>
   <%= comment.body %>
-
-  <% comment.attachments.each do |attachment| %>
-    <br><%= link_to attachment.file.identifier, attachment.url, target: :_blank %>
-  <% end %>
-
   <% if current_user.can_delete_comment(comment) %>
     <%= link_to task_comment_path(comment.task, comment), class: 'right', method: :delete,
                 data: { confirm: 'Are you sure?' }, title: 'Delete comment' do %>
       <i class="glyphicon glyphicon-remove"></i>
     <% end %>
-  <% end %><br><br>
+  <% end %><br>
+
+  <% comment.attachments.each do |attachment| %>
+    <% if attachment.is_image %>
+      <%= image_tag(attachment.url, size: "25", alt: "broke", class: "comment-image") %>
+    <% end %>
+  <% end %><br>
+
+  <!-- necessary in order to show images first, then the other files -->
+  <% comment.attachments.each do |attachment| %>
+    <% unless attachment.is_image %>
+      <%= link_to attachment.file.identifier, attachment.url, target: :_blank %><br>
+    <% end %>
+  <% end %>
 
 <% end %>

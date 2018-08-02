@@ -47,4 +47,10 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  def is_image
+    extension = self.file.extension.downcase
+    %w(jpg jpeg gif png bmp).include?(extension)
+  end
+
 end

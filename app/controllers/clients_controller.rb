@@ -52,5 +52,5 @@ class ClientsController < ApplicationController
   def get_clients
     @clients = Client.all
   end
-  
+
 end
