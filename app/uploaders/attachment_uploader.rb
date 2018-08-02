@@ -49,8 +49,29 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # end
 
   def is_image
-    extension = self.file.extension.downcase
-    %w(jpg jpeg gif png bmp).include?(extension)
+    %w(jpg jpeg gif png bmp).include?(get_extension)
+  end
+
+  def is_video
+    %w(mp4 avi wmv mov).include?(get_extension)
+  end
+
+  def is_audio
+    %w(mp3 wma wav).include?(get_extension)
+  end
+
+  def is_pdf
+    %w(pdf).include?(get_extension)
+  end
+
+  def is_other
+    !is_image && !is_video && !is_audio && !is_pdf 
+  end
+
+  private
+
+  def get_extension
+    self.file.extension.downcase
   end
 
 end

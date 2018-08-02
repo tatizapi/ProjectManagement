@@ -26,5 +26,8 @@ Rails.application.routes.draw do
   #voiam doar ca o actiune din controller sa se execute in momentul in care se apasa pe un buton
   put '/projects/:id/dashboard/change_status' => 'dashboard#change_status', as: :change_status
 
+  #for downloading file in a task
+  get '/projects/:id/dashboard/:attachment' => 'dashboard#download', as: :download_file
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

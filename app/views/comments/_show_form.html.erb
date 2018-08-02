@@ -9,17 +9,37 @@
     <% end %>
   <% end %><br>
 
+  <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
   <% comment.attachments.each do |attachment| %>
-    <% if attachment.is_image %>
-      <%= image_tag(attachment.url, size: "25", alt: "broke", class: "comment-image") %>
-    <% end %>
-  <% end %><br>
-
-  <!-- necessary in order to show images first, then the other files -->
-  <% comment.attachments.each do |attachment| %>
-    <% unless attachment.is_image %>
-      <%= link_to attachment.file.identifier, attachment.url, target: :_blank %><br>
-    <% end %>
+    <% images.push(attachment) if attachment.is_image %>
+    <% audios.push(attachment) if attachment.is_audio %>
+    <% videos.push(attachment) if attachment.is_video %>
+    <% pdfs.push(attachment) if attachment.is_pdf %>
+    <% others.push(attachment) if attachment.is_other %>
   <% end %>
+
+  <% images.each do |image| %>
+    <%= image_tag(image.url, size: "25", alt: "broke", class: "comment-image") %>
+  <% end %>
+  <% unless images.empty? %> <br> <% end %>
+
+  <% audios.each do |audio| %>
+    <%= audio_tag(audio.url, controls: true, class: "comment-audio") %>
+  <% end %>
+
+  <% videos.each do |video| %>
+    <%= video_tag(video.url, controls: true, size: "330x250", class: "comment-video") %>
+  <% end %>
+  <% unless videos.empty? %> <br> <% end %>
+
+  <% pdfs.each do |pdf| %>
+    <%= link_to pdf.file.identifier, pdf.url, target: :_blank %><br>
+  <% end %>
+  <% unless pdfs.empty? %> <br> <% end %>
+
+  <% others.each do |other| %>
+    <%= link_to other.file.identifier, download_file_path(comment.task.project, other), target: :_blank %><br>
+  <% end %>
+
 
 <% end %>

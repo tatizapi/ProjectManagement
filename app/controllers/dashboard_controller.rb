@@ -38,6 +38,10 @@ class DashboardController < ApplicationController
     end
   end
 
+  def download
+    send_file "#{Rails.root}/public#{params[:attachment]}", disposition: 'attachment'
+  end
+
   private
 
   def find_current_project
