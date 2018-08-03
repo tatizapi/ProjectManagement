@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
   end
 
   def download
-    send_file "#{Rails.root}/public#{params[:attachment]}", disposition: 'attachment'
+    send_file "#{Rails.root}/public#{params[:attachment].gsub('%2B', '+')}", disposition: 'attachment'
   end
 
   private

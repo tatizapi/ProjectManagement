@@ -26,7 +26,7 @@
 
     <p>
       <% task.attachments.each do |attachment| %>
-        <%= link_to attachment.file.identifier, attachment.url, target: :_blank %><br>
+        <%= link_to attachment.get_original_filename, attachment.url, target: :_blank %><br>
       <% end %>
     </p>
 

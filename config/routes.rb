@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   put '/projects/:id/dashboard/change_status' => 'dashboard#change_status', as: :change_status
 
   #for downloading file in a task
-  get '/projects/:id/dashboard/:attachment' => 'dashboard#download', as: :download_file
+  get '/projects/:id/dashboard/:attachment' => 'dashboard#download', :constraints => {:attachment => /.*/ }, as: :download_file
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

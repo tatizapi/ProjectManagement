@@ -33,12 +33,12 @@
   <% unless videos.empty? %> <br> <% end %>
 
   <% pdfs.each do |pdf| %>
-    <%= link_to pdf.file.identifier, pdf.url, target: :_blank %><br>
+    <%= link_to pdf.get_original_filename, pdf.url, target: :_blank %><br>
   <% end %>
   <% unless pdfs.empty? %> <br> <% end %>
 
   <% others.each do |other| %>
-    <%= link_to other.file.identifier, download_file_path(comment.task.project, other), target: :_blank %><br>
+    <%= link_to other.get_original_filename, download_file_path(comment.task.project, other), target: :_blank %><br>
   <% end %>
 
 
