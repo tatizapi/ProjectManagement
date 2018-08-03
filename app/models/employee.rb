@@ -8,8 +8,9 @@ class Employee < User
     role.role == "projectmanager"
   end
 
-  def can_modify_task(project)
-    is_projectmanager(project)
+  def can_modify_task(project, task)
+    is_projectmanager(project) ||
+    (task.parent_id && task.find_parent.employee_id == self.id)
   end
 
   def can_delete_comment(comment)
@@ -60,7 +61,7 @@ class Employee < User
     Role.find_by(project_id: project.id, employee_id: self.id)
   end
 
-  def can_change_status(project, task)
+  def has_task(project, task)
     role = get_role(project)
 
     if self.id == task.employee_id && role.role == "developer" &&

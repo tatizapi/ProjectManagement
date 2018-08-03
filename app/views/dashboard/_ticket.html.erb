@@ -22,6 +22,10 @@
       </h6><br>
     <% end %>
 
+    <% if task.parent_id %>
+      <h5 style="color:#167FD2;">Derived from: <%= task.find_parent.title %></h5>
+    <% end %>
+
     <p><%= task.description %></p>
 
     <p>
@@ -38,7 +42,7 @@
         <i class="glyphicon glyphicon-comment"></i>
     <% end %>
 
-    <% if current_user.can_modify_task(task.project) %>
+    <% if current_user.can_modify_task(task.project, task) %>
       <%= link_to project_task_path(task.project, task), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete task' do %>
         <i class="glyphicon glyphicon-remove"></i>
       <% end %>
@@ -48,7 +52,10 @@
       <% end %>
     <% end %>
 
-    <% if current_user.can_change_status(@project, task) %>
+    <% if current_user.has_task(@project, task) %>
+      <%= link_to new_project_subtask_path(task.project, task.id), title: "Create subtask" do %>
+        <i class="glyphicon glyphicon-plus"></i>
+      <% end %>
 
       <%= link_to change_status_path(@project, :task_id => task.id),
               method: :put, remote: true, class: 'right' do %>
@@ -61,7 +68,6 @@
             <i class="glyphicon glyphicon-chevron-left"></i>
         <% end %>
       <% end %>
-
     <% end %>
 
     <% add_comment_form_id = "add-comment-form" + task.id.to_s %>

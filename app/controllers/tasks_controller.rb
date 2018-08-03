@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   before_action :setup_left_sidebar, only: [:new, :create, :edit, :update]
 
   def new
-    @task = Task.new
+    @task = Task.new(parent_id: params[:parent_id])
   end
 
   def create
@@ -43,7 +43,7 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :priority, {attachments: []},
-                                  :project_id, :developers, :employee_id)
+                                  :project_id, :developers, :employee_id, :parent_id)
   end
 
   def find_task_by_id

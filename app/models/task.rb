@@ -7,4 +7,10 @@ class Task < ApplicationRecord
   serialize :attachments, JSON
 
   validates :title, presence: true
+
+  def find_parent
+    puts self
+    Task.find(self.parent_id)
+  end
+
 end
