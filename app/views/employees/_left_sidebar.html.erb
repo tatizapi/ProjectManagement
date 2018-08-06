@@ -1,5 +1,5 @@
 <div class="sidenav">
-  <% if current_user.can_see_all_employees %>
+  <% if current_user.can_see_employees %>
     <% @employees.each do |employee| %>
       <%= link_to employee.full_name, employee_path(employee) %></a>
     <% end %>

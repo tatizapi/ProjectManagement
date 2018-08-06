@@ -1,9 +1,13 @@
 <div class="sidenav">
-  <% @clients.each do |client| %>
-    <%= link_to client.full_name, client_path(client) %></a>
+  <% if current_user.can_see_clients %>
+    <% @clients.each do |client| %>
+      <%= link_to client.full_name, client_path(client) %></a>
+    <% end %>
   <% end %>
 
-  <div class="footer">
-    <%= link_to 'Add new client', new_client_path %>
-  </div>
+  <% if current_user.can_modify_client %>
+    <div class="footer">
+      <%= link_to 'Add new client', new_client_path %>
+    </div>
+  <% end %>
 </div>

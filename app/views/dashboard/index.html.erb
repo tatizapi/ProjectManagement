@@ -3,7 +3,6 @@
 
 <div class="container-fluid">
   <%= form_with method: :get, :url => { :controller => "dashboard", :action => "index" } do |form| %>
-  <span style="color:#2196F3">Filter: </span>
     <%= form.select :filter, options_for_select(["All", "Only tasks", "Only bugs", "Only mine", "Only created by me"],
                                                 selected: "All") %>
     <%= form.submit("Filter") %>

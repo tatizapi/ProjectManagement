@@ -6,6 +6,7 @@ class ClientsController < ApplicationController
   end
 
   def show
+    get_client_projects
   end
 
   def new
@@ -51,6 +52,10 @@ class ClientsController < ApplicationController
 
   def get_clients
     @clients = Client.all
+  end
+
+  def get_client_projects
+    @projects = @client.projects
   end
 
 end

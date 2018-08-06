@@ -1,7 +1,7 @@
 class Admin < User
 
 #project ---------------------------------------------------
-  def can_see_all_projects
+  def can_see_projects
     true
   end
 
@@ -22,7 +22,7 @@ class Admin < User
   end
 
 #employee --------------------------------------------------
-  def can_see_all_employees
+  def can_see_employees
     true
   end
 
@@ -31,7 +31,7 @@ class Admin < User
   end
 
 #client -----------------------------------------------------
-  def can_see_all_clients
+  def can_see_clients
     true
   end
 

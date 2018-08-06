@@ -3,8 +3,6 @@ class DashboardController < ApplicationController
   before_action :get_project_tasks, only: [:index]
 
   def index
-
-
     #left sidebar
     case current_user.type
     when "Admin"
@@ -13,6 +11,8 @@ class DashboardController < ApplicationController
       @projects_projectmanager_role,
       @projects_developer_role,
       @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+    when 'Client'
+      get_client_projects
     end
   end
 
@@ -44,6 +44,10 @@ class DashboardController < ApplicationController
 
   def find_current_project
     @project = Project.find(params[:project_id])
+  end
+
+  def get_client_projects
+    @projects = Client.find(current_user.id).projects
   end
 
   def get_project_tasks

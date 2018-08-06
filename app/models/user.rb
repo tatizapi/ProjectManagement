@@ -28,7 +28,7 @@ class User < ApplicationRecord
   end
 
 #project ---------------------------------------------------
-  def can_see_all_projects
+  def can_see_projects
     false
   end
 
@@ -44,12 +44,16 @@ class User < ApplicationRecord
     false
   end
 
+  def has_task(project, task)
+    false
+  end
+
   def can_delete_comment(comment)
     false
   end
 
 #employee --------------------------------------------------
-  def can_see_all_employees
+  def can_see_employees
     false
   end
 
@@ -70,7 +74,7 @@ class User < ApplicationRecord
   end
 
 #client -----------------------------------------------------
-  def can_see_all_clients
+  def can_see_clients
     false
   end
 

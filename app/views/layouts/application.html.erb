@@ -20,9 +20,16 @@
           <ul class="nav navbar-nav navbar-right">
             <li>
               <% if current_user.can_see_his_profile %>
-                <%= link_to employee_path(current_user.id) do %>
-                  <i class="glyphicon glyphicon-user"><%= current_user.username %></i>
-                <% end %>
+                <% case current_user.type %>
+                <% when "Client" %>
+                  <%= link_to client_path(current_user) do %>
+                    <i class="glyphicon glyphicon-user"><%= current_user.username %></i>
+                  <% end %> <!-- link_to end -->
+                <% when "Employee" %>
+                  <%= link_to employee_path(current_user) do %>
+                    <i class="glyphicon glyphicon-user"><%= current_user.username %></i>
+                  <% end %> <!-- link_to end -->
+                <% end %> <!-- when end -->
               <% else %> <!-- if it's admin -->
                 <a><i class="glyphicon glyphicon-user"> admin</i></a>
               <% end %>

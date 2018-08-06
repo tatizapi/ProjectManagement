@@ -102,6 +102,10 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  def get_client_projects
+    @projects = Client.find(current_user.id).projects
+  end
+
   def get_employees
     @employees = Employee.all
   end
@@ -122,6 +126,8 @@ class ProjectsController < ApplicationController
       @projects_projectmanager_role,
       @projects_developer_role,
       @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+    when 'Client'
+      get_client_projects
     end
   end
 
