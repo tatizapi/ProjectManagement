@@ -29,7 +29,10 @@ class Task < ApplicationRecord
     else
       all
     end
+  end
 
+  def get_employee
+    Employee.find(self.employee_id)
   end
 
 end
