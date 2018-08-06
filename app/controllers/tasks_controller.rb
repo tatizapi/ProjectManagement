@@ -9,12 +9,14 @@ class TasksController < ApplicationController
   before_action :setup_left_sidebar, only: [:new, :create, :edit, :update]
 
   def new
-    @task = Task.new(parent_id: params[:parent_id])
+    @task = Task.new(owner: params[:owner], bug: params[:bug], parent_task: params[:parent_task])
+    get_task_developer #for dropdown when a bug is created
   end
 
   def create
     @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo",
-                      created_at: DateTime.current))
+                      created_at: DateTime.current, bug: params[:task][:bug],
+                      parent_task: params[:task][:parent_task]))
     if @task.save
       redirect_to project_dashboard_index_path(@project)
     else
@@ -43,7 +45,7 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :priority, {attachments: []},
-                                  :project_id, :developers, :employee_id, :parent_id)
+                                  :project_id, :developers, :employee_id, :owner, :bug)
   end
 
   def find_task_by_id
@@ -60,6 +62,10 @@ class TasksController < ApplicationController
 
   def get_projects
     @projects = Project.all
+  end
+
+  def get_task_developer
+    @developer = Employee.find(Task.find(params[:parent_task]).employee_id)
   end
 
   def setup_left_sidebar

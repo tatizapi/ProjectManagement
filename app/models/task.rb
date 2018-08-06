@@ -9,8 +9,7 @@ class Task < ApplicationRecord
   validates :title, presence: true
 
   def find_parent
-    puts self
-    Task.find(self.parent_id)
+    Task.find(self.parent_task)
   end
 
 end

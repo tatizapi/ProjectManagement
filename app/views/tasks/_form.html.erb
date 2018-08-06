@@ -1,5 +1,7 @@
 <%= form_with model: [@project, @task], local: true, class: 'form-horizontal' do |form| %>
-  <%= form.hidden_field :parent_id %>
+  <%= form.hidden_field :owner %>
+  <%= form.hidden_field :bug %>
+  <%= form.hidden_field :parent_task %>
 
   <% if @task.errors.any? %>
   <div id="error_explanation">
@@ -51,9 +53,13 @@
     <div class="form-group">
       <%= form.label 'Developer', class: 'control-label col-sm-1' %>
       <div class="col-sm-4">
-        <%= form.select :employee_id, options_from_collection_for_select(@developers, "id", "full_name", 1) %>
+        <% unless params[:bug] %>
+          <%= form.select :employee_id, options_from_collection_for_select(@developers, "id", "full_name", 1) %>
+        <% else %>
+          <%= form.select :employee_id, options_from_collection_for_select([@developer], "id", "full_name", 1) %>
+        <% end %>
+        </div>
       </div>
-    </div>
 
     <br>
     <div class="form-group">

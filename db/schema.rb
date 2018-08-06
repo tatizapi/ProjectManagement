@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_03_081751) do
+ActiveRecord::Schema.define(version: 2018_08_06_052218) do
 
   create_table "clients_projects", id: false, force: :cascade do |t|
     t.integer "client_id", null: false
@@ -52,7 +52,9 @@ ActiveRecord::Schema.define(version: 2018_08_03_081751) do
     t.datetime "ended_at"
     t.integer "employee_id"
     t.integer "project_id"
-    t.integer "parent_id"
+    t.boolean "bug"
+    t.integer "owner"
+    t.integer "parent_task"
     t.index ["employee_id"], name: "index_tasks_on_employee_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end

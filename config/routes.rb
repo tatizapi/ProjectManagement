@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get '/projects/:id/dashboard/:attachment' => 'dashboard#download', :constraints => {:attachment => /.*/ }, as: :download_file
 
   #for subtasks
-  get '/projects/:project_id/tasks/new/(:parent_id)' => 'tasks#new', as: :new_project_subtask
+  get '/projects/:project_id/tasks/new/(:owner)' => 'tasks#new', as: :new_project_subtask
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,4 +1,10 @@
-<div class="panel panel-info">
+<% if task.bug %>
+  <div class="panel panel-danger">
+<% elsif task.parent_task %>
+  <div class="panel panel-warning">
+<% else %>
+  <div class="panel panel-info">
+<% end %>
 
   <div class="panel-heading">
     <h5><b><%= task.title %></b></h5>
@@ -22,8 +28,12 @@
       </h6><br>
     <% end %>
 
-    <% if task.parent_id %>
-      <h5 style="color:#167FD2;">Derived from: <%= task.find_parent.title %></h5>
+    <% if task.owner %>
+      <% if task.bug %>
+        <h5 style="color:#167FD2;">From task: <%= task.find_parent.title %> </h5>
+      <% else %>
+        <h5 style="color:#167FD2;">Derived from: <%= task.find_parent.title %> </h5>
+      <% end %>
     <% end %>
 
     <p><%= task.description %></p>
@@ -53,7 +63,7 @@
     <% end %>
 
     <% if current_user.has_task(@project, task) %>
-      <%= link_to new_project_subtask_path(task.project, task.id), title: "Create subtask" do %>
+      <%= link_to new_project_subtask_path(@project, task.employee_id, :parent_task => task.id), title: "Create subtask" do %>
         <i class="glyphicon glyphicon-plus"></i>
       <% end %>
 
@@ -63,10 +73,14 @@
         <% end %>
 
       <% if current_user.is_tester(@project) %>
+        <%= link_to image_tag("bug.png", size: "19"), new_project_subtask_path(@project,
+                                  current_user.id, :parent_task => task.id, :bug => true) %>
+
         <%= link_to change_status_path(@project, :task_id => task.id, :set_todo => true),
             method: :put, remote: true, class: 'right' do %>
             <i class="glyphicon glyphicon-chevron-left"></i>
         <% end %>
+
       <% end %>
     <% end %>
 

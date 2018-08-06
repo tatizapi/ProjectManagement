@@ -10,7 +10,7 @@ class Employee < User
 
   def can_modify_task(project, task)
     is_projectmanager(project) ||
-    (task.parent_id && task.find_parent.employee_id == self.id)
+    (task.owner && task.owner == self.id)
   end
 
   def can_delete_comment(comment)
