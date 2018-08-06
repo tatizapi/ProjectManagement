@@ -1,0 +1,43 @@
+<table class="dashboard-table table table-borderless">
+  <thead>
+    <tr>
+      <th class="col-lg-3">TODO</th>
+      <th class="col-lg-3">In progress</th>
+      <th class="col-lg-3">Complete</th>
+      <th class="col-lg-3">Done</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <% @tasks.filter_by_status("todo").each do |task| %>
+          <div class="row">
+            <%= render partial: 'ticket', locals: {task: task} %>
+          </div>
+        <% end %>
+      </td>
+      <td>
+        <% @tasks.filter_by_status("inprogress").each do |task| %>
+          <div class="row">
+            <%= render partial: 'ticket', locals: {task: task} %>
+          </div>
+        <% end %>
+      </td>
+      <td>
+        <% @tasks.filter_by_status("complete").each do |task| %>
+          <div class="row">
+            <%= render partial: 'ticket', locals: {task: task} %>
+          </div>
+        <% end %>
+      </td>
+      <td>
+        <% @tasks.filter_by_status("done").each do |task| %>
+          <div class="row">
+            <%= render partial: 'ticket', locals: {task: task} %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

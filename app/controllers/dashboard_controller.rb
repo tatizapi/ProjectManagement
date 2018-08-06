@@ -1,11 +1,9 @@
 class DashboardController < ApplicationController
   before_action :find_current_project, only: [:index]
+  before_action :get_project_tasks, only: [:index]
 
   def index
-    @tasks_todo = @project.tasks.where(status: 'todo')
-    @tasks_inprogress = @project.tasks.where(status: 'inprogress')
-    @tasks_complete = @project.tasks.where(status: 'complete')
-    @tasks_done = @project.tasks.where(status: 'done')
+
 
     #left sidebar
     case current_user.type
@@ -46,6 +44,10 @@ class DashboardController < ApplicationController
 
   def find_current_project
     @project = Project.find(params[:project_id])
+  end
+
+  def get_project_tasks
+    @tasks = @project.tasks.filter(params[:filter], current_user.id)
   end
 
 end

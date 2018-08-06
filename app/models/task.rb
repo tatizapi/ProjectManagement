@@ -12,4 +12,24 @@ class Task < ApplicationRecord
     Task.find(self.parent_task)
   end
 
+  def self.filter_by_status(status)
+    where(status: status)
+  end
+
+  def self.filter(criteria, current_user_id)
+    case criteria
+    when "Only tasks"
+      where(bug: nil)
+    when "Only bugs"
+      where(bug: 1)
+    when "Only mine"
+      where(employee_id: current_user_id)
+    when "Only created by me"
+      where(owner: current_user_id)
+    else
+      all
+    end
+
+  end
+
 end

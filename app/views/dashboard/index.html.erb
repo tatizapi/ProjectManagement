@@ -2,46 +2,12 @@
 <%= render 'projects/tabs' %>
 
 <div class="container-fluid">
-  <table class="dashboard-table table table-borderless">
-    <thead>
-      <tr>
-        <th class="col-lg-3">TODO</th>
-        <th class="col-lg-3">In progress</th>
-        <th class="col-lg-3">Complete</th>
-        <th class="col-lg-3">Done</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <% @tasks_todo.each do |task| %>
-            <div class="row">
-              <%= render partial: 'ticket', locals: {task: task} %>
-            </div>
-          <% end %>
-        </td>
-        <td>
-          <% @tasks_inprogress.each do |task| %>
-            <div class="row">
-              <%= render partial: 'ticket', locals: {task: task} %>
-            </div>
-          <% end %>
-        </td>
-        <td>
-          <% @tasks_complete.each do |task| %>
-            <div class="row">
-              <%= render partial: 'ticket', locals: {task: task} %>
-            </div>
-          <% end %>
-        </td>
-        <td>
-          <% @tasks_done.each do |task| %>
-            <div class="row">
-              <%= render partial: 'ticket', locals: {task: task} %>
-            </div>
-          <% end %>
-        </td>
-      </tr>
+  <%= form_with method: :get, :url => { :controller => "dashboard", :action => "index" } do |form| %>
+  <span style="color:#2196F3">Filter: </span>
+    <%= form.select :filter, options_for_select(["All", "Only tasks", "Only bugs", "Only mine", "Only created by me"],
+                                                selected: "All") %>
+    <%= form.submit("Filter") %>
+  <% end %>
 
-    </tbody>
-  </table>
+  <div id="all-tasks"><%= render 'dashboard_table' %></div>
+</div>
