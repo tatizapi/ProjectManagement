@@ -1,12 +1,18 @@
 class ClientsController < ApplicationController
   before_action :find_client_by_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_clients, only: [:index, :show, :new, :create, :edit, :update]
+  before_action :get_clients, only: [:index, :new, :create, :edit, :update]
 
   def index
   end
 
   def show
-    get_client_projects
+    #for left sidebar
+    case current_user.type
+    when "Client"
+      get_client_projects
+    when "Admin"
+      get_clients
+    end
   end
 
   def new

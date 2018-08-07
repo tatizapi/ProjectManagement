@@ -8,9 +8,7 @@ class DashboardController < ApplicationController
     when "Admin"
       @projects = Project.all
     when "Employee"
-      @projects_projectmanager_role,
-      @projects_developer_role,
-      @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
     when 'Client'
       get_client_projects
     end
@@ -21,6 +19,8 @@ class DashboardController < ApplicationController
 
     case task.status
     when "todo"
+      #update_attributes
+      #task.update(:status => "inprogess", :started_at)
       task.update_column(:status, "inprogress")
       task.update_column(:started_at, Time.now)
     when "inprogress"

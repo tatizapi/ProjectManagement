@@ -34,5 +34,4 @@ class Task < ApplicationRecord
   def get_employee
     Employee.find(self.employee_id)
   end
-
 end

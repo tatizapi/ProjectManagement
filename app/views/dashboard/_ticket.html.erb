@@ -63,10 +63,12 @@
       <% end %>
     <% end %>
 
-    <% if current_user.has_task(@project, task) %>
-      <%= link_to new_project_subtask_path(@project, task.employee_id, :parent_task => task.id), title: "Create subtask" do %>
-        <i class="glyphicon glyphicon-plus"></i>
-      <% end %>
+    <% if current_user.has_task(@project, task)%>
+      <% unless current_user.is_tester(@project) %> <!-- tester can't create a subbug -->
+        <%= link_to new_project_subtask_path(@project, task.employee_id, :parent_task => task.id), title: "Create subtask" do %>
+          <i class="glyphicon glyphicon-plus"></i>
+        <% end %>
+      <% end %> <!-- end unless -->
 
       <%= link_to change_status_path(@project, :task_id => task.id),
               method: :put, remote: true, class: 'right' do %>
@@ -81,8 +83,8 @@
             method: :put, remote: true, class: 'right' do %>
             <i class="glyphicon glyphicon-chevron-left"></i>
         <% end %>
-
       <% end %>
+
     <% end %>
 
     <% add_comment_form_id = "add-comment-form" + task.id.to_s %>

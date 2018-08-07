@@ -65,7 +65,9 @@ class TasksController < ApplicationController
   end
 
   def get_task_developer
-    @developer = Employee.find(Task.find(params[:parent_task]).employee_id)
+    if params[:parent_task] #only when a subtask is created
+      @developer = Employee.find(Task.find(params[:parent_task]).employee_id)
+    end
   end
 
   def setup_left_sidebar
@@ -73,9 +75,7 @@ class TasksController < ApplicationController
     when 'Admin'
       get_projects
     when 'Employee'
-      @projects_projectmanager_role,
-      @projects_developer_role,
-      @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
     end
   end
 

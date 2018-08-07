@@ -1,12 +1,9 @@
 class ProjectsController < ApplicationController
-  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy,
-                                            :developers, :testers,
-                                            :manage_developers, :manage_testers]
+  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy, :developers, :testers, :manage_developers, :manage_testers]
   before_action :get_projects, only: [:new, :create, :edit, :update]
 
   #for project manager dropdown
-  before_action :get_employees, only: [:new, :create, :edit, :update,
-                                       :developers, :testers]
+  before_action :get_employees, only: [:new, :create, :edit, :update, :developers, :testers]
 
   #for clients check boxes
   before_action :get_clients, only: [:new, :create, :edit, :update]
@@ -59,17 +56,20 @@ class ProjectsController < ApplicationController
   end
 
   def developers
-    @available_employees = Employee.all - @project.get_testers - Array(@project.get_projectmanager)
+    #refactor
+    @available_employees = Employee.all - @project.get_testers.push(@project.get_projectmanager)
   end
 
   def testers
-    @available_employees = Employee.all - @project.get_developers - Array(@project.get_projectmanager)
+    #refactor
+    @available_employees = Employee.all - @project.get_developers - [@project.get_projectmanager]
   end
 
   def manage_developers
     destroy_existing_developers
 
-    if !params[:developer_ids].nil?
+    #can be better?
+    unless params[:developer_ids].nil?
       params[:developer_ids].each do |developer_id|
         @role = Role.new(developer_role_params(developer_id))
         @role.save
@@ -82,7 +82,8 @@ class ProjectsController < ApplicationController
   def manage_testers
     destroy_existing_testers
 
-    if !params[:tester_ids].nil?
+    #can be better?
+    unless params[:tester_ids].nil?
       params[:tester_ids].each do |tester_id|
         @role = Role.new(tester_role_params(tester_id))
         @role.save
@@ -123,9 +124,7 @@ class ProjectsController < ApplicationController
     when 'Admin'
       get_projects
     when 'Employee'
-      @projects_projectmanager_role,
-      @projects_developer_role,
-      @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
     when 'Client'
       get_client_projects
     end
@@ -148,7 +147,7 @@ class ProjectsController < ApplicationController
 
   def destroy_existing_developers
     @project.roles.each do |role|
-      if role.role == "developer"
+      if role.role == "developer" #is_developer? pe role model
         role.destroy
       end
     end

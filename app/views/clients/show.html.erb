@@ -4,8 +4,11 @@
 <div class="main">
     <div class="container-fluid">
       <div class="row">
+
         <% if !@client.attachment_url.nil? %>
-          <div class="col-md-2 col-lg-2" align="center"><%= image_tag @client.attachment_url, :size => "200x200", class: "img-circle img-responsive"%> </div>
+          <div class="col-md-2 col-lg-2" align="center">
+            <%= image_tag @client.attachment_url, :size => "200x200", class: "img-circle img-responsive"%>
+          </div>
         <% end %>
 
         <div class="col-md-9  col-lg-9">
@@ -46,7 +49,8 @@
           <%= link_to edit_client_path(@client), class: "btn btn-warning", title: 'Edit client' do %>
             <i class="glyphicon glyphicon-edit"></i>
           <% end %>
-          <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete client' do %>
+          <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' },
+                                            class: "btn btn-danger", title: 'Delete client' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
         <% end %>
