@@ -48,7 +48,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   end
 
   def get_original_filename
-    filename = self.file.identifier.split("+")
+    filename = file.identifier.split("+")
     filename[0]
   end
 
@@ -67,30 +67,30 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     model.instance_variable_get(media_original_filenames_var)[original_filename.to_sym]
   end
 
-  def is_image
+  def is_image?
     %w(jpg jpeg gif png bmp).include?(get_extension)
   end
 
-  def is_video
+  def is_video?
     %w(mp4 avi wmv mov).include?(get_extension)
   end
 
-  def is_audio
+  def is_audio?
     %w(mp3 wma wav).include?(get_extension)
   end
 
-  def is_pdf
+  def is_pdf?
     %w(pdf).include?(get_extension)
   end
 
-  def is_other
-    !is_image && !is_video && !is_audio && !is_pdf
+  def is_other?
+    !is_image? && !is_video? && !is_audio? && !is_pdf?
   end
 
   private
 
   def get_extension
-    self.file.extension.downcase
+    file.extension.downcase
   end
 
 end

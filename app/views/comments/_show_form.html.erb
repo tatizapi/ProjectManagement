@@ -10,11 +10,11 @@
 
   <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
   <% comment.attachments.each do |attachment| %>
-    <% images.push(attachment) if attachment.is_image %>
-    <% audios.push(attachment) if attachment.is_audio %>
-    <% videos.push(attachment) if attachment.is_video %>
-    <% pdfs.push(attachment) if attachment.is_pdf %>
-    <% others.push(attachment) if attachment.is_other %>
+    <% images.push(attachment) if attachment.is_image? %>
+    <% audios.push(attachment) if attachment.is_audio? %>
+    <% videos.push(attachment) if attachment.is_video? %>
+    <% pdfs.push(attachment) if attachment.is_pdf? %>
+    <% others.push(attachment) if attachment.is_other? %>
   <% end %>
 
   <% images.each do |image| %>

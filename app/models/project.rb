@@ -10,13 +10,13 @@ class Project < ApplicationRecord
   validates :title, presence: true
 
   def get_projectmanager
-     self.roles.where(:role => "projectmanager").take.employee
+     roles.where(:role => "projectmanager").take.employee
   end
 
   def get_developers
     developers =  []
 
-    self.roles.where(:role => "developer").each do |role|
+    roles.where(:role => "developer").each do |role|
       developers.push(role.employee)
     end
 
@@ -26,7 +26,7 @@ class Project < ApplicationRecord
   def get_testers
     testers = []
 
-    self.roles.where(:role => "tester").each do |role|
+    roles.where(:role => "tester").each do |role|
       testers.push(role.employee)
     end
 

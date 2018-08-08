@@ -9,7 +9,7 @@ class Task < ApplicationRecord
   validates :title, presence: true
 
   def find_parent
-    Task.find(self.parent_task)
+    Task.find(parent_task)
   end
 
   def self.filter_by_status(status)
@@ -32,7 +32,7 @@ class Task < ApplicationRecord
   end
 
   def get_employee
-    Employee.find(self.employee_id)
+    Employee.find(employee_id)
   end
 
   def get_owner

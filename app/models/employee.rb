@@ -40,7 +40,7 @@ class Employee < User
   end
 
   def can_modify_task?(project, task)
-    (task.status != "done") && (is_projectmanager?(project) || (task.owner && task.owner == self.id))
+    (task.status != "done") && (is_projectmanager?(project) || (task.owner && task.owner == id))
   end
 
   def can_add_bug?(project, task)
@@ -60,7 +60,7 @@ class Employee < User
   end
 
   def can_modify_comment?(comment)
-    self.id == comment.user_id
+    id == comment.user_id
   end
 
   def self.get_employees_filtered_by_role(employee_id)
@@ -85,7 +85,7 @@ class Employee < User
   end
 
   def get_role(project)
-    Role.find_by(project_id: project.id, employee_id: self.id) # ??
+    Role.find_by(project_id: project.id, employee_id: id) # ??
   end
 
 end
