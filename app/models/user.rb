@@ -29,92 +29,88 @@ class User < ApplicationRecord
   end
 
 #project ---------------------------------------------------
-  def can_see_projects
+  def can_see_projects?
     false
   end
 
-  def can_modify_project
+  def can_modify_project?
     false
   end
 
-  def can_see_project_roles
+  def can_see_project_roles?
     true
   end
 
 #task ------------------------------------------------------
-  def can_add_task
+  def can_add_task?
     false
   end
 
-  def can_add_subtask(task)
+  def can_add_subtask?(task)
     false
   end
 
-  def can_modify_task(project, task)
+  def can_modify_task?(project, task)
     false
   end
 
-  def can_add_bug(project, task)
+  def can_add_bug?(project, task)
     false
   end
 
-  def can_send_task_back(project, task)
+  def can_send_task_back?(project, task)
     false
   end
 
-  def can_send_task_forward(project, task)
-    false
-  end
-
-  def has_task(project, task)
+  def can_send_task_forward?(project, task)
     false
   end
 
 #comment ---------------------------------------------------
-  def can_add_and_see_comments
+  def can_add_and_see_comments?
     true
   end
 
-  def can_modify_comment(comment)
+  def can_modify_comment?(comment)
     false
   end
 
 #employee --------------------------------------------------
-  def can_see_employees
+  def can_see_employees?
     false
   end
 
-  def can_modify_employee
+  def can_modify_employee?
     false
   end
 
-  def is_projectmanager(project)
+  def is_projectmanager?(project)
     false
   end
 
-  def is_tester(project)
+  def is_tester?(project)
     false
   end
 
-  def is_developer(project)
+  def is_developer?(project)
     false
   end
 
 #client -----------------------------------------------------
-  def can_see_clients
+  def can_see_clients?
     false
   end
 
-  def can_modify_client
+  def can_modify_client?
     false
   end
 
 #others ----------------------------------------------------
-  def can_see_his_profile
+  def can_see_his_profile?
     true
   end
 
-  def can_see_dashboard
+  def can_see_dashboard?
     true
   end
 

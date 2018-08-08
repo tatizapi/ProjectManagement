@@ -3,8 +3,7 @@
   <% if @project.errors.any? %>
   <div id="error_explanation">
     <h2>
-      <%= pluralize(@project.errors.count, "error") %> prohibited
-      this project from being saved:
+      <%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:
     </h2>
     <ul>
       <% @project.errors.full_messages.each do |msg| %>
@@ -50,8 +49,7 @@
     <div class="form-group">
       <%= form.label 'Clients', class: 'control-label col-sm-1' %>
       <div class="col-sm-4">
-        <%= form.collection_check_boxes :client_ids, @clients, :id, :full_name,
-                                          { include_hidden: false } do |client| %>
+        <%= form.collection_check_boxes :client_ids, @clients, :id, :full_name, { include_hidden: false } do |client| %>
           <div class="collection-check-box">
             <%= client.check_box %>
             <%= client.label %>

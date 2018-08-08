@@ -37,7 +37,7 @@
             </tbody>
           </table>
 
-          <% if current_user.can_modify_employee %>
+          <% if current_user.can_modify_employee? %>
             <%= link_to edit_employee_path(@employee), class: "btn btn-warning", title: 'Edit employee' do %>
               <i class="glyphicon glyphicon-edit"></i>
             <% end %>

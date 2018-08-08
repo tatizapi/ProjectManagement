@@ -34,7 +34,7 @@
 
   <% @employees.each do |employee| %>
     <div class="collection-check-box">
-      <% if employee.is_developer(@project) %>
+      <% if employee.is_developer?(@project) %>
         <%= form.check_box :developers, checked: true %>
       <% else %>
         <%= form.check_box :developers %>
@@ -56,10 +56,3 @@
   <% end %>
 
     <%= video_tag(video.url, controls: true, class: "comment-video") %>
-
-
-
-
-
-
-

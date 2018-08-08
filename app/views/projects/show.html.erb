@@ -31,7 +31,7 @@
           </tr>
           <tr>
             <td><b>Developers:</b><br>
-              <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
+              <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
                 <%= link_to project_developers_path(@project), class: 'btn btn-success', title: 'Manage developers' do %>
                   <i class="glyphicon glyphicon-pencil"></i>
                 <% end %>
@@ -45,7 +45,7 @@
           </tr>
           <tr>
             <td><b>Testers:</b><br>
-              <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
+              <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
                 <%= link_to project_testers_path(@project), class: 'btn btn-success', title: 'Manage testers' do %>
                   <i class="glyphicon glyphicon-pencil"></i>
                 <% end %>
@@ -61,15 +61,14 @@
             <td><b>Attachments:</b></td>
             <td>
               <% @project.attachments.each do |attachment| %>
-                <%= link_to attachment.get_original_filename, attachment.url,
-                              target: :_blank %><br>
+                <%= link_to attachment.get_original_filename, attachment.url, target: :_blank %><br>
               <% end %>
             </td>
           </tr>
         </tbody>
       </table>
 
-        <% if current_user.can_modify_project %>
+        <% if current_user.can_modify_project? %>
           <%= link_to edit_project_path(@project), class: 'btn btn-warning', title: 'Edit project' do %>
             <i class="glyphicon glyphicon-edit"></i>
           <% end %>
@@ -78,7 +77,7 @@
           <% end %>
         <% end %>
 
-        <% if current_user.can_modify_project || current_user.is_projectmanager(@project) %>
+        <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
           <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info', title: 'Add task' do %>
             <i class="glyphicon glyphicon-list-alt"></i>
           <% end %>

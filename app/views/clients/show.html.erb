@@ -45,12 +45,11 @@
             </tbody>
           </table>
 
-        <% if current_user.can_modify_client %>
+        <% if current_user.can_modify_client? %>
           <%= link_to edit_client_path(@client), class: "btn btn-warning", title: 'Edit client' do %>
             <i class="glyphicon glyphicon-edit"></i>
           <% end %>
-          <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' },
-                                            class: "btn btn-danger", title: 'Delete client' do %>
+          <%= link_to client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", title: 'Delete client' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
         <% end %>

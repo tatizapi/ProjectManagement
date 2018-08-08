@@ -46,7 +46,7 @@
     </p>
 
     <!-- BOTTOM BUTTONS -->
-    <% if current_user.can_add_and_see_comments %>
+    <% if current_user.can_add_and_see_comments? %>
       <%= link_to task_comments_path(task), remote: true, :title => "Show comments" do %>
           <i class="glyphicon glyphicon-align-left"></i>
       <% end %>
@@ -55,17 +55,17 @@
       <% end %>
     <% end %>
 
-    <% if current_user.can_add_subtask(task) %>
+    <% if current_user.can_add_subtask?(task) %>
       <%= link_to new_project_subtask_path(@project, task.employee_id, :parent_task => task.id), title: "Create subtask" do %>
         <i class="glyphicon glyphicon-plus"></i>
       <% end %>
     <% end %>
 
-    <% if current_user.can_add_bug(@project, task) %>
+    <% if current_user.can_add_bug?(@project, task) %>
       <%= link_to image_tag("bug.png", size: "18"), new_project_subtask_path(@project, current_user.id, :parent_task => task.id, :bug => true) %>
     <% end %>
 
-    <% if current_user.can_modify_task(@project, task) %>
+    <% if current_user.can_modify_task?(@project, task) %>
       <%= link_to edit_project_task_path(task.project, task), title: 'Edit task' do %>
         <i class="glyphicon glyphicon-edit "></i>
       <% end %>
@@ -75,13 +75,13 @@
       <% end %>
     <% end %>
 
-    <% if current_user.can_send_task_forward(@project, task) %>
+    <% if current_user.can_send_task_forward?(@project, task) %>
       <%= link_to change_status_path(@project, task), method: :put, remote: true, class: 'right' do %>
           <i class="glyphicon glyphicon-chevron-right"></i>
       <% end %>
     <% end %>
 
-    <% if current_user.can_send_task_back(@project, task) %>
+    <% if current_user.can_send_task_back?(@project, task) %>
       <%= link_to change_status_path(@project, task, :back => true), method: :put, remote: true, class: 'right' do %>
           <i class="glyphicon glyphicon-chevron-left"></i>
       <% end %>

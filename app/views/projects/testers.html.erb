@@ -4,10 +4,9 @@
 <%= form_with :url => { :controller => "projects", :action => "manage_testers" } do |form| %>
   <h2>Manage testers</h2>
   <h4>Check to add and uncheck to delete testers from the project</h4>
-  <%= form.collection_check_boxes :tester_ids, @available_employees, :id, :full_name,
-       { include_hidden: false } do |f| %>
+  <%= form.collection_check_boxes :tester_ids, @available_employees, :id, :full_name, { include_hidden: false } do |f| %>
     <div class="collection-check-box">
-    <% if f.object.is_tester(@project) %>
+    <% if f.object.is_tester?(@project) %>
       <%= f.check_box(checked: true) %>
       <% else %>
       <%= f.check_box %>

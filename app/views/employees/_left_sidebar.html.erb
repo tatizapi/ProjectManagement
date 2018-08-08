@@ -1,11 +1,11 @@
 <div class="sidenav">
-  <% if current_user.can_see_employees %>
+  <% if current_user.can_see_employees? %>
     <% @employees.each do |employee| %>
       <%= link_to employee.full_name, employee_path(employee) %></a>
     <% end %>
   <% end %>
 
-  <% if current_user.can_modify_employee %>
+  <% if current_user.can_modify_employee? %>
     <div class="footer">
       <%= link_to 'Add new employee', new_employee_path %>
     </div>

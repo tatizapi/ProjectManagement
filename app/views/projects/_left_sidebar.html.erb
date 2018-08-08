@@ -1,17 +1,17 @@
 <div class="sidenav">
-  <% if current_user.can_see_projects %>
+  <% if current_user.can_see_projects? %>
     <% @projects.each do |project| %>
       <%= link_to project.title, project_path(project) %>
     <% end %>
   <% end %>
 
-  <% if current_user.can_modify_project %>
+  <% if current_user.can_modify_project? %>
     <div class="footer">
       <%= link_to 'Add new project', new_project_path %>
     </div>
   <% end %>
 
-  <% if current_user.can_see_project_roles %>
+  <% if current_user.can_see_project_roles? %>
     <h3>Project manager</h3>
     <% @projects_projectmanager_role.each do |project| %>
       <%= link_to project.title, project_path(project.id) %>

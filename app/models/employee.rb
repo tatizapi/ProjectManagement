@@ -3,12 +3,12 @@ class Employee < User
   has_many :projects, :through => :roles
   has_many :tasks
 
-  def is_projectmanager(project)
+  def is_projectmanager?(project)
     role = get_role(project)
     role.role == "projectmanager"
   end
 
-  def is_developer(project)
+  def is_developer?(project)
     puts "was employee tester"
     role = get_role(project)
 
@@ -19,7 +19,7 @@ class Employee < User
     end
   end
 
-  def is_tester(project)
+  def is_tester?(project)
     puts "was employee tester"
     role = get_role(project)
 
@@ -31,35 +31,35 @@ class Employee < User
   end
 
 #task --------------------------------------------------------------------------
-  def can_add_task(project)
-    is_projectmanager(project)
+  def can_add_task?(project)
+    is_projectmanager?(project)
   end
 
-  def can_add_subtask(task)
+  def can_add_subtask?(task)
     (task.employee_id == id) && (task.status != "complete") && (task.status != "done")
   end
 
-  def can_modify_task(project, task)
-    (task.status != "done") && (is_projectmanager(project) || (task.owner && task.owner == self.id))
+  def can_modify_task?(project, task)
+    (task.status != "done") && (is_projectmanager?(project) || (task.owner && task.owner == self.id))
   end
 
-  def can_add_bug(project, task)
-    (is_tester(project)) && (task.status == "complete") && (!task.bug)
+  def can_add_bug?(project, task)
+    (is_tester?(project)) && (task.status == "complete") && (!task.bug)
   end
 
-  def can_send_task_back(project, task)
-    (is_developer(project) && has_task(task) && (task.status == "inprogress" || task.status == "complete")) || (is_tester(project) && (task.status == "complete" || task.status == "done"))
+  def can_send_task_back?(project, task)
+    (is_developer?(project) && has_task?(task) && (task.status == "inprogress" || task.status == "complete")) || (is_tester?(project) && (task.status == "complete" || task.status == "done"))
   end
 
-  def can_send_task_forward(project, task)
-    (is_developer(project) && has_task(task) && (task.status == "todo" || task.status == "inprogress")) || (is_tester(project) && task.status == "complete")
+  def can_send_task_forward?(project, task)
+    (is_developer?(project) && has_task?(task) && (task.status == "todo" || task.status == "inprogress")) || (is_tester?(project) && task.status == "complete")
   end
 
-  def has_task(task)
+  def has_task?(task)
     task.employee_id == id
   end
 
-  def can_modify_comment(comment)
+  def can_modify_comment?(comment)
     self.id == comment.user_id
   end
 
