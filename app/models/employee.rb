@@ -68,18 +68,16 @@ class Employee < User
     projects_developer_role = []
     projects_tester_role = []
 
-    # get all from database + 3 ifs
-    Employee.find(employee_id).roles.where(:role => "projectmanager").each do |role|
-      projects_projectmanager_role.push(role.project)
-    end
-
-    Employee.find(employee_id).roles.where(:role => "developer").each do |role|
-      projects_developer_role.push(role.project)
-    end
-
-    Employee.find(employee_id).roles.where(:role => "tester").each do |role|
-      projects_tester_role.push(role.project)
-    end
+    Employee.find(employee_id).roles.each do |role|
+      case role.role
+      when "projectmanager"
+        projects_projectmanager_role.push(role.project)
+      when "developer"
+        projects_developer_role.push(role.project)
+      when "tester"
+        projects_tester_role.push(role.project)
+      end
+    end 
 
     return projects_projectmanager_role, projects_developer_role, projects_tester_role
   end
