@@ -17,6 +17,16 @@
     <% if user_signed_in? %>
       <nav class="navbar navbar-default">
         <div class="container-fluid">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              <!-- can be better -->
+              <% if current_user.type == "Admin" %>
+                <%= link_to image_tag("home.png", size: "30"), admin_index_path %>
+              <% else %>
+                <%= link_to image_tag("home.png", size: "30"), projects_path %>
+              <% end %>
+            </li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
               <% if current_user.can_see_his_profile %>

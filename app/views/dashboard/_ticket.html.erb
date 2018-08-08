@@ -70,17 +70,14 @@
         <% end %>
       <% end %> <!-- end unless -->
 
-      <%= link_to change_status_path(@project, :task_id => task.id),
-              method: :put, remote: true, class: 'right' do %>
+      <%= link_to change_status_path(@project, :task_id => task.id), method: :put, remote: true, class: 'right' do %>
           <i class="glyphicon glyphicon-chevron-right"></i>
         <% end %>
 
       <% if current_user.is_tester(@project) %>
-        <%= link_to image_tag("bug.png", size: "19"), new_project_subtask_path(@project,
-                                  current_user.id, :parent_task => task.id, :bug => true) %>
+        <%= link_to image_tag("bug.png", size: "19"), new_project_subtask_path(@project, current_user.id, :parent_task => task.id, :bug => true) %>
 
-        <%= link_to change_status_path(@project, :task_id => task.id, :set_todo => true),
-            method: :put, remote: true, class: 'right' do %>
+        <%= link_to change_status_path(@project, :task_id => task.id, :set_todo => true), method: :put, remote: true, class: 'right' do %>
             <i class="glyphicon glyphicon-chevron-left"></i>
         <% end %>
       <% end %>

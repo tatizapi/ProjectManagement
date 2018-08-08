@@ -39,7 +39,7 @@ class Admin < User
     true
   end
 
-
+#others ----------------------------------------------------
   def can_see_his_profile
     false
   end
