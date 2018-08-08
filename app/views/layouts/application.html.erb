@@ -19,7 +19,7 @@
         <div class="container-fluid">
           <ul class="nav navbar-nav navbar-left">
             <li>
-              <!-- can be better -->
+              <!-- can be better? -->
               <% if current_user.type == "Admin" %>
                 <%= link_to image_tag("home.png", size: "30"), admin_index_path %>
               <% else %>

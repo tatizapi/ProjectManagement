@@ -48,7 +48,6 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   end
 
   def get_original_filename
-    puts self.file.identifier
     filename = self.file.identifier.split("+")
     filename[0]
   end

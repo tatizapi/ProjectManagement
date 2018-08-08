@@ -2,7 +2,7 @@
   <br>
   <b style="color:#167FD2"><%= comment.user.username %>:</b><br>
   <%= comment.body %>
-  <% if current_user.can_delete_comment(comment) %>
+  <% if current_user.can_modify_comment(comment) %>
     <%= link_to task_comment_path(comment.task, comment), class: 'right', method: :delete,
                 data: { confirm: 'Are you sure?' }, title: 'Delete comment' do %>
       <i class="glyphicon glyphicon-remove"></i>

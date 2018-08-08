@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 
   #not sure this is the right way to do it
   #voiam doar ca o actiune din controller sa se execute in momentul in care se apasa pe un buton
-  put '/projects/:id/dashboard/change_status' => 'dashboard#change_status', as: :change_status
+  put '/projects/:project_id/dashboard/change_status/:task_id' => 'dashboard#change_status', as: :change_status
 
   #for downloading file in a task
   get '/projects/:id/dashboard/:attachment' => 'dashboard#download', :constraints => {:attachment => /.*/ }, as: :download_file

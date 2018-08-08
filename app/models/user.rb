@@ -41,7 +41,28 @@ class User < ApplicationRecord
     true
   end
 
+#task ------------------------------------------------------
+  def can_add_task
+    false
+  end
+
+  def can_add_subtask(task)
+    false
+  end
+
   def can_modify_task(project, task)
+    false
+  end
+
+  def can_add_bug(project, task)
+    false
+  end
+
+  def can_send_task_back(project, task)
+    false
+  end
+
+  def can_send_task_forward(project, task)
     false
   end
 
@@ -49,7 +70,12 @@ class User < ApplicationRecord
     false
   end
 
-  def can_delete_comment(comment)
+#comment ---------------------------------------------------
+  def can_add_and_see_comments
+    true
+  end
+
+  def can_modify_comment(comment)
     false
   end
 

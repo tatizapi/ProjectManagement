@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :find_current_project, only: [:index]
+  before_action :find_current_project, only: [:index, :change_status]
   before_action :get_project_tasks, only: [:index]
 
   def index
@@ -19,20 +19,22 @@ class DashboardController < ApplicationController
 
     case task.status
     when "todo"
-      #update_attributes
-      #task.update(:status => "inprogess", :started_at)
-      task.update_column(:status, "inprogress")
-      task.update_column(:started_at, Time.now)
+      #started_at is set only once, first time it goes to "inprogress"
+      task.started_at.nil? ? task.update(status: "inprogress", started_at: Time.now) : task.update(status: "inprogress")
     when "inprogress"
-      task.update_column(:status, "complete")
-      task.update_column(:completed_at, Time.now)
+      params[:back] ? status = "todo" : status = "complete"
+      status == "complete" ? task.update(status: status, completed_at: Time.now) : task.update(status: status)
     when "complete"
-      if params[:set_todo]
-        task.update_column(:status, "todo")
+      if params[:back] && current_user.is_developer(@project)
+        status = "inprogress"
+      elsif params[:back] && current_user.is_tester(@project)
+        status = "todo"
       else
-        task.update_column(:status, "done")
-        task.update_column(:ended_at, Time.now)
+        status = "done"
       end
+      status == "done" ? task.update(status: status, ended_at: Time.now) : task.update(status: status)
+    when "done"
+      task.update(status: "complete")
     end
   end
 

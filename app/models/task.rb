@@ -34,4 +34,13 @@ class Task < ApplicationRecord
   def get_employee
     Employee.find(self.employee_id)
   end
+
+  def get_owner
+    Employee.find(owner)
+  end
+
+  def get_project
+    Project.find(project_id)
+  end
+
 end

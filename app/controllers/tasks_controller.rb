@@ -14,9 +14,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo",
-                      created_at: DateTime.current, bug: params[:task][:bug],
-                      parent_task: params[:task][:parent_task]))
+    @task = Task.new(task_params.merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, bug: params[:task][:bug], parent_task: params[:task][:parent_task]))
     if @task.save
       redirect_to project_dashboard_index_path(@project)
     else
@@ -44,8 +42,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :priority, {attachments: []},
-                                  :project_id, :developers, :employee_id, :owner, :bug)
+    params.require(:task).permit(:title, :description, :priority, {attachments: []}, :project_id, :developers, :employee_id, :owner, :bug)
   end
 
   def find_task_by_id

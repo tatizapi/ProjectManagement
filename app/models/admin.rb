@@ -9,15 +9,37 @@ class Admin < User
     true
   end
 
-  def has_task(project, task)
+#task ------------------------------------------------------
+  def can_add_task(project)
     true
+  end
+
+  def can_add_subtask(task)
+    task.status == "todo" || task.status == "inprogress"
   end
 
   def can_modify_task(project, task)
     true
   end
 
-  def can_delete_comment(comment)
+  def can_add_bug(project, task)
+    task.status == "complete" && !task.bug
+  end
+
+  def can_send_task_back(project, task)
+    task.status != "todo"
+  end
+
+  def can_send_task_forward(project, task)
+    task.status != "done"
+  end
+
+  def has_task(project, task)
+    true
+  end
+
+#comment ---------------------------------------------------
+  def can_modify_comment(comment)
     true
   end
 

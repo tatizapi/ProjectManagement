@@ -9,6 +9,7 @@ class Employee < User
   end
 
   def is_developer(project)
+    puts "was employee tester"
     role = get_role(project)
 
     if role.nil?
@@ -19,6 +20,7 @@ class Employee < User
   end
 
   def is_tester(project)
+    puts "was employee tester"
     role = get_role(project)
 
     if role.nil?
@@ -28,11 +30,36 @@ class Employee < User
     end
   end
 
-  def can_modify_task(project, task)
-    is_projectmanager(project) || (task.owner && task.owner == self.id)
+#task --------------------------------------------------------------------------
+  def can_add_task(project)
+    is_projectmanager(project)
   end
 
-  def can_delete_comment(comment)
+  def can_add_subtask(task)
+    (task.employee_id == id) && (task.status != "complete") && (task.status != "done")
+  end
+
+  def can_modify_task(project, task)
+    (task.status != "done") && (is_projectmanager(project) || (task.owner && task.owner == self.id))
+  end
+
+  def can_add_bug(project, task)
+    (is_tester(project)) && (task.status == "complete") && (!task.bug)
+  end
+
+  def can_send_task_back(project, task)
+    (is_developer(project) && has_task(task) && (task.status == "inprogress" || task.status == "complete")) || (is_tester(project) && (task.status == "complete" || task.status == "done"))
+  end
+
+  def can_send_task_forward(project, task)
+    (is_developer(project) && has_task(task) && (task.status == "todo" || task.status == "inprogress")) || (is_tester(project) && task.status == "complete")
+  end
+
+  def has_task(task)
+    task.employee_id == id
+  end
+
+  def can_modify_comment(comment)
     self.id == comment.user_id
   end
 
@@ -59,16 +86,6 @@ class Employee < User
 
   def get_role(project)
     Role.find_by(project_id: project.id, employee_id: self.id) # ??
-  end
-
-  def has_task(project, task)
-    role = get_role(project)
-
-    if ((id == task.employee_id) && (role.role == "developer") && (task.status == "todo" || task.status == "inprogress")) || ((role.role == "tester") && (task.status == "complete"))
-      return true
-    end
-
-    false # sau nil ?
   end
 
 end
