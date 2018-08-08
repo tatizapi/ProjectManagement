@@ -25,7 +25,7 @@ class DashboardController < ApplicationController
       params[:back] ? status = "todo" : status = "complete"
       status == "complete" ? task.update(status: status, completed_at: Time.now) : task.update(status: status)
     when "complete"
-      if params[:back] && current_user.is_developer(@project)
+      if params[:back] && (current_user.is_developer(@project) || current_user.type == "Admin" )
         status = "inprogress"
       elsif params[:back] && current_user.is_tester(@project)
         status = "todo"
