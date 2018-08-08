@@ -37,7 +37,15 @@ class User < ApplicationRecord
     false
   end
 
+  def can_see_project_team?
+    true
+  end
+
   def can_see_project_roles?
+    true
+  end
+
+  def can_see_filter?
     true
   end
 

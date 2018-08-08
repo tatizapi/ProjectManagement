@@ -10,6 +10,14 @@ class Client < User
     true
   end
 
+  def can_see_project_team?
+    false
+  end
+
+  def can_see_filter?
+    false
+  end
+
   #task ------------------------------------------------------
 
   #comment ---------------------------------------------------
