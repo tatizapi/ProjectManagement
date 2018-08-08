@@ -147,7 +147,7 @@ class ProjectsController < ApplicationController
 
   def destroy_existing_developers
     @project.roles.each do |role|
-      if role.role == "developer" #is_developer? pe role model
+      if role.role == "developer" #is_developer? pe role model (de ce ar fi mai util asa tho?)
         role.destroy
       end
     end

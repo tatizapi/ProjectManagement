@@ -4,30 +4,15 @@ class Employee < User
   has_many :tasks
 
   def is_projectmanager?(project)
-    role = get_role(project)
-    role.role == "projectmanager"
+    get_role(project).role == "projectmanager"
   end
 
   def is_developer?(project)
-    puts "was employee tester"
-    role = get_role(project)
-
-    if role.nil?
-      return false
-    elsif role.role == "developer"
-      return true
-    end
+    get_role(project).role == "developer"
   end
 
   def is_tester?(project)
-    puts "was employee tester"
-    role = get_role(project)
-
-    if role.nil?
-      return false
-    elsif role.role == "tester"
-      return true
-    end
+    get_role(project).role == "tester"
   end
 
 #task --------------------------------------------------------------------------
@@ -63,6 +48,7 @@ class Employee < User
     id == comment.user_id
   end
 
+#others ------------------------------------------------------------------------
   def self.get_employees_filtered_by_role(employee_id)
     projects_projectmanager_role = []
     projects_developer_role = []
@@ -77,13 +63,13 @@ class Employee < User
       when "tester"
         projects_tester_role.push(role.project)
       end
-    end 
+    end
 
     return projects_projectmanager_role, projects_developer_role, projects_tester_role
   end
 
   def get_role(project)
-    Role.find_by(project_id: project.id, employee_id: id) # ??
+    Role.find_by(project_id: project.id, employee_id: id)
   end
 
 end
