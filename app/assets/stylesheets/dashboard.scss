@@ -58,5 +58,6 @@
 //comments
 .comment-image:hover {
   transform: scale(20);
+  transition-delay: 700ms;
   z-index: 10;
 }
