@@ -31,6 +31,10 @@ class Task < ApplicationRecord
     end
   end
 
+  def has_children?
+    subtasks = Task.where(parent_task: id).count != 0
+  end
+
   def get_employee
     Employee.find(employee_id)
   end

@@ -31,10 +31,14 @@
 
     <% if task.owner %>
       <% if task.bug %>
-        <h5 style="color:#167FD2;">From task: <%= task.find_parent.title %> </h5>
+        <h5 style="color:#167FD2;"><b>From task:</b> <%= task.find_parent.title %> </h5>
       <% else %>
-        <h5 style="color:#167FD2;">Derived from: <%= task.find_parent.title %> </h5>
+        <h5 style="color:#167FD2;"><b>Derived from:</b> <%= task.find_parent.title %> </h5>
       <% end %>
+    <% end %>
+
+    <% if task.has_children? %>
+      <h5 style="color:#167FD2;"><b>Has subtasks</b></h5>
     <% end %>
 
     <p><%= task.description %></p>
@@ -62,7 +66,7 @@
     <% end %>
 
     <% if current_user.can_add_bug?(@project, task) %>
-      <%= link_to image_tag("bug.png", size: "18"), new_project_subtask_path(@project, current_user.id, :parent_task => task.id, :bug => true) %>
+      <%= link_to image_tag("bug.png", size: "18"), new_project_subtask_path(@project, current_user.id, :parent_task => task.id, :bug => true, title: "Report a bug") %>
     <% end %>
 
     <% if current_user.can_modify_task?(@project, task) %>
@@ -76,13 +80,13 @@
     <% end %>
 
     <% if current_user.can_send_task_forward?(@project, task) %>
-      <%= link_to change_status_path(@project, task), method: :put, remote: true, class: 'right' do %>
+      <%= link_to change_status_path(@project, task), method: :put, remote: true, class: 'right', title: 'Go forward' do %>
           <i class="glyphicon glyphicon-chevron-right"></i>
       <% end %>
     <% end %>
 
     <% if current_user.can_send_task_back?(@project, task) %>
-      <%= link_to change_status_path(@project, task, :back => true), method: :put, remote: true, class: 'right' do %>
+      <%= link_to change_status_path(@project, task, :back => true), method: :put, remote: true, class: 'right', title: 'Go back' do %>
           <i class="glyphicon glyphicon-chevron-left"></i>
       <% end %>
     <% end %>
