@@ -1,13 +1,6 @@
 <%= render 'projects/left_sidebar' %>
-<%= render 'projects/tabs' %>
+<%= render 'tabs' %>
 
 <div class="container-fluid">
-  <% if current_user.can_see_filter? %>
-    <%= form_with method: :get, :url => { :controller => "dashboard", :action => "index" } do |form| %>
-      <%= form.select :filter, options_for_select(["All", "Only tasks", "Only bugs", "Only mine", "Only created by me"], selected: "All") %>
-      <%= form.submit("Filter") %>
-    <% end %>
-  <% end %>
-
   <div id="all-tasks"><%= render 'dashboard_table' %></div>
 </div>

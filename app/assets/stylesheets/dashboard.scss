@@ -2,7 +2,7 @@
 .dashboard-table th + th { border-left:2px solid #2196F3; }
 .dashboard-table td + td { border-left:2px solid #2196F3; }
 
-.dashboard-table th { text-align: center; color: #2196F3; font-size: 18px;}
+.dashboard-table th { text-align: center; font-size: 18px;}
 .dashboard-table td { text-align: center; }
 
 .dashboard-table { width: 100px; }
@@ -38,6 +38,22 @@
 .employee-avatar {
   border-radius: 50%;
 }
+
+//tabs
+.nav-tabs li a {
+  font-size:18px; color:#2196F3;
+}
+
+.btn-info {
+  float:right
+}
+
+.filter-form {
+  float: right;
+  margin-right: 20px;
+  color: #2196F3;
+}
+
 
 //comments
 .comment-image:hover {

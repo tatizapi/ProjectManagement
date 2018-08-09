@@ -1,0 +1,30 @@
+<div class="main">
+  <% if current_user.can_see_dashboard? %>
+    <ul class="nav nav-tabs">
+      <li><%= link_to 'Project details', project_path(@project) %></li>
+      <li><%= link_to 'Dashboard', project_dashboard_index_path(@project) %></li>
+
+      <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
+        <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info', title: 'New task' do %>
+          <i class="glyphicon glyphicon-list-alt"></i>
+        <% end %>
+      <% end %>
+
+      <%= form_with class: 'filter-form' do |form| %>
+        <%= form.label "Filter: " %>
+        <%= form.select :filter, options_for_select(["All", "Tasks", "Bugs", "Mine", "Created by me"], selected: "All") %>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <script>
+
+    $('#filter').change(function(){
+      $.ajax({
+        url: "dashboard",
+        type: "GET",
+        data: {"filter": $('#filter option:selected').val()}
+      })
+    });
+
+  </script>

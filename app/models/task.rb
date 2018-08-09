@@ -18,13 +18,13 @@ class Task < ApplicationRecord
 
   def self.filter(criteria, current_user_id)
     case criteria
-    when "Only tasks"
+    when "Tasks"
       where(bug: nil)
-    when "Only bugs"
+    when "Bugs"
       where(bug: 1)
-    when "Only mine"
+    when "Mine"
       where(employee_id: current_user_id)
-    when "Only created by me"
+    when "Created by me"
       where(owner: current_user_id)
     else
       all

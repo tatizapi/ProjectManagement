@@ -14,17 +14,17 @@
   <% if current_user.can_see_project_roles? %>
     <h3>Project manager</h3>
     <% @projects_projectmanager_role.each do |project| %>
-      <%= link_to project.title, project_path(project.id) %>
+      <%= link_to project.title, project_dashboard_index_path(project.id) %>
     <% end %>
 
     <h3>Developer</h3>
     <% @projects_developer_role.each do |project| %>
-      <%= link_to project.title, project_path(project.id) %>
+      <%= link_to project.title, project_dashboard_index_path(project.id) %>
     <% end %>
 
     <h3>Tester</h3>
     <% @projects_tester_role.each do |project| %>
-      <%= link_to project.title, project_path(project.id) %>
+      <%= link_to project.title, project_dashboard_index_path(project.id)%>
     <% end %>
   <% end %>
 </div>

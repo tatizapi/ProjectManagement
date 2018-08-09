@@ -1,5 +1,5 @@
 <%= render 'left_sidebar' %>
-<%= render 'tabs' %>
+<%= render 'dashboard/tabs' %>
 
 <div class="container-fluid">
   <div class="row">
@@ -76,12 +76,6 @@
           <% end %>
           <%= link_to project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'Delete project' do %>
             <i class="glyphicon glyphicon-remove"></i>
-          <% end %>
-        <% end %>
-
-        <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
-          <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info', title: 'Add task' do %>
-            <i class="glyphicon glyphicon-list-alt"></i>
           <% end %>
         <% end %>
 

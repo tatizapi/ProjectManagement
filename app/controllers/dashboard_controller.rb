@@ -1,16 +1,12 @@
 class DashboardController < ApplicationController
   before_action :find_current_project, only: [:index, :change_status]
+  before_action :setup_left_sidebar, only: [:index]
   before_action :get_project_tasks, only: [:index]
 
   def index
-    #left sidebar
-    case current_user.type
-    when "Admin"
-      @projects = Project.all
-    when "Employee"
-      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
-    when 'Client'
-      get_client_projects
+    respond_to do |format|
+       format.js
+       format.html
     end
   end
 
@@ -38,6 +34,10 @@ class DashboardController < ApplicationController
     end
   end
 
+  def change_filter
+    @tasks = @project.tasks.filter(params[:filter], current_user.id)
+  end
+
   def download
     send_file "#{Rails.root}/public#{params[:attachment].gsub('%2B', '+')}", disposition: 'attachment'
   end
@@ -54,6 +54,17 @@ class DashboardController < ApplicationController
 
   def get_project_tasks
     @tasks = @project.tasks.filter(params[:filter], current_user.id)
+  end
+
+  def setup_left_sidebar
+    case current_user.type
+    when "Admin"
+      @projects = Project.all
+    when "Employee"
+      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+    when 'Client'
+      get_client_projects
+    end
   end
 
 end
