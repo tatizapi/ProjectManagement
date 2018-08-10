@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(comment_params.merge(user_id: current_user.id, task_id: @task.id ))
+    @comment = Comment.new(comment_params.merge(user_id: current_user.id, task_id: @task.id))
     @comment.save
   end
 
@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
+    render 'create'
   end
 
   private

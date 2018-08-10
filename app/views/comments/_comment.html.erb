@@ -1,4 +1,5 @@
 <br>
+<small class='form-text text-muted' style='font-size:10px;'><%= comment.date_time %></small><br>
 <b style="color:#167FD2"><%= comment.user.username %>:</b>
 <% if current_user.can_modify_comment?(comment) %>
   <%= link_to task_comment_path(comment.task, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'right', title: 'Delete comment' do %>
