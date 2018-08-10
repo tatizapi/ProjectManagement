@@ -91,13 +91,13 @@
       <% end %>
     <% end %>
 
-    <% add_comment_form_id = "add-comment-form" + task.id.to_s %>
-    <div id=<%= add_comment_form_id %> style="display:none"></div>
-
-    <br>
-    <% show_comments_form_id = "show-comments-form" + task.id.to_s %>
-    <div id=<%= show_comments_form_id %> style="display:none" ></div>
+    <div id="new-comment-<%= task.id.to_s %>" style="display:none"></div>
+    <div id="all-comments-<%= task.id.to_s %>" style="display:none"></div>
 
    </div>
-
  </div>
+
+
+<script>
+
+</script>

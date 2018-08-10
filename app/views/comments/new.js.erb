@@ -1,8 +1,8 @@
-var add_comment_form_id = '#add-comment-form' + <%= @task.id %>
+var new_comment_id = '#new-comment-' + <%= @task.id %>
 
-if ($(add_comment_form_id).is(':visible')) {
-    $(add_comment_form_id).slideUp(350);
+if ($(new_comment_id).is(':visible')) {
+    $(new_comment_id).slideUp(350);
 } else {
-  $(add_comment_form_id).html("<%= j (render 'add_form') %>");
-  $(add_comment_form_id).slideDown(350);
+  $(new_comment_id).html("<%= j (render 'form') %>");
+  $(new_comment_id).slideDown(350);
 }

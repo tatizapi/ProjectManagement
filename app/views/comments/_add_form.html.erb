@@ -1,5 +1,0 @@
-<%= form_with model: [@task, @comment] do |form| %>
-  <%= form.text_area :body %><br>
-  <%= form.file_field :attachments, multiple: true %><br>
-  <%= form.submit("Submit") %>
-<% end %>
