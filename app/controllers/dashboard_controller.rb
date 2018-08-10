@@ -1,9 +1,13 @@
 class DashboardController < ApplicationController
   before_action :find_current_project, only: [:index, :change_status]
   before_action :setup_left_sidebar, only: [:index]
-  before_action :get_project_tasks, only: [:index]
+  before_action :get_project_tasks, only: [:index, :change_status]
 
   def index
+    #@filter here and in change_status is needed for keeping the filtering when forward and back actions are performed on a task
+    #not a solution i'm proud of but it works
+    @filter = params[:filter]
+
     respond_to do |format|
        format.js
        format.html
@@ -11,6 +15,7 @@ class DashboardController < ApplicationController
   end
 
   def change_status
+    @filter = params[:filter]
     task = Task.find(params[:task_id])
 
     case task.status
@@ -32,10 +37,6 @@ class DashboardController < ApplicationController
     when "done"
       task.update(status: "complete")
     end
-  end
-
-  def change_filter
-    @tasks = @project.tasks.filter(params[:filter], current_user.id)
   end
 
   def download

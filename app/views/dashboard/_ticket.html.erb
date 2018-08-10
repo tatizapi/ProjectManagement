@@ -80,13 +80,13 @@
     <% end %>
 
     <% if current_user.can_send_task_forward?(@project, task) %>
-      <%= link_to change_status_path(@project, task), method: :put, remote: true, class: 'right', title: 'Go forward' do %>
+      <%= link_to change_status_path(@project, task, :filter => @filter), method: :put, remote: true, class: 'right', title: 'Go forward' do %>
           <i class="glyphicon glyphicon-chevron-right"></i>
       <% end %>
     <% end %>
 
     <% if current_user.can_send_task_back?(@project, task) %>
-      <%= link_to change_status_path(@project, task, :back => true), method: :put, remote: true, class: 'right', title: 'Go back' do %>
+      <%= link_to change_status_path(@project, task, :filter => @filter, :back => true), method: :put, remote: true, class: 'right', title: 'Go back' do %>
           <i class="glyphicon glyphicon-chevron-left"></i>
       <% end %>
     <% end %>
