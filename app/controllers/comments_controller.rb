@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
-  before_action :get_current_task, only: [:index, :new, :create, :destroy]
-  before_action :get_task_comments, only: [:index, :create, :destroy]
+  before_action :get_current_task, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_action :get_task_comments, only: [:index, :create, :update, :destroy]
+  before_action :get_comment_by_id, only: [:edit, :update, :destroy]
 
   def index
   end
@@ -14,9 +15,16 @@ class CommentsController < ApplicationController
     @comment.save
   end
 
+  def edit
+  end
+
+  def update
+    @comment.update(comment_params)
+    render 'create'
+  end
+
   def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy
+    @comment.destroy
   end
 
   private
@@ -25,12 +33,15 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body, {attachments: []})
   end
 
-  def get_task_comments
-    @comments = @task.comments
+  def get_comment_by_id
+    @comment = Comment.find(params[:id])
   end
 
   def get_current_task
     @task = Task.find(params[:task_id])
   end
 
+  def get_task_comments
+    @comments = @task.comments
+  end
 end

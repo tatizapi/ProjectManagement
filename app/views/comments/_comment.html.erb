@@ -1,11 +1,15 @@
 <br>
-<b style="color:#167FD2"><%= comment.user.username %>:</b><br>
-<%= comment.body %>
+<b style="color:#167FD2"><%= comment.user.username %>:</b>
 <% if current_user.can_modify_comment?(comment) %>
   <%= link_to task_comment_path(comment.task, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'right', title: 'Delete comment' do %>
     <i class="glyphicon glyphicon-remove"></i>
   <% end %>
+  <%= link_to edit_task_comment_path(comment.task, comment), remote: true, class: 'right', title: 'Edit comment' do %>
+    <i class="glyphicon glyphicon-edit "></i>
+  <% end %>
 <% end %><br>
+<%= comment.body %><br>
+
 
 <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
 <% comment.attachments.each do |attachment| %>
