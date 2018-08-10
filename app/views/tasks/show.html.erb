@@ -1,0 +1,116 @@
+<%= render 'projects/left_sidebar' %>
+
+<div class="main">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-7 col-lg-7">
+
+        <table class="table table-user-information">
+          <tbody>
+            <tr>
+              <td><b>Title:<b></td>
+              <td><%= @task.title.capitalize %></td>
+            </tr>
+            <tr>
+              <td><b>Description:</b></td>
+              <td><%= @task.description.capitalize %></td>
+            </tr>
+            <tr>
+              <td><b>Assigned to:</b></td>
+              <td><%= @task.get_employee.full_name %></td>
+            </tr>
+            <tr>
+              <td><b>Created by:</b></td>
+              <% if @task.owner %>
+                <td><%= @task.get_owner.full_name %></td>
+              <% else %>
+                <td><%= @task.project.get_projectmanager.full_name %> (project manager) </td>
+              <% end %>
+            </tr>
+            <tr>
+              <td><b>Priority:</b></td>
+              <td><%= @task.priority.capitalize %></td>
+            </tr>
+            <tr>
+              <td><b>Status:</b></td>
+              <td><%= @task.status.capitalize %></td>
+            </tr>
+            <tr>
+              <td><b>Created at:</b></td>
+              <td><%= @task.created_at.strftime("%d %^b, %H:%M") unless @task.created_at.nil? %></td>
+            </tr>
+            <tr>
+              <td><b>Started at:</b></td>
+              <td><%= @task.started_at.strftime("%d %^b, %H:%M") unless @task.started_at.nil? %></td>
+            </tr>
+            <tr>
+              <td><b>Completed at:</b></td>
+              <td><%= @task.completed_at.strftime("%d %^b, %H:%M") unless @task.completed_at.nil? %></td>
+            </tr>
+            <tr>
+              <td><b>Ended at:</b></td>
+              <td><%= @task.ended_at.strftime("%d %^b, %H:%M") unless @task.ended_at.nil? %></td>
+            </tr>
+            <tr>
+              <% if @task.parent_task && @task.bug %>
+                <td><b>From task:</b></td>
+                <td><%= @task.get_parent.title %>
+              <% elsif @task.parent_task && !@task.bug %>
+                <td><b>Derived from:</b></td>
+                <td><%= @task.get_parent.title %>
+              <% end %>
+            </tr>
+            <tr>
+              <% if @task.has_children? %>
+                <td><b>Children:</b></td>
+                <td>
+                  <% @task.get_children.each do |children| %>
+                    <%= link_to children.title, project_task_path(@task.project, children) %><br>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+            <tr>
+              <td><b>Attachments:</b></td>
+              <td>
+                <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
+                <% @task.attachments.each do |attachment| %>
+                  <% images.push(attachment) if attachment.is_image? %>
+                  <% audios.push(attachment) if attachment.is_audio? %>
+                  <% videos.push(attachment) if attachment.is_video? %>
+                  <% pdfs.push(attachment) if attachment.is_pdf? %>
+                  <% others.push(attachment) if attachment.is_other? %>
+                <% end %>
+
+                <% images.each do |image| %>
+                  <%= image_tag(image.url, size: "25", alt: "broke", class: "comment-image") %>
+                <% end %>
+                <% unless images.empty? %> <br> <% end %>
+
+                <% audios.each do |audio| %>
+                  <%= audio_tag(audio.url, controls: true, class: "comment-audio") %>
+                <% end %>
+                <% unless audios.empty? %> <br> <% end %>
+
+                <% videos.each do |video| %>
+                  <%= video_tag(video.url, controls: true, size: "330x250", class: "comment-video") %>
+                <% end %>
+                <% unless videos.empty? %> <br> <% end %>
+
+                <% pdfs.each do |pdf| %>
+                  <%= link_to pdf.get_original_filename, pdf.url, target: :_blank %><br>
+                <% end %>
+                <% unless pdfs.empty? %> <br> <% end %>
+
+                <% others.each do |other| %>
+                  <%= link_to other.get_original_filename, download_file_path(comment.task.project, other), target: :_blank %><br>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

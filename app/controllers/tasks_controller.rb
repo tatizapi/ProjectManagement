@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
-  before_action :find_task_by_id, only: [:edit, :update, :destroy]
+  before_action :find_task_by_id, only: [:show, :edit, :update, :destroy]
   before_action :find_current_project, only: [:new, :create, :destroy, :edit, :update]
 
   #for developers dropdown
   before_action :get_developers, only: [:new, :create, :edit, :update]
 
   #index and show are common for admin and employee
-  before_action :setup_left_sidebar, only: [:new, :create, :edit, :update]
+  before_action :setup_left_sidebar, only: [:new, :create, :show, :edit, :update]
 
   def new
     @task = Task.new(owner: params[:owner], bug: params[:bug], parent_task: params[:parent_task])
@@ -22,8 +22,10 @@ class TasksController < ApplicationController
     end
   end
 
-  def edit
+  def show
+  end
 
+  def edit
   end
 
   def update

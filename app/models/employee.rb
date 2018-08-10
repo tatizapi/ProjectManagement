@@ -8,11 +8,15 @@ class Employee < User
   end
 
   def is_developer?(project)
-    get_role(project).role == "developer"
+    unless get_role(project).nil? #can be nil actually, see developers, at checkbox
+      get_role(project).role == "developer"
+    end
   end
 
   def is_tester?(project)
-    get_role(project).role == "tester"
+    unless get_role(project).nil? #can be nil actually, see testers, at checkbox
+      get_role(project).role == "tester"
+    end
   end
 
 #task --------------------------------------------------------------------------

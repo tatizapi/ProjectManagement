@@ -20,9 +20,9 @@
             <li>
               <!-- can be better? -->
               <% if current_user.type == "Admin" %>
-                <%= link_to image_tag("home.png", size: "30"), admin_index_path %>
+                <%= link_to image_tag("home.png", size: "35"), admin_index_path %>
               <% else %>
-                <%= link_to image_tag("home.png", size: "30"), projects_path %>
+                <%= link_to image_tag("home.png", size: "35"), projects_path %>
               <% end %>
             </li>
           </ul>

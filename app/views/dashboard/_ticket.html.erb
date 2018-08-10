@@ -7,7 +7,7 @@
 <% end %>
 
   <div class="panel-heading">
-    <h5><b><%= task.title %></b></h5>
+    <h5><b><%= link_to task.title, project_task_path(@project, task) %></b></h5>
     <%= image_tag(task.get_employee.attachment.url, size: "30", alt: "broke", class: 'employee-avatar') %>
     <h6 class="task-time"><%= task.created_at.strftime("%d %^b, %H:%M") %><br></h6>
   </div>
@@ -31,9 +31,9 @@
 
     <% if task.owner %>
       <% if task.bug %>
-        <h5 style="color:#167FD2;"><b>From task:</b> <%= task.find_parent.title %> </h5>
+        <h5 style="color:#167FD2;"><b>From task:</b> <%= task.get_parent.title %> </h5>
       <% else %>
-        <h5 style="color:#167FD2;"><b>Derived from:</b> <%= task.find_parent.title %> </h5>
+        <h5 style="color:#167FD2;"><b>Derived from:</b> <%= task.get_parent.title %> </h5>
       <% end %>
     <% end %>
 
@@ -42,12 +42,6 @@
     <% end %>
 
     <p><%= task.description %></p>
-
-    <p>
-      <% task.attachments.each do |attachment| %>
-        <%= link_to attachment.get_original_filename, attachment.url, target: :_blank %><br>
-      <% end %>
-    </p>
 
     <!-- BOTTOM BUTTONS -->
     <% if current_user.can_add_and_see_comments? %>

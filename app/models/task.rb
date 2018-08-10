@@ -8,10 +8,6 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
 
-  def find_parent
-    Task.find(parent_task)
-  end
-
   def self.filter_by_status(status)
     where(status: status)
   end
@@ -32,7 +28,15 @@ class Task < ApplicationRecord
   end
 
   def has_children?
-    subtasks = Task.where(parent_task: id).count != 0
+    Task.where(parent_task: id).count != 0
+  end
+
+  def get_parent
+    Task.find(parent_task)
+  end
+
+  def get_children
+    Task.where(parent_task: id)
   end
 
   def get_employee
