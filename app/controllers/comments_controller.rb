@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :get_current_task, only: [:index, :new, :create, :destroy]
-  before_action :get_task_comments, only: [:index, :create]
+  before_action :get_task_comments, only: [:index, :create, :destroy]
 
   def index
   end
@@ -17,7 +17,6 @@ class CommentsController < ApplicationController
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy
-    redirect_to project_dashboard_index_path(@task.project_id)
   end
 
   private
