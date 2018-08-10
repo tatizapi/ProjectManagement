@@ -1,42 +1,40 @@
-<% @comments.each do |comment| %>
-  <br>
-  <b style="color:#167FD2"><%= comment.user.username %>:</b><br>
-  <%= comment.body %>
-  <% if current_user.can_modify_comment?(comment) %>
-    <%= link_to task_comment_path(comment.task, comment), class: 'right', method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete comment' do %>
-      <i class="glyphicon glyphicon-remove"></i>
-    <% end %>
-  <% end %><br>
-
-  <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
-  <% comment.attachments.each do |attachment| %>
-    <% images.push(attachment) if attachment.is_image? %>
-    <% audios.push(attachment) if attachment.is_audio? %>
-    <% videos.push(attachment) if attachment.is_video? %>
-    <% pdfs.push(attachment) if attachment.is_pdf? %>
-    <% others.push(attachment) if attachment.is_other? %>
+<br>
+<b style="color:#167FD2"><%= comment.user.username %>:</b><br>
+<%= comment.body %>
+<% if current_user.can_modify_comment?(comment) %>
+  <%= link_to task_comment_path(comment.task, comment), class: 'right', method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete comment' do %>
+    <i class="glyphicon glyphicon-remove"></i>
   <% end %>
+<% end %><br>
 
-  <% images.each do |image| %>
-    <%= image_tag(image.url, size: "25", alt: "broke", class: "comment-image") %>
-  <% end %>
-  <% unless images.empty? %> <br> <% end %>
+<% images, audios, videos, pdfs, others = [], [], [], [], [] %>
+<% comment.attachments.each do |attachment| %>
+  <% images.push(attachment) if attachment.is_image? %>
+  <% audios.push(attachment) if attachment.is_audio? %>
+  <% videos.push(attachment) if attachment.is_video? %>
+  <% pdfs.push(attachment) if attachment.is_pdf? %>
+  <% others.push(attachment) if attachment.is_other? %>
+<% end %>
 
-  <% audios.each do |audio| %>
-    <%= audio_tag(audio.url, controls: true, class: "comment-audio") %>
-  <% end %>
+<% images.each do |image| %>
+  <%= image_tag(image.url, size: "25", alt: "broke", class: "comment-image") %>
+<% end %>
+<% unless images.empty? %> <br> <% end %>
 
-  <% videos.each do |video| %>
-    <%= video_tag(video.url, controls: true, size: "330x250", class: "comment-video") %>
-  <% end %>
-  <% unless videos.empty? %> <br> <% end %>
+<% audios.each do |audio| %>
+  <%= audio_tag(audio.url, controls: true, class: "comment-audio") %>
+<% end %>
 
-  <% pdfs.each do |pdf| %>
-    <%= link_to pdf.get_original_filename, pdf.url, target: :_blank %><br>
-  <% end %>
-  <% unless pdfs.empty? %> <br> <% end %>
+<% videos.each do |video| %>
+  <%= video_tag(video.url, controls: true, size: "330x250", class: "comment-video") %>
+<% end %>
+<% unless videos.empty? %> <br> <% end %>
 
-  <% others.each do |other| %>
-    <%= link_to other.get_original_filename, download_file_path(comment.task.project, other), target: :_blank %><br>
-  <% end %>
+<% pdfs.each do |pdf| %>
+  <%= link_to pdf.get_original_filename, pdf.url, target: :_blank %><br>
+<% end %>
+<% unless pdfs.empty? %> <br> <% end %>
+
+<% others.each do |other| %>
+  <%= link_to other.get_original_filename, download_file_path(comment.task.project, other), target: :_blank %><br>
 <% end %>

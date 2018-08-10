@@ -3,6 +3,6 @@ var all_comments_id = '#all-comments-' + <%= @task.id %>
 if ($(all_comments_id).is(':visible')) {
     $(all_comments_id).slideUp(350);
 } else {
-  $(all_comments_id).html("<%= j (render 'comment') %>");
+  $(all_comments_id).html("<%= j (render @comments) %>");
   $(all_comments_id).slideDown(350);
 }
