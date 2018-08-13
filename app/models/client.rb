@@ -19,6 +19,13 @@ class Client < User
   end
 
   #task ------------------------------------------------------
+  def can_see_task_employee?
+    false
+  end
+
+  def can_see_task_details?
+    false
+  end
 
   #comment ---------------------------------------------------
   def can_add_and_see_comments?

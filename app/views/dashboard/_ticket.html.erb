@@ -7,8 +7,14 @@
 <% end %>
 
   <div class="panel-heading">
-    <h5><b><%= link_to task.title, project_task_path(@project, task) %></b></h5>
-    <%= image_tag(task.get_employee.attachment.url, size: "30", alt: "broke", class: 'employee-avatar') %>
+    <% if current_user.can_see_task_details? %>
+      <h5><b><%= link_to task.title, project_task_path(@project, task) %></b></h5>
+    <% else %>
+      <h5><b><%= task.title %></b></h5>
+    <% end %>
+    <% if current_user.can_see_task_employee? %>
+      <%= image_tag(task.get_employee.attachment.url, size: "30", alt: "broke", class: 'employee-avatar') %>
+    <% end %>
     <h6 class="task-time"><%= task.created_at.strftime("%d %^b, %H:%M") %><br></h6>
   </div>
 

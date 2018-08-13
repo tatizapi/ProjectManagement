@@ -10,9 +10,11 @@
         <% end %>
       <% end %>
 
-      <%= form_with class: 'filter-form' do |form| %>
-        <%= form.label "Filter: " %>
-        <%= form.select :filter, options_for_select(["All", "Tasks", "Bugs", "Mine", "Created by me"], selected: "All") %>
+      <% if current_user.can_see_filter? %>
+        <%= form_with class: 'filter-form' do |form| %>
+          <%= form.label "Filter: " %>
+          <%= form.select :filter, options_for_select(["All", "Tasks", "Bugs", "Mine", "Created by me"], selected: "All") %>
+        <% end %>
       <% end %>
     </ul>
   <% end %>

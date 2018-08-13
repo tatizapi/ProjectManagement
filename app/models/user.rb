@@ -74,6 +74,14 @@ class User < ApplicationRecord
     false
   end
 
+  def can_see_task_employee?
+    true
+  end
+
+  def can_see_task_details?
+    true
+  end
+
 #comment ---------------------------------------------------
   def can_add_and_see_comments?
     true
