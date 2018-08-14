@@ -63,7 +63,11 @@
             <td><b>Attachments:</b></td>
             <td>
               <% @project.attachments.each do |attachment| %>
-                <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>
+                <% if attachment.file.is_other? %>
+                  <%= link_to attachment.file.get_original_filename, download_file_path(@project, attachment.file), target: :_blank %><br>
+                <% else %>
+                  <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>
+                <% end %>
               <% end %>
             </td>
           </tr>
