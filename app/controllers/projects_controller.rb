@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy, :developers, :testers, :manage_developers, :manage_testers]
+  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy, :delete_attachment, :developers, :testers, :manage_developers, :manage_testers]
   before_action :get_projects, only: [:new, :create, :edit, :update]
 
   #for project manager dropdown
@@ -29,8 +29,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
-      permit_files
-      save_files(@project, params[:project][:files])
+      add_files
       add_projectmanager_role
       redirect_to project_path(@project)
     else
@@ -45,6 +44,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
+      add_files
       update_projectmanager_role
       redirect_to project_path(@project)
     else
@@ -55,6 +55,12 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     redirect_to projects_path
+  end
+
+  def delete_attachment
+    attachment = Attachment.find(params[:attachment_id])
+    attachment.destroy
+    redirect_to edit_project_path(@project)
   end
 
   def developers
@@ -134,6 +140,11 @@ class ProjectsController < ApplicationController
     when 'Client'
       get_client_projects
     end
+  end
+
+  def add_files
+    permit_files
+    save_files(@project, params[:project][:files])
   end
 
   def add_projectmanager_role
