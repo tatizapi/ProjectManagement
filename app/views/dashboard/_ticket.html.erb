@@ -13,7 +13,7 @@
       <h5><b><%= task.title %></b></h5>
     <% end %>
     <% if current_user.can_see_task_employee? %>
-      <%= image_tag(task.get_employee.attachment.url, size: "30", alt: "broke", class: 'employee-avatar') %>
+      <%= image_tag(task.get_employee.file.url, size: "30", alt: "broke", class: 'employee-avatar') %>
     <% end %>
     <h6 class="task-time"><%= task.created_at.strftime("%d %^b, %H:%M") %><br></h6>
   </div>

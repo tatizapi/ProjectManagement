@@ -1,0 +1,13 @@
+- Edit si delete pe attachments
+- atasmenturi afisate frumos la toate
+
+# new.js.erb
+
+$('#task-form').html("<%= j (render 'form') %>");
+$('#task-form').slideDown(350);
+
+# create.js.erb
+
+$('#tasks').html("<%= j (render @tasks) %>");
+$('#task-form').slideUp(350);
+

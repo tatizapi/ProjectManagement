@@ -46,7 +46,13 @@
     <div class="form-group">
       <%= form.label :attachments, class: 'control-label col-sm-1' %>
       <div class="col-sm-4">
-        <%= form.file_field :attachments, class: 'form-control-file', multiple: true  %>
+        <% @task.attachments.each do |attachment| %>
+          <%= link_to task_delete_attachment_path(@task, attachment), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
+            <i class="glyphicon glyphicon-remove"></i>
+          <% end %>
+          <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>
+        <% end %>
+        <%= form.file_field :files, class: 'form-control-file', multiple: true  %>
       </div>
     </div>
 

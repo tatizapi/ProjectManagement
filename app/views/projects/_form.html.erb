@@ -32,7 +32,7 @@
       <%= form.label :attachments, class: 'control-label col-sm-1' %>
       <div class="col-sm-4">
         <% @project.attachments.each do |attachment| %>
-          <%= link_to delete_attachment_path(@project, attachment), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
+          <%= link_to project_delete_attachment_path(@project, attachment), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
           <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>

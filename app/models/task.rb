@@ -3,8 +3,7 @@ class Task < ApplicationRecord
   belongs_to :employee
   belongs_to :project
 
-  mount_uploaders :attachments, AttachmentUploader
-  serialize :attachments, JSON
+  has_many :attachments, as: :container, dependent: :destroy
 
   validates :title, presence: true
 

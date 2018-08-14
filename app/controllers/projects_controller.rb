@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy, :delete_attachment, :developers, :testers, :manage_developers, :manage_testers]
+  before_action :find_project_by_id, only: [:show, :edit, :update, :destroy, :developers, :testers, :manage_developers, :manage_testers]
   before_action :get_projects, only: [:new, :create, :edit, :update]
 
   #for project manager dropdown
@@ -60,7 +60,7 @@ class ProjectsController < ApplicationController
   def delete_attachment
     attachment = Attachment.find(params[:attachment_id])
     attachment.destroy
-    redirect_to edit_project_path(@project)
+    redirect_to edit_project_path(Project.find(attachment.container_id))
   end
 
   def developers
