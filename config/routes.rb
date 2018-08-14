@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   #deleting attachments
   delete 'projects/:id/attachment/:attachment_id' => 'projects#delete_attachment', as: :project_delete_attachment
   delete 'tasks/:id/attachment/:attachment_id' => 'tasks#delete_attachment', as: :task_delete_attachment
+  delete 'tasks/:task_id/comments/:id/attachment/:attachment_id' => 'comments#delete_attachment', as: :comment_delete_attachment
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

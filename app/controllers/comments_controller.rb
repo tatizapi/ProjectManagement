@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
-  before_action :get_current_task, only: [:index, :new, :create, :edit, :update, :destroy]
-  before_action :get_task_comments, only: [:index, :create, :update, :destroy]
-  before_action :get_comment_by_id, only: [:edit, :update, :destroy]
+  before_action :get_current_task, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment]
+  before_action :get_task_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
+  before_action :get_comment_by_id, only: [:edit, :update, :destroy, :delete_attachment]
 
   def index
   end
@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params.merge(user_id: current_user.id, task_id: @task.id))
     @comment.save
+    add_files
   end
 
   def edit
@@ -20,6 +21,7 @@ class CommentsController < ApplicationController
 
   def update
     @comment.update(comment_params)
+    add_files
     render 'create'
   end
 
@@ -28,10 +30,20 @@ class CommentsController < ApplicationController
     render 'create'
   end
 
+  def delete_attachment
+    attachment = Attachment.find(params[:attachment_id])
+    attachment.destroy
+    render 'create'
+  end
+
   private
 
   def comment_params
-    params.require(:comment).permit(:body, {attachments: []})
+    params.require(:comment).permit(:body)
+  end
+
+  def permit_files
+    params.require(:comment).permit({files: []})
   end
 
   def get_comment_by_id
@@ -44,5 +56,10 @@ class CommentsController < ApplicationController
 
   def get_task_comments
     @comments = @task.comments
+  end
+
+  def add_files
+    permit_files
+    save_files(@comment, params[:comment][:files])
   end
 end

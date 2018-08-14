@@ -2,8 +2,7 @@ class Comment < ApplicationRecord
   belongs_to :task
   belongs_to :user
 
-  mount_uploaders :attachments, AttachmentUploader
-  serialize :attachments, JSON
+  has_many :attachments, as: :container, dependent: :destroy
 
   validates :body, presence: true
 
