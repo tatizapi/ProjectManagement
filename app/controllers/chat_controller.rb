@@ -3,7 +3,9 @@ class ChatController < ApplicationController
   before_action :get_current_project, only: [:index]
 
   def index
+  end
 
+  def create
   end
 
   private

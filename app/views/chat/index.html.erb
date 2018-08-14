@@ -23,11 +23,11 @@
     </div>
 
     <div class="panel-footer">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Type your message here..." />
-        <span class="input-group-btn">
-          <button class="btn btn-info"> Send</button>
-        </span>
+      <div class="input-group" style="width:100%">
+        <%= form_with do |form| %>
+          <%= form.text_field :body, class: "form-control", style: 'width: 95%', placeholder: "Type your message here..." %>
+          <%= form.submit "Send", class: "btn btn-info" %>
+        <% end %>
       </div>
     </div>
   </div>
