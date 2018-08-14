@@ -81,15 +81,6 @@ class TasksController < ApplicationController
     end
   end
 
-  def setup_left_sidebar
-    case current_user.type
-    when 'Admin'
-      get_projects
-    when 'Employee'
-      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
-    end
-  end
-
   def add_files
     permit_files
     save_files(@task, params[:task][:files])

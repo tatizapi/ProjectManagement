@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :find_project_by_id, only: [:show, :edit, :update, :destroy, :developers, :testers, :manage_developers, :manage_testers]
-  before_action :get_projects, only: [:new, :create, :edit, :update]
 
   #for project manager dropdown
   before_action :get_employees, only: [:new, :create, :edit, :update, :developers, :testers]
@@ -9,7 +8,7 @@ class ProjectsController < ApplicationController
   before_action :get_clients, only: [:new, :create, :edit, :update]
 
   #index and show are common for admin and employee
-  before_action :setup_left_sidebar, only: [:index, :show, :developers, :testers]
+  before_action :setup_left_sidebar, only: [:index, :show, :new, :create, :edit, :update, :developers, :testers]
 
 
   def index
@@ -115,10 +114,6 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-  def get_client_projects
-    @projects = Client.find(current_user.id).projects
-  end
-
   def get_employees
     @employees = Employee.all
   end
@@ -129,17 +124,6 @@ class ProjectsController < ApplicationController
 
   def get_clients
     @clients = Client.all
-  end
-
-  def setup_left_sidebar
-    case current_user.type
-    when 'Admin'
-      get_projects
-    when 'Employee'
-      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
-    when 'Client'
-      get_client_projects
-    end
   end
 
   def add_files

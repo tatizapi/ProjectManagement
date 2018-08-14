@@ -1,6 +1,17 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
+  def setup_left_sidebar
+    case current_user.type
+    when 'Admin'
+      @projects = Project.all
+    when 'Employee'
+      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
+    when 'Client'
+      @projects = Client.find(current_user.id).projects
+    end
+  end
+
   def save_files(container, files)
     if files
       files.each do |file|

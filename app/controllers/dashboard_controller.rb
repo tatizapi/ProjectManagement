@@ -49,23 +49,7 @@ class DashboardController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
-  def get_client_projects
-    @projects = Client.find(current_user.id).projects
-  end
-
   def get_project_tasks
     @tasks = @project.tasks.filter(params[:filter], current_user.id)
   end
-
-  def setup_left_sidebar
-    case current_user.type
-    when "Admin"
-      @projects = Project.all
-    when "Employee"
-      @projects_projectmanager_role, @projects_developer_role, @projects_tester_role = Employee.get_employees_filtered_by_role(current_user.id)
-    when 'Client'
-      get_client_projects
-    end
-  end
-
 end

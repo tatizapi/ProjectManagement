@@ -130,4 +130,7 @@ class User < ApplicationRecord
     true
   end
 
+  def can_see_chat?(project)
+    false
+  end
 end

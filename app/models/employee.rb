@@ -76,4 +76,8 @@ class Employee < User
     Role.find_by(project_id: project.id, employee_id: id)
   end
 
+  def can_see_chat?(project)
+    is_projectmanager?(project)
+  end
+
 end

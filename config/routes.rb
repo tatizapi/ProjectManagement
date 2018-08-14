@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks
     resources :dashboard, only: [:index]
+    resources :chat, only: [:index]
   end
   resources :employees
 

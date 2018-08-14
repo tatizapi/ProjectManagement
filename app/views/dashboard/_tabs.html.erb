@@ -4,9 +4,13 @@
       <li><%= link_to 'Project details', project_path(@project) %></li>
       <li><%= link_to 'Dashboard', project_dashboard_index_path(@project) %></li>
 
+      <% if current_user.can_see_chat?(@project) %>
+        <%= link_to image_tag("chat.png", size: "20"), project_chat_index_path(@project), class: 'btn btn-info', title: 'Open chat' %>
+      <% end %>
+
       <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
         <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info', title: 'New task' do %>
-          <i class="glyphicon glyphicon-list-alt"></i>
+          <i class="glyphicon glyphicon-tasks"></i>
         <% end %>
       <% end %>
 

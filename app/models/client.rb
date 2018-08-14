@@ -44,5 +44,8 @@ class Client < User
   end
 
   #others ----------------------------------------------------
+  def can_see_chat?(project)
+    true
+  end
 
 end
