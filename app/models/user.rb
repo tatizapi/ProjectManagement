@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum type: { User: 0, Admin: 1, Employee: 2, Client: 3}
+  enum type: { User: 0, Admin: 1, Employee: 2, Client: 3 }
 
   has_many :comments
 
@@ -7,7 +7,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :rememberable, :trackable#, :registerable, :validatable
 
-  mount_uploader :attachment, AttachmentUploader
+  mount_uploader :file, AttachmentUploader
 
   validates :first_name, presence: true
   validates :last_name, presence: true

@@ -4,8 +4,7 @@ class Project < ApplicationRecord
   has_many :employees, :through => :roles
   has_many :tasks, dependent: :destroy
 
-  mount_uploaders :attachments, AttachmentUploader
-  serialize :attachments, JSON
+  has_many :attachments, as: :container, dependent: :destroy
 
   validates :title, presence: true
 

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_10_102048) do
+ActiveRecord::Schema.define(version: 2018_08_14_055501) do
+
+  create_table "attachments", force: :cascade do |t|
+    t.string "filename"
+    t.string "file_type"
+    t.string "file"
+    t.string "container_type"
+    t.integer "container_id"
+    t.index ["container_type", "container_id"], name: "index_attachments_on_container_type_and_container_id"
+  end
 
   create_table "clients_projects", id: false, force: :cascade do |t|
     t.integer "client_id", null: false
@@ -78,7 +87,7 @@ ActiveRecord::Schema.define(version: 2018_08_10_102048) do
     t.text "last_name"
     t.string "country"
     t.string "company"
-    t.string "attachment"
+    t.string "file"
     t.string "function"
     t.integer "type"
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -5,9 +5,9 @@
     <div class="container-fluid">
       <div class="row">
 
-        <% if !@client.attachment_url.nil? %>
+        <% unless @client.file_url.nil? %>
           <div class="col-md-2 col-lg-2" align="center">
-            <%= image_tag @client.attachment_url, :size => "200x200", class: "img-circle img-responsive"%>
+            <%= image_tag @client.file_url, :size => "200x200", class: "img-circle img-responsive"%>
           </div>
         <% end %>
 

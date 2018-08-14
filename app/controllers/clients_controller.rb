@@ -48,8 +48,7 @@ class ClientsController < ApplicationController
   private
 
   def client_params
-    params.require(:client).permit(:first_name, :last_name, :username, :password,
-                                      :attachment, :email, :country, :company)
+    params.require(:client).permit(:first_name, :last_name, :username, :password, :file, :email, :country, :company)
   end
 
   def find_client_by_id

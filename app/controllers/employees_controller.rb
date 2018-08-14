@@ -41,8 +41,7 @@ class EmployeesController < ApplicationController
 
   private
   def employee_params
-    params.require(:employee).permit(:first_name, :last_name, :username,
-                                       :password, :email, :function, :attachment)
+    params.require(:employee).permit(:first_name, :last_name, :username, :password, :email, :function, :file)
   end
 
   def find_employee_by_id

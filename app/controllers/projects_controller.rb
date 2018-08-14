@@ -29,6 +29,8 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
+      permit_files
+      save_files(@project, params[:project][:files])
       add_projectmanager_role
       redirect_to project_path(@project)
     else
@@ -96,7 +98,11 @@ class ProjectsController < ApplicationController
 #-------------------------------------------------------------------------------
   private
   def project_params
-    params.require(:project).permit(:title, :description, {attachments: []}, client_ids:[])
+    params.require(:project).permit(:title, :description, client_ids:[])
+  end
+
+  def permit_files
+    params.require(:project).permit({files: []})
   end
 
   def find_project_by_id
