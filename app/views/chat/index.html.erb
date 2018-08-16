@@ -18,7 +18,7 @@
           <%= form_with model: @message, url: project_chat_index_path, method: :post do |form| %>
             <%= form.text_field :body, class: "form-control", id: "chat-text-input", style: 'width: 95%', placeholder: "Type your message here..." %>
             <%= form.submit "Send", class: "btn btn-info" %>
-            <% end %>
+          <% end %>
         <% end %>
       </div>
     </div>
