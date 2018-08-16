@@ -66,4 +66,7 @@ class Admin < User
     false
   end
 
+  def can_see_chat?(project)
+    true
+  end
 end

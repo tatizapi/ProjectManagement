@@ -80,4 +80,7 @@ class Employee < User
     is_projectmanager?(project)
   end
 
+  def can_chat?(project)
+    is_projectmanager?(project)
+  end
 end

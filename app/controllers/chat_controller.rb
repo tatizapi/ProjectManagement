@@ -1,6 +1,6 @@
 class ChatController < ApplicationController
   before_action :setup_left_sidebar, only: [:index]
-  before_action :get_current_project, only: [:index]
+  before_action :get_current_project, only: [:index, :create]
   before_action :get_messages, only: [:index, :create]
 
   def index
@@ -9,7 +9,7 @@ class ChatController < ApplicationController
 
   def create
     message = Message.new(message_params.merge(user_id: current_user.id, project_id: params[:project_id]))
-    message.save
+    message.save!
   end
 
   private
@@ -19,7 +19,8 @@ class ChatController < ApplicationController
   end
 
   def get_messages
-    @messages = Message.all
+    puts "current project is #{@project.title}"
+    @messages = @project.messages
   end
 
   def get_current_project

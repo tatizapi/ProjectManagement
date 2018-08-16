@@ -48,4 +48,8 @@ class Client < User
     true
   end
 
+  def can_chat?(project)
+    true
+  end
+
 end
