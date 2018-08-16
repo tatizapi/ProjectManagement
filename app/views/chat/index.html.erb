@@ -9,26 +9,20 @@
     </div>
 
     <div class="panel-body">
-      <div class="chat">
-        <%= image_tag("home.png", size: "50", alt: 'User Avatar', class: 'left-chat-avatar') %>
-        <small class="chat-time text-muted"><span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-        <p class="left-message" id="message-body">The first line of Lorem Ipsum comes from a line in section 1.10.32.</p>
-      </div>
-
-      <div class="chat">
-        <span class="chat-img pull-right"><%= image_tag("bug.png", size: "50", alt: 'User Avatar', class: 'chat-avatar') %></span>
-        <small class="chat-time text-muted pull-right"><span class="glyphicon glyphicon-time"></span>12 mins ago</small><br>
-        <p class="right-message pull-right" id="message-body">The first line of Lorem Ipsum comes from a line in section 1.10.32.</p>
-      </div>
+      <div id="messages"><%= render @messages %></div>
     </div>
 
     <div class="panel-footer">
       <div class="input-group" style="width:100%">
-        <%= form_with do |form| %>
-          <%= form.text_field :body, class: "form-control", style: 'width: 95%', placeholder: "Type your message here..." %>
+        <%= form_with model: @message, url: project_chat_index_path, method: :post do |form| %>
+          <%= form.text_field :body, class: "form-control", id: "chat-text-input", style: 'width: 95%', placeholder: "Type your message here..." %>
           <%= form.submit "Send", class: "btn btn-info" %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+$('.panel-body').scrollTop($('.panel-body')[0].scrollHeight);
+</script>

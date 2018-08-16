@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :roles, dependent: :destroy
   has_many :employees, :through => :roles
   has_many :tasks, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   has_many :attachments, as: :container, dependent: :destroy
 

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   enum type: { User: 0, Admin: 1, Employee: 2, Client: 3 }
 
   has_many :comments
+  has_many :messages, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

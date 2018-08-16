@@ -1,28 +1,35 @@
+.panel-body {
+  max-height: 700px;
+  overflow-y: scroll;
+}
+
 .left-message {
-  margin-left: 50px;
-  padding-left: 10px;
+  margin-left: 52px;
+  background-color: #F8F8F8;
+  color: #337ab7;
 }
 
 .right-message {
-  margin-left: 10px;
-  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #337ab7;
+  color: white;
+  //text-align: right; !!!
 }
 
 #message-body {
-  color: white;
   font-size: 16px;
-  background-color: #337ab7;
   border: 2px solid #337ab7;
   border-radius: 8px;
   width: 500px;
+  padding-left: 10px;
 }
 
-.left-chat-avatar {
+.chat-avatar-left {
   float: left;
-  margin-left: 0px;
-  padding-left: 0px;
+  border-radius: 50%;
 }
 
-ul {
-  text-decoration: none;
+.chat-avatar-right {
+  float: right;
+  border-radius: 50%;
 }
