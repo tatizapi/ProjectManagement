@@ -4,24 +4,22 @@
 }
 
 .left-message {
-  margin-left: 52px;
   background-color: #F8F8F8;
   color: #337ab7;
 }
 
 .right-message {
-  padding-right: 10px;
   background-color: #337ab7;
   color: white;
-  //text-align: right; !!!
 }
 
 #message-body {
   font-size: 16px;
   border: 2px solid #337ab7;
-  border-radius: 8px;
-  width: 500px;
+  border-radius: 10px;
+  //width: 500px;
   padding-left: 10px;
+  padding-right: 10px;
 }
 
 .chat-avatar-left {
