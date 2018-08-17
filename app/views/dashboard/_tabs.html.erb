@@ -4,15 +4,21 @@
       <li><%= link_to 'Project details', project_path(@project) %></li>
       <li><%= link_to 'Dashboard', project_dashboard_index_path(@project) %></li>
 
-      <% if current_user.can_see_chat?(@project) %>
-        <%= link_to image_tag("chat.png", size: "20"), project_chat_index_path(@project), class: 'btn btn-info', title: 'Open chat' %>
-      <% end %>
+      <div class="right-buttons-wrapper">
+        <%# if Message.unseen_messages_exists?(current_user, @project) %>
+          <!-- <div class="notification"></div> -->
+        <%# end %>
 
-      <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
-        <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info', title: 'New task' do %>
-          <i class="glyphicon glyphicon-tasks"></i>
+        <% if current_user.can_see_chat?(@project) %>
+          <%= link_to image_tag("chat.png", size: "20"), project_chat_index_path(@project), class: 'btn btn-info open-chat-button', title: 'Open chat' %>
         <% end %>
-      <% end %>
+
+        <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
+          <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info new-task-button', title: 'New task' do %>
+            <i class="glyphicon glyphicon-tasks"></i>
+          <% end %>
+        <% end %>
+      </div>
 
       <% if current_user.can_see_filter? %>
         <%= form_with class: 'filter-form' do |form| %>

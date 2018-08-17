@@ -46,19 +46,42 @@
 
 //tabs
 .nav-tabs li a {
-  font-size:18px; color:#2196F3;
-}
-
-.btn-info {
-  float:right;
-  margin-right: 5px;
+  font-size: 18px;
+  color: #2196F3;
 }
 
 .filter-form {
   float: right;
-  margin-right: 20px;
+  margin-right: 110px;
   color: #2196F3;
 }
+
+//right side buttons
+.right-buttons-wrapper {
+  float: right;
+  position: relative;
+  margin-right: 50px;
+}
+
+.new-task-button {
+  position: absolute;
+  right: 5px;
+}
+
+.open-chat-button {
+  position: absolute;
+}
+
+// .notification {
+//   position: absolute;
+//   left: 35px;
+//   top : -2px;
+//   z-index: 1;
+//   background-color: #F08080;
+//   width: 15px;
+//   height: 15px;
+//   border-radius: 10px;
+// }
 
 //comments
 .comment-image:hover {

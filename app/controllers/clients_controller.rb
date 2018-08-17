@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_action :find_client_by_id, only: [:show, :edit, :update, :destroy]
-  before_action :get_clients, only: [:index, :new, :create, :edit, :update]
+  before_action :get_clients, only: [:index, :show, :new, :create, :edit, :update]
   before_action :setup_left_sidebar, only: [:show]
 
   def index
