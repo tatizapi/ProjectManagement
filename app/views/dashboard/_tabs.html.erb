@@ -5,10 +5,6 @@
       <li><%= link_to 'Dashboard', project_dashboard_index_path(@project) %></li>
 
       <div class="right-buttons-wrapper">
-        <%# if Message.unseen_messages_exists?(current_user, @project) %>
-          <!-- <div class="notification"></div> -->
-        <%# end %>
-
         <% if current_user.can_see_chat?(@project) %>
           <%= link_to image_tag("chat.png", size: "20"), project_chat_index_path(@project), class: 'btn btn-info open-chat-button', title: 'Open chat' %>
         <% end %>
@@ -23,20 +19,8 @@
       <% if current_user.can_see_filter? %>
         <%= form_with class: 'filter-form' do |form| %>
           <%= form.label "Filter: " %>
-          <%= form.select :filter, options_for_select(["All", "Tasks", "Bugs", "Mine", "Created by me"], selected: "All") %>
+          <%= form.select :filter, options_for_select(["All", "Tasks", "Bugs", "Mine", "Created by me"], selected: "All"), {}, :onchange => 'filter_change();' %>
         <% end %>
       <% end %>
     </ul>
   <% end %>
-
-  <script>
-
-    $('#filter').change(function(){
-      $.ajax({
-        url: "dashboard",
-        type: "GET",
-        data: {"filter": $('#filter option:selected').val()}
-      })
-    });
-
-  </script>

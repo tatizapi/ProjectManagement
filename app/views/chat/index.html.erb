@@ -9,7 +9,7 @@
       <span class="glyphicon glyphicon-comment"><b> Chat</b></span>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body scroll-down">
       <div id="messages"><%= render @messages %></div>
     </div>
 
@@ -17,15 +17,16 @@
       <div class="input-group" style="width:100%">
         <% if current_user.can_chat?(@project) %>
           <%= form_with model: @message, url: project_chat_index_path, method: :post do |form| %>
-            <%= form.text_field :body, class: "form-control", id: "chat-text-input", style: 'width: 95%', placeholder: "Type your message here..." %>
+            <%= form.text_field :body, class: "form-control", style: 'width: 95%; autocomplete: "off"', placeholder: "Type your message here..." %>
             <%= form.submit "Send", class: "btn btn-info" %>
           <% end %>
         <% end %>
       </div>
     </div>
+
   </div>
 </div>
 
 <script>
-  $('.panel-body').scrollTop($('.panel-body')[0].scrollHeight);
+  $('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);
 </script>

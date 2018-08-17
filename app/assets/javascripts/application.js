@@ -16,3 +16,37 @@
 //= require_tree .
 //= require jquery
 //= require jquery_ujs
+
+//-----> DASHBOARD - _TABS.HTML.ERB
+function filter_change() {
+    $.ajax({
+      url: "dashboard",
+      type: "GET",
+      data: {"filter": $('#filter option:selected').val()}
+      // dataType: 'ktml',
+      // success: function(response) {
+      //   $(parinte).append("div" + response.user + "span" + response.message + response.time_date)
+      // }
+    })
+}
+
+//-----> DASHBOARD - INDEX.HTML.ERB
+//to put scroll at the bottom when chat loads
+window.onload = function() {
+  $('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);
+}
+
+//show the top button
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 400) {
+    document.getElementById("top-button").style.display = "block";
+  } else {
+    document.getElementById("top-button").style.display = "none";
+  }
+}
+
+//when clicking the top button, go to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+}

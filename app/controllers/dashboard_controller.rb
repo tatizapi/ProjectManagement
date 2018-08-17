@@ -20,6 +20,7 @@ class DashboardController < ApplicationController
 
     case task.status
     when "todo"
+      #paranteze !!
       #started_at is set only once, first time it goes to "inprogress"
       task.started_at.nil? ? task.update(status: "inprogress", started_at: Time.now) : task.update(status: "inprogress")
     when "inprogress"
