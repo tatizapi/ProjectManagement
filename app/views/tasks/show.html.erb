@@ -111,6 +111,12 @@
         </table>
 
       </div>
+      <% if current_user.can_modify_task?(@project, @task) %>
+        <%= link_to edit_project_task_path(@task.project, @task), class: 'btn btn-warning', title: 'Edit project' do %>
+          <i class="glyphicon glyphicon-edit"></i>
+        <% end %>
+      <% end %>
+
     </div>
   </div>
 </div>
