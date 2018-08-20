@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :find_task_by_id, only: [:show, :edit, :update, :destroy, :delete_attachment]
-  before_action :find_current_project, only: [:new, :create, :destroy, :edit, :update]
+  before_action :find_current_project, only: [:new, :create, :show, :edit, :update, :destroy]
 
   #for developers dropdown
   before_action :get_developers, only: [:new, :create, :edit, :update]
