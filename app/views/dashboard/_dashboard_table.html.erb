@@ -10,30 +10,30 @@
   <tbody>
     <tr>
       <td>
-        <% @tasks.filter_by_status("todo").each do |task| %>
+        <% @tickets.filter_by_status("todo").each do |ticket| %>
           <div class="row">
-            <%= render partial: 'ticket', locals: {task: task} %>
+            <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>
       <td>
-        <% @tasks.filter_by_status("inprogress").each do |task| %>
+        <% @tickets.filter_by_status("inprogress").each do |ticket| %>
           <div class="row">
-            <%= render partial: 'ticket', locals: {task: task} %>
+            <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>
       <td>
-        <% @tasks.filter_by_status("complete").each do |task| %>
+        <% @tickets.filter_by_status("complete").each do |ticket| %>
           <div class="row">
-            <%= render partial: 'ticket', locals: {task: task} %>
+            <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>
       <td>
-        <% @tasks.filter_by_status("done").each do |task| %>
+        <% @tickets.filter_by_status("done").each do |ticket| %>
           <div class="row">
-            <%= render partial: 'ticket', locals: {task: task} %>
+            <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>

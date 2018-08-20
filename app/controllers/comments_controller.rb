@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :get_current_task, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment]
-  before_action :get_task_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
+  before_action :get_current_ticket, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment]
+  before_action :get_ticket_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
   before_action :get_comment_by_id, only: [:edit, :update, :destroy, :delete_attachment]
 
   def index
@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(comment_params.merge(user_id: current_user.id, task_id: @task.id))
+    @comment = Comment.new(comment_params.merge(user_id: current_user.id, ticket_id: @ticket.id))
     @comment.save
     add_files
   end
@@ -50,12 +50,12 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   end
 
-  def get_current_task
-    @task = Task.find(params[:task_id])
+  def get_current_ticket
+    @ticket = Ticket.find(params[:ticket_id])
   end
 
-  def get_task_comments
-    @comments = @task.comments
+  def get_ticket_comments
+    @comments = @ticket.comments
   end
 
   def add_files

@@ -1,4 +1,4 @@
-var new_comment_id = '#new-comment-' + <%= @task.id %>
+var new_comment_id = '#new-comment-' + <%= @ticket.id %>
 
 if ($(new_comment_id).is(':visible')) {
     $(new_comment_id).slideUp(350);

@@ -50,16 +50,16 @@ class User < ApplicationRecord
     true
   end
 
-#task ------------------------------------------------------
-  def can_add_task?
+#ticket ------------------------------------------------------
+  def can_add_ticket?
     false
   end
 
-  def can_add_subtask?(task)
+  def can_add_subticket?(ticket)
     false
   end
 
-  def can_modify_task?(project, task)
+  def can_modify_ticket?(project, ticket)
     false
   end
 
@@ -67,19 +67,19 @@ class User < ApplicationRecord
     false
   end
 
-  def can_send_task_back?(project, task)
+  def can_send_ticket_back?(project, ticket)
     false
   end
 
-  def can_send_task_forward?(project, task)
+  def can_send_ticket_forward?(project, ticket)
     false
   end
 
-  def can_see_task_employee?
+  def can_see_ticket_employee?
     true
   end
 
-  def can_see_task_details?
+  def can_see_ticket_details?
     true
   end
 

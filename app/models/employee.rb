@@ -1,7 +1,7 @@
 class Employee < User
   has_many :roles
   has_many :projects, :through => :roles
-  has_many :tasks
+  has_many :tickets
 
   def is_projectmanager?(project)
     get_role(project).role == "projectmanager"
@@ -19,33 +19,33 @@ class Employee < User
     end
   end
 
-#task --------------------------------------------------------------------------
-  def can_add_task?(project)
+#ticket --------------------------------------------------------------------------
+  def can_add_ticket?(project)
     is_projectmanager?(project)
   end
 
-  def can_add_subtask?(task)
-    (task.employee_id == id) && (task.status != "complete") && (task.status != "done")
+  def can_add_subticket?(ticket)
+    (ticket.employee_id == id) && (ticket.status != "complete") && (ticket.status != "done")
   end
 
-  def can_modify_task?(project, task)
-    (task.status != "done") && (is_projectmanager?(project) || (task.owner && task.owner == id))
+  def can_modify_ticket?(project, ticket)
+    (ticket.status != "done") && (is_projectmanager?(project) || (ticket.owner && ticket.owner == id))
   end
 
   def can_add_bug?(project, task)
-    (is_tester?(project)) && (task.status == "complete") && (!task.bug)
+    (is_tester?(project)) && (task.status == "complete") && (task.type != "Bug")
   end
 
-  def can_send_task_back?(project, task)
-    (is_developer?(project) && has_task?(task) && (task.status == "inprogress" || task.status == "complete")) || (is_tester?(project) && (task.status == "complete" || task.status == "done"))
+  def can_send_ticket_back?(project, ticket)
+    (is_developer?(project) && has_ticket?(ticket) && (ticket.status == "inprogress" || ticket.status == "complete")) || (is_tester?(project) && (ticket.status == "complete" || ticket.status == "done"))
   end
 
-  def can_send_task_forward?(project, task)
-    (is_developer?(project) && has_task?(task) && (task.status == "todo" || task.status == "inprogress")) || (is_tester?(project) && task.status == "complete")
+  def can_send_ticket_forward?(project, ticket)
+    (is_developer?(project) && has_ticket?(ticket) && (ticket.status == "todo" || ticket.status == "inprogress")) || (is_tester?(project) && ticket.status == "complete")
   end
 
-  def has_task?(task)
-    task.employee_id == id
+  def has_ticket?(ticket)
+    ticket.employee_id == id
   end
 
   def can_modify_comment?(comment)

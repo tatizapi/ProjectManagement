@@ -9,63 +9,63 @@
           <tbody>
             <tr>
               <td><b>Title:<b></td>
-              <td><%= @task.title.capitalize %></td>
+              <td><%= @ticket.title.capitalize %></td>
             </tr>
             <tr>
               <td><b>Description:</b></td>
-              <td><%= @task.description.capitalize %></td>
+              <td><%= @ticket.description.capitalize %></td>
             </tr>
             <tr>
               <td><b>Assigned to:</b></td>
-              <td><%= @task.get_employee.full_name %></td>
+              <td><%= @ticket.get_employee.full_name %></td>
             </tr>
             <tr>
               <td><b>Created by:</b></td>
-              <% if @task.owner %>
-                <td><%= @task.get_owner.full_name %></td>
+              <% if @ticket.owner %>
+                <td><%= @ticket.get_owner.full_name %></td>
               <% else %>
-                <td><%= @task.project.get_projectmanager.full_name %> (project manager) </td>
+                <td><%= @ticket.project.get_projectmanager.full_name %> (project manager) </td>
               <% end %>
             </tr>
             <tr>
               <td><b>Priority:</b></td>
-              <td><%= @task.priority.capitalize %></td>
+              <td><%= @ticket.priority.capitalize %></td>
             </tr>
             <tr>
               <td><b>Status:</b></td>
-              <td><%= @task.status.capitalize %></td>
+              <td><%= @ticket.status.capitalize %></td>
             </tr>
             <tr>
               <td><b>Created at:</b></td>
-              <td><%= @task.created_at.strftime("%d %^b, %H:%M") unless @task.created_at.nil? %></td>
+              <td><%= @ticket.created_at.strftime("%d %^b, %H:%M") unless @ticket.created_at.nil? %></td>
             </tr>
             <tr>
               <td><b>Started at:</b></td>
-              <td><%= @task.started_at.strftime("%d %^b, %H:%M") unless @task.started_at.nil? %></td>
+              <td><%= @ticket.started_at.strftime("%d %^b, %H:%M") unless @ticket.started_at.nil? %></td>
             </tr>
             <tr>
               <td><b>Completed at:</b></td>
-              <td><%= @task.completed_at.strftime("%d %^b, %H:%M") unless @task.completed_at.nil? %></td>
+              <td><%= @ticket.completed_at.strftime("%d %^b, %H:%M") unless @ticket.completed_at.nil? %></td>
             </tr>
             <tr>
               <td><b>Ended at:</b></td>
-              <td><%= @task.ended_at.strftime("%d %^b, %H:%M") unless @task.ended_at.nil? %></td>
+              <td><%= @ticket.ended_at.strftime("%d %^b, %H:%M") unless @ticket.ended_at.nil? %></td>
             </tr>
             <tr>
-              <% if @task.parent_task && @task.bug %>
-                <td><b>From task:</b></td>
-                <td><%= @task.get_parent.title %>
-              <% elsif @task.parent_task && !@task.bug %>
+              <% if (@ticket.parent_ticket) && (@ticket.type == 2) %>
+                <td><b>From ticket:</b></td>
+                <td><%= @ticket.get_parent.title %>
+              <% elsif (@ticket.parent_ticket) && !(@ticket.type == 2) %>
                 <td><b>Derived from:</b></td>
-                <td><%= link_to @task.get_parent.title, project_task_path(@task.project, @task.get_parent) %>
+                <td><%= link_to @ticket.get_parent.title, project_ticket_path(@ticket.project, @ticket.get_parent) %>
               <% end %>
             </tr>
             <tr>
-              <% if @task.has_children? %>
+              <% if @ticket.has_children? %>
                 <td><b>Children:</b></td>
                 <td>
-                  <% @task.get_children.each do |children| %>
-                    <%= link_to children.title, project_task_path(@task.project, children) %><br>
+                  <% @ticket.get_children.each do |children| %>
+                    <%= link_to children.title, project_ticket_path(@ticket.project, children) %><br>
                   <% end %>
                 </td>
               <% end %>
@@ -74,7 +74,7 @@
               <td><b>Attachments:</b></td>
               <td>
                 <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
-                <% @task.attachments.each do |attachment| %>
+                <% @ticket.attachments.each do |attachment| %>
                   <% images.push(attachment.file) if attachment.file.is_image? %>
                   <% audios.push(attachment.file) if attachment.file.is_audio? %>
                   <% videos.push(attachment.file) if attachment.file.is_video? %>
@@ -103,7 +103,7 @@
                 <% unless pdfs.empty? %> <br> <% end %>
 
                 <% others.each do |other| %>
-                  <%= link_to other.get_original_filename, download_file_path(comment.task.project, other), target: :_blank %><br>
+                  <%= link_to other.get_original_filename, download_file_path(comment.ticket.project, other), target: :_blank %><br>
                 <% end %>
               </td>
             </tr>
@@ -111,8 +111,8 @@
         </table>
 
       </div>
-      <% if current_user.can_modify_task?(@project, @task) %>
-        <%= link_to edit_project_task_path(@task.project, @task), class: 'btn btn-warning', title: 'Edit project' do %>
+      <% if current_user.can_modify_ticket?(@project, @ticket) %>
+        <%= link_to edit_project_ticket_path(@ticket.project, @ticket), class: 'btn btn-warning', title: 'Edit project' do %>
           <i class="glyphicon glyphicon-edit"></i>
         <% end %>
       <% end %>

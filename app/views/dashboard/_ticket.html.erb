@@ -1,99 +1,99 @@
-<% if task.bug %>
+<% if ticket.type == "Bug" %> <!-- if it's a bug -->
   <div class="panel panel-danger">
-<% elsif task.parent_task %>
+<% elsif ticket.parent_ticket %> <!-- if it's a subtask -->
   <div class="panel panel-warning">
 <% else %>
   <div class="panel panel-info">
 <% end %>
 
   <div class="panel-heading">
-    <% if current_user.can_see_task_details? %>
-      <h5><b><%= link_to task.title, project_task_path(@project, task) %></b></h5>
+    <% if current_user.can_see_ticket_details? %>
+      <h5><b><%= link_to ticket.title, project_ticket_path(@project, ticket) %></b></h5>
     <% else %>
-      <h5><b><%= task.title %></b></h5>
+      <h5><b><%= ticket.title %></b></h5>
     <% end %>
-    <% if current_user.can_see_task_employee? %>
-      <%= image_tag(task.get_employee.file.url, size: "30", alt: "broke", class: 'employee-avatar') %>
+    <% if current_user.can_see_ticket_employee? %>
+      <%= image_tag(ticket.get_employee.file.url, size: "30", alt: "broke", class: 'employee-avatar') %>
     <% end %>
-    <h6 class="task-time"><%= task.created_at.strftime("%d %^b, %H:%M") %><br></h6>
+    <h6 class="ticket-time"><%= ticket.created_at.strftime("%d %^b, %H:%M") %><br></h6>
   </div>
 
   <div class="panel-body fixed-ticket-panel">
-    <% if task.priority == "medium" %>
+    <% if ticket.priority == "medium" %>
       <h6 class="card-subtitle mb-2 text-muted" style="color:#990066;">
-        <b><%= task.priority.upcase %></b>
+        <b><%= ticket.priority.upcase %></b>
       </h6><br>
 
-    <% elsif task.priority == "high" %>
+    <% elsif ticket.priority == "high" %>
       <h6 class="card-subtitle mb-2 text-muted" style="color:#FF0000;">
-        <b><%= task.priority.upcase %></b>
+        <b><%= ticket.priority.upcase %></b>
       </h6><br>
 
     <% else %>
       <h6 class="card-subtitle mb-2 text-muted">
-        <b><%= task.priority.upcase %></b>
+        <b><%= ticket.priority.upcase %></b>
       </h6><br>
     <% end %>
 
-    <% if task.owner %>
-      <% if task.bug %>
-        <h5 style="color:#167FD2;"><b>From task:</b> <%= task.get_parent.title %> </h5>
+    <% if ticket.owner %>
+      <% if ticket.type == "Bug" %>
+        <h5 style="color:#167FD2;"><b>From ticket:</b> <%= ticket.get_parent.title %> </h5>
       <% else %>
-        <h5 style="color:#167FD2;"><b>Derived from:</b> <%= task.get_parent.title %> </h5>
+        <h5 style="color:#167FD2;"><b>Derived from:</b> <%= ticket.get_parent.title %> </h5>
       <% end %>
     <% end %>
 
-    <% if task.has_children? %>
-      <h5 style="color:#167FD2;"><b>Has subtasks</b></h5>
+    <% if ticket.has_children? %>
+      <h5 style="color:#167FD2;"><b>Has subtickets</b></h5>
     <% end %>
 
-    <p><%= task.description %></p>
+    <p><%= ticket.description %></p>
   </div>
 
     <!-- BOTTOM BUTTONS -->
   <div class="panel-footer">
     <% if current_user.can_add_and_see_comments? %>
-      <%= link_to task_comments_path(task), remote: true, :title => "Show comments" do %>
+      <%= link_to ticket_comments_path(ticket), remote: true, :title => "Show comments" do %>
           <i class="glyphicon glyphicon-align-left"></i>
       <% end %>
-      <%= link_to new_task_comment_path(task), remote: true, :title => "Add comment" do %>
+      <%= link_to new_ticket_comment_path(ticket), remote: true, :title => "Add comment" do %>
           <i class="glyphicon glyphicon-comment"></i>
       <% end %>
     <% end %>
 
-    <% if current_user.can_add_subtask?(task) %>
-      <%= link_to new_project_subtask_path(@project, task.employee_id, :parent_task => task.id), title: "Create subtask" do %>
+    <% if current_user.can_add_subticket?(ticket) %>
+      <%= link_to new_project_ticket_path(@project, :owner => ticket.employee_id, :parent_ticket => ticket.id), title: "Create subticket" do %>
         <i class="glyphicon glyphicon-plus"></i>
       <% end %>
     <% end %>
 
-    <% if current_user.can_add_bug?(@project, task) %>
-      <%= link_to image_tag("bug.png", size: "18"), new_project_subtask_path(@project, current_user.id, :parent_task => task.id, :bug => true, title: "Report a bug") %>
+    <% if current_user.can_add_bug?(@project, ticket) %>
+      <%= link_to image_tag("bug.png", size: "18"), new_project_subticket_path(@project, current_user.id, :parent_ticket => ticket.id, :bug => true), title: "Report a bug" %>
     <% end %>
 
-    <% if current_user.can_modify_task?(@project, task) %>
-      <%= link_to edit_project_task_path(task.project, task), title: 'Edit task' do %>
+    <% if current_user.can_modify_ticket?(@project, ticket) %>
+      <%= link_to edit_project_ticket_path(ticket.project, ticket), title: 'Edit ticket' do %>
         <i class="glyphicon glyphicon-edit "></i>
       <% end %>
 
-      <%= link_to project_task_path(task.project, task), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete task' do %>
+      <%= link_to project_ticket_path(ticket.project, ticket), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete ticket' do %>
         <i class="glyphicon glyphicon-remove"></i>
       <% end %>
     <% end %>
 
-    <% if current_user.can_send_task_forward?(@project, task) %>
-      <%= link_to change_status_path(@project, task, :filter => @filter), method: :put, remote: true, class: 'right', title: 'Go forward' do %>
+    <% if current_user.can_send_ticket_forward?(@project, ticket) %>
+      <%= link_to change_status_path(@project, ticket, :filter => @filter), method: :put, remote: true, class: 'right', title: 'Go forward' do %>
           <i class="glyphicon glyphicon-chevron-right"></i>
       <% end %>
     <% end %>
 
-    <% if current_user.can_send_task_back?(@project, task) %>
-      <%= link_to change_status_path(@project, task, :filter => @filter, :back => true), method: :put, remote: true, class: 'right', title: 'Go back' do %>
+    <% if current_user.can_send_ticket_back?(@project, ticket) %>
+      <%= link_to change_status_path(@project, ticket, :filter => @filter, :back => true), method: :put, remote: true, class: 'right', title: 'Go back' do %>
           <i class="glyphicon glyphicon-chevron-left"></i>
       <% end %>
     <% end %>
 
-    <div id="new-comment-<%= task.id.to_s %>" style="display:none"></div>
-    <div id="all-comments-<%= task.id.to_s %>" style="display:none"></div>
+    <div id="new-comment-<%= ticket.id.to_s %>" style="display:none"></div>
+    <div id="all-comments-<%= ticket.id.to_s %>" style="display:none"></div>
   </div>
  </div>

@@ -18,12 +18,12 @@ class Client < User
     false
   end
 
-  #task ------------------------------------------------------
-  def can_see_task_employee?
+  #ticket ------------------------------------------------------
+  def can_see_ticket_employee?
     false
   end
 
-  def can_see_task_details?
+  def can_see_ticket_details?
     false
   end
 

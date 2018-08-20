@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_17_094251) do
+ActiveRecord::Schema.define(version: 2018_08_20_095748) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "filename"
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 2018_08_17_094251) do
     t.text "body"
     t.string "attachments"
     t.integer "user_id"
-    t.integer "task_id"
+    t.integer "ticket_id"
     t.datetime "created_at"
-    t.index ["task_id"], name: "index_comments_on_task_id"
+    t.index ["ticket_id"], name: "index_comments_on_ticket_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2018_08_17_094251) do
     t.string "role"
   end
 
-  create_table "tasks", force: :cascade do |t|
+  create_table "tickets", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "attachments"
@@ -71,11 +71,11 @@ ActiveRecord::Schema.define(version: 2018_08_17_094251) do
     t.datetime "ended_at"
     t.integer "employee_id"
     t.integer "project_id"
-    t.boolean "bug"
     t.integer "owner"
-    t.integer "parent_task"
-    t.index ["employee_id"], name: "index_tasks_on_employee_id"
-    t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.integer "parent_ticket"
+    t.integer "type"
+    t.index ["employee_id"], name: "index_tickets_on_employee_id"
+    t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
   create_table "users", force: :cascade do |t|

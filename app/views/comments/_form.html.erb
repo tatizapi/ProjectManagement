@@ -1,8 +1,8 @@
-<%= form_with model: [@task, @comment] do |form| %>
+<%= form_with model: [@ticket, @comment] do |form| %>
   <%= form.text_area :body %><br>
   <% if @comment.attachments %>
     <% @comment.attachments.each do |attachment| %>
-      <%= link_to comment_delete_attachment_path(@comment.task, @comment, attachment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
+      <%= link_to comment_delete_attachment_path(@comment.ticket, @comment, attachment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
         <i class="glyphicon glyphicon-remove"></i>
       <% end %>
       <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>

@@ -10,7 +10,7 @@
         <% end %>
 
         <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
-          <%= link_to new_project_task_path(@project), method: :get, class: 'btn btn-info new-task-button', title: 'New task' do %>
+          <%= link_to new_project_ticket_path(@project), method: :get, class: 'btn btn-info new-task-button', title: 'New task' do %>
             <i class="glyphicon glyphicon-tasks"></i>
           <% end %>
         <% end %>

@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  belongs_to :task
+  belongs_to :ticket
   belongs_to :user
 
   has_many :attachments, as: :container, dependent: :destroy

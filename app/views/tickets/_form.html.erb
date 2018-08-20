@@ -1,15 +1,15 @@
-<%= form_with model: [@project, @task], local: true, class: 'form-horizontal' do |form| %>
+<%= form_with model: [@project, @ticket], class: 'form-horizontal' do |form| %>
   <%= form.hidden_field :owner %>
-  <%= form.hidden_field :bug %>
-  <%= form.hidden_field :parent_task %>
+  <%= form.hidden_field :bug, value: @is_bug %>
+  <%= form.hidden_field :parent_ticket %>
 
-  <% if @task.errors.any? %>
+  <% if @ticket.errors.any? %>
   <div id="error_explanation">
     <h2>
-      <%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:
+      <%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:
     </h2>
     <ul>
-      <% @task.errors.full_messages.each do |msg| %>
+      <% @ticket.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
@@ -46,8 +46,8 @@
     <div class="form-group">
       <%= form.label :attachments, class: 'control-label col-sm-1' %>
       <div class="col-sm-4">
-        <% @task.attachments.each do |attachment| %>
-          <%= link_to task_delete_attachment_path(@task, attachment), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
+        <% @ticket.attachments.each do |attachment| %>
+          <%= link_to ticket_delete_attachment_path(@ticket, attachment), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
             <i class="glyphicon glyphicon-remove"></i>
           <% end %>
           <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>
