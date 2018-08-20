@@ -51,11 +51,14 @@
   </div>
 
     <!-- BOTTOM BUTTONS -->
-  <div class="panel-footer">
+  <div class="panel-footer ticket-footer">
     <% if current_user.can_add_and_see_comments? %>
       <%= link_to ticket_comments_path(ticket), remote: true, :title => "Show comments" do %>
-          <i class="glyphicon glyphicon-align-left"></i>
+          <i class="glyphicon glyphicon-align-left show-comments-icon"></i>
       <% end %>
+
+      <div class="notification"><%= ticket.get_nr_of_comments %></div>
+
       <%= link_to new_ticket_comment_path(ticket), remote: true, :title => "Add comment" do %>
           <i class="glyphicon glyphicon-comment"></i>
       <% end %>

@@ -51,4 +51,8 @@ class Ticket < ApplicationRecord
   def get_project
     Project.find(project_id)
   end
+
+  def get_nr_of_comments
+    comments.count
+  end
 end
