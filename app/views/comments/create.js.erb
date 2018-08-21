@@ -2,3 +2,7 @@ var all_comments_id = '#all-comments-' + <%= @ticket.id %>
 
 $(all_comments_id).html("<%= j (render @comments) %>");
 $('#comment_body').val('');
+
+var notification_id = '#notification-' + <%= @ticket.id %>
+var nr_of_comments = <%= @ticket.get_nr_of_comments %>
+$(notification_id).text(nr_of_comments);

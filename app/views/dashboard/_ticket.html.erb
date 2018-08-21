@@ -57,7 +57,7 @@
           <i class="glyphicon glyphicon-align-left show-comments-icon"></i>
       <% end %>
 
-      <div class="notification"><%= ticket.get_nr_of_comments %></div>
+      <div class="notification" id="notification-<%= ticket.id.to_s %>"><%= ticket.get_nr_of_comments %></div>
 
       <%= link_to new_ticket_comment_path(ticket), remote: true, :title => "Add comment" do %>
           <i class="glyphicon glyphicon-comment"></i>
