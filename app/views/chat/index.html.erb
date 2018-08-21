@@ -16,8 +16,8 @@
     <div class="panel-footer">
       <div class="input-group" style="width:100%">
         <% if current_user.can_chat?(@project) %>
-          <%= form_with model: @message, url: '#', html: {id: 'new-message'} do |form| %>
-            <%= form.text_field :body, class: "form-control", id: 'new-message-body', style: 'width: 95%;', autocomplete: 'off', placeholder: "Type your message here..." %>
+          <%= form_with model: @message, url: project_chat_index_path, method: :post do |form| %>
+            <%= form.text_field :body, class: "form-control", style: 'width: 95%;', autocomplete: 'off', placeholder: "Type your message here..." %>
             <%= form.submit "Send", class: "btn btn-info" %>
           <% end %>
         <% end %>
