@@ -97,6 +97,14 @@
     <% end %>
 
     <div id="new-comment-<%= ticket.id.to_s %>" style="display:none"></div>
-    <div id="all-comments-<%= ticket.id.to_s %>" style="display:none"></div>
+
+    <div id="more-comments-button-<%= ticket.id.to_s %>" style="display:none">
+      <%= link_to ticket_comments_path(ticket), title: 'Show all comments' do %>
+        <br><i class="glyphicon glyphicon-option-horizontal"></i>
+      <% end %>
+    </div>
+    <div id="comments-<%= ticket.id.to_s %>" style="display:none">
+    </div>
+
   </div>
  </div>

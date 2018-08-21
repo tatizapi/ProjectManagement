@@ -1,3 +1,3 @@
-var all_comments_id = '#all-comments-' + <%= @ticket.id %>
+var comments_id = '#comments-' + <%= @ticket.id %>
 
-$(all_comments_id).html("<%= j (render 'form') %>");
+$(comments_id).html("<%= j (render 'form') %>");

@@ -1,9 +1,13 @@
 class CommentsController < ApplicationController
   before_action :get_current_ticket, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment]
-  before_action :get_ticket_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
+  before_action :get_current_project, only: [:index]
+  before_action :get_first_ticket_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
+  before_action :get_all_ticket_comments, only: [:index, :create]
   before_action :get_comment_by_id, only: [:edit, :update, :destroy, :delete_attachment]
+  before_action :setup_left_sidebar, only: [:index]
 
   def index
+    @comment = Comment.new
   end
 
   def new
@@ -54,8 +58,16 @@ class CommentsController < ApplicationController
     @ticket = Ticket.find(params[:ticket_id])
   end
 
-  def get_ticket_comments
-    @comments = @ticket.comments
+  def get_current_project
+    @project = @ticket.project
+  end
+
+  def get_first_ticket_comments
+    @first_comments = @ticket.comments.order(created_at: :desc).limit(5)
+  end
+
+  def get_all_ticket_comments
+    @all_ticket_comments = @ticket.comments
   end
 
   def add_files

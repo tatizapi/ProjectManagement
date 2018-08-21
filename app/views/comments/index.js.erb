@@ -1,8 +1,14 @@
-var all_comments_id = '#all-comments-' + <%= @ticket.id %>
+var comments_id = '#comments-' + <%= @ticket.id %>
+var more_comments_button_id = '#more-comments-button-' + <%= @ticket.id %>
 
-if ($(all_comments_id).is(':visible')) {
-    $(all_comments_id).slideUp(350);
+if ($(comments_id).is(':visible')) {
+    $(comments_id).slideUp(350);
+    $(more_comments_button_id).slideUp(700);
 } else {
-  $(all_comments_id).html("<%= j (render @comments) %>");
-  $(all_comments_id).slideDown(350);
+  $(comments_id).html("<%= j (render @first_comments) %>");
+  $(comments_id).slideDown(350);
+
+  <% if @all_ticket_comments.count > 5 %>
+    $(more_comments_button_id).show();
+  <% end %>
 }
