@@ -79,18 +79,6 @@
   z-index: 10;
 }
 
-//go to top button
-#top-button {
-   display: none;
-   position: fixed;
-   bottom: 20px;
-   right: 30px;
-   width: 50px;
-   height: 50px;
-   z-index: 99;
-   cursor: pointer;
-}
-
 .ticket-footer {
   position: relative;
 }
@@ -111,4 +99,16 @@
   font-size: 12px;
   text-align: center;
   border-radius: 10px;
+}
+
+//go to top button
+#top-button {
+   display: none;
+   position: fixed;
+   bottom: 20px;
+   right: 30px;
+   width: 50px;
+   height: 50px;
+   z-index: 99;
+   cursor: pointer;
 }

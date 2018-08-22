@@ -6,7 +6,3 @@ $('#comment_body').val('');
 var notification_id = '#notification-' + <%= @ticket.id %>
 var nr_of_comments = <%= @ticket.get_nr_of_comments %>
 $(notification_id).text(nr_of_comments);
-
-//for comments panel
-$("#all-comments-panel").html("<%= j (render @all_ticket_comments) %>");
-$('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);

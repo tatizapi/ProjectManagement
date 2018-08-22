@@ -73,38 +73,7 @@
             <tr>
               <td><b>Attachments:</b></td>
               <td>
-                <% images, audios, videos, pdfs, others = [], [], [], [], [] %>
-                <% @ticket.attachments.each do |attachment| %>
-                  <% images.push(attachment.file) if attachment.file.is_image? %>
-                  <% audios.push(attachment.file) if attachment.file.is_audio? %>
-                  <% videos.push(attachment.file) if attachment.file.is_video? %>
-                  <% pdfs.push(attachment.file) if attachment.file.is_pdf? %>
-                  <% others.push(attachment.file) if attachment.file.is_other? %>
-                <% end %>
-
-                <% images.each do |image| %>
-                  <%= image_tag(image.url, size: "25", alt: "broke", class: "comment-image") %>
-                <% end %>
-                <% unless images.empty? %> <br> <% end %>
-
-                <% audios.each do |audio| %>
-                  <%= audio_tag(audio.url, controls: true, class: "comment-audio") %>
-                <% end %>
-                <% unless audios.empty? %> <br> <% end %>
-
-                <% videos.each do |video| %>
-                  <%= video_tag(video.url, controls: true, size: "330x250", class: "comment-video") %>
-                <% end %>
-                <% unless videos.empty? %> <br> <% end %>
-
-                <% pdfs.each do |pdf| %>
-                  <%= link_to pdf.get_original_filename, pdf.url, target: :_blank %><br>
-                <% end %>
-                <% unless pdfs.empty? %> <br> <% end %>
-
-                <% others.each do |other| %>
-                  <%= link_to other.get_original_filename, download_file_path(comment.ticket.project, other), target: :_blank %><br>
-                <% end %>
+                <%= render 'shared/attachments', entity: @ticket %>
               </td>
             </tr>
           </tbody>

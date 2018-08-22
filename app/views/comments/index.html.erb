@@ -10,16 +10,12 @@
     </div>
 
     <div class="panel-body scroll-down" id="all-comments-panel">
-      <div id="messages"><%= render @all_ticket_comments %></div>
-    </div>
-
-    <div class="panel-footer">
-      <div class="input-group" style="width:100%">
-        <% if current_user.can_add_and_see_comments? %>
-          <%= form_with model: @comment, url: ticket_comments_path, method: :post do |form| %>
-            <%= form.text_field :body, class: "form-control", style: 'width: 95%;', autocomplete: 'off', placeholder: "Type your comment here..." %>
-            <%= form.submit "Send", class: "btn btn-info" %>
-          <% end %>
+      <div id="comments">
+        <% @all_ticket_comments.each do |comment| %>
+          <small class='form-text text-muted' style='font-size:10px;'><%= comment.date_time %></small><br>
+          <b style="color:#167FD2"><%= comment.user.username %> said: </b>
+          <%= comment.body %><br>
+          <%= render 'shared/attachments', entity: comment %><br>
         <% end %>
       </div>
     </div>
