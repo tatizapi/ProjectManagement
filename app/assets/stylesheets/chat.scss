@@ -3,12 +3,7 @@
   overflow-y: scroll;
 }
 
-.left-message {
-  background-color: #F8F8F8;
-  color: #337ab7;
-}
-
-.right-message {
+.chat-message {
   background-color: #337ab7;
   color: white;
 }
@@ -21,12 +16,7 @@
   padding-right: 10px;
 }
 
-.chat-avatar-left {
+.chat-avatar {
   float: left;
-  border-radius: 50%;
-}
-
-.chat-avatar-right {
-  float: right;
   border-radius: 50%;
 }

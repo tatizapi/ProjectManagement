@@ -13,9 +13,9 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery3
 //= require_tree .
-//= require jquery
-//= require jquery_ujs
+//= require cable
 
 //-----> DASHBOARD - _TABS.HTML.ERB
 function filter_change() {

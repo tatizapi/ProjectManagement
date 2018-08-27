@@ -38,5 +38,8 @@ Rails.application.routes.draw do
   delete 'tickets/:id/attachment/:attachment_id' => 'tickets#delete_attachment', as: :ticket_delete_attachment
   delete 'tickets/:ticket_id/comments/:id/attachment/:attachment_id' => 'comments#delete_attachment', as: :comment_delete_attachment
 
+  #for realtime chat
+  mount ActionCable.server => '/cable'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
