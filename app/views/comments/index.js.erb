@@ -5,7 +5,7 @@ if ($(comments_id).is(':visible')) {
     $(comments_id).slideUp(350);
     $(more_comments_button_id).slideUp(700);
 } else {
-  $(comments_id).html("<%= j (render @first_comments) %>");
+  $(comments_id).html("<%= j (render partial: 'comment', collection: @first_comments, locals: {modify: true}) %>");
   $(comments_id).slideDown(350);
 
   <% if @all_ticket_comments.count > 5 %>

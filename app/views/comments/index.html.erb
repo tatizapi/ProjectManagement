@@ -6,19 +6,27 @@
   <div class="panel panel-primary">
 
     <div class="panel-heading">
-      <span class="glyphicon glyphicon-comment"><b> Comments for <%= @ticket.title %> ticket</b></span>
+      <span class="glyphicon glyphicon-comment"><b> Comments for "<%= @ticket.title %>" ticket</b></span>
     </div>
 
-    <div class="panel-body scroll-down" id="all-comments-panel">
+    <div class="panel-body scroll-down all-comments-panel">
       <div id="comments">
-        <% @all_ticket_comments.each do |comment| %>
-          <small class='form-text text-muted' style='font-size:10px;'><%= comment.date_time %></small><br>
-          <b style="color:#167FD2"><%= comment.user.username %> said: </b>
-          <%= comment.body %><br>
-          <%= render 'shared/attachments', entity: comment %><br>
+        <% if current_user.can_add_and_see_comments? %>
+          <%= render partial: 'comment', collection: @all_ticket_comments, locals: {modify: false} %>
         <% end %>
       </div>
     </div>
+
+    <% if current_user.can_add_and_see_comments? %>
+      <div class="panel-footer">
+        <%= form_with model: [ @ticket, @ticket.comments.build ] do |form| %>
+          <%= form.text_field :body, class: "form-control", style: 'width: 95%; float: left;', autocomplete: 'off', placeholder: "Type your message here..." %>
+          <%= form.hidden_field :from_all_comments_form, value: true %>
+          <%= form.submit "Send", class: "btn btn-info" %>
+          <%= form.file_field :files, multiple: true %><br>
+        <% end %>
+      </div>
+    <% end %>
 
   </div>
 </div>

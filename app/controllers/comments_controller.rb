@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def create
+    @from_all_comments_form = params[:comment][:from_all_comments_form]
     @comment = Comment.new(comment_params.merge(user_id: current_user.id, ticket_id: @ticket.id))
     @comment.save
     add_files
