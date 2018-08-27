@@ -9,4 +9,8 @@ class Comment < ApplicationRecord
   def date_time
     created_at.strftime("%d %^b, %H:%M")
   end
+
+  def get_project
+    ticket.project
+  end
 end

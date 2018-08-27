@@ -28,5 +28,5 @@
 <% unless pdfs.empty? %> <br> <% end %>
 
 <% others.each do |other| %>
-  <%= link_to other.get_original_filename, download_file_path(comment.ticket.project, other), target: :_blank %><br>
+  <%= link_to other.get_original_filename, download_file_path(entity.get_project, other), target: :_blank %><br>
 <% end %>

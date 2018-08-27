@@ -49,7 +49,7 @@ class Ticket < ApplicationRecord
   end
 
   def get_project
-    Project.find(project_id)
+    project
   end
 
   def get_nr_of_comments
