@@ -1,12 +1,10 @@
 
-<div class="scroll-down">
-  <div class="chat-body clearfix">
-    <%= image_tag(message.user.file.url, size: "50", alt: 'User Avatar', class: 'chat-avatar') %>
-    <small class="chat-time text-muted pull-left"><span class="glyphicon glyphicon-time"></span> <%= message.get_time %></small><br>
-    <p class="chat-message pull-left" id="message-body"><%= message.body %></p>
-  </div><br>
-</div>
+<div class="chat-body clearfix">
+  <%= image_tag(message.user.file.url, size: "50", alt: 'User Avatar', class: 'chat-avatar') %>
+  <small class="chat-time text-muted pull-left"><span class="glyphicon glyphicon-time"></span> <%= message.get_time %></small><br>
+  <p class="chat-message pull-left" id="message-body"><%= message.body %></p>
+</div><br>
 
-<script>
+<script> //doesnt work if I put it in application.js
   $('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);
 </script>

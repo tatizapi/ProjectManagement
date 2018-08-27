@@ -24,7 +24,6 @@ jQuery(document).on 'turbolinks:load', ->
 
     $('#new-message-form').submit (e) ->
       $this = $(this)
-      console.log("was here")
       textarea = $this.find('#message_body')
       if $.trim(textarea.val()).length > 1
         App.global_chat.send_message textarea.val(), messages.data('project-id')

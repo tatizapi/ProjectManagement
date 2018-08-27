@@ -9,7 +9,7 @@
       <span class="glyphicon glyphicon-comment"><b> Chat</b></span>
     </div>
 
-    <div class="panel-body scroll-down">
+    <div class="scroll-down panel-body">
       <div id="messages" data-project-id="<%= @project.id %>"><%= render @messages %></div>
     </div>
 
@@ -26,7 +26,3 @@
 
   </div>
 </div>
-
-<script>
-  $('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);
-</script>
