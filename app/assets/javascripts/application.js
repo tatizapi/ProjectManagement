@@ -16,6 +16,7 @@
 //= require jquery3
 //= require_tree .
 //= require cable
+//= require toastr
 
 //-----> DASHBOARD - _TABS.HTML.ERB
 function filter_change() {

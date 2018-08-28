@@ -7,6 +7,7 @@ gem 'devise'
 gem 'carrierwave'
 gem 'jquery-rails'
 gem 'redis', '~> 3.2'
+gem 'toastr-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'

@@ -1,5 +1,6 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
+    # Called when the consumer has successfully become a subscriber to this channel.
     stream_from "chat_#{params['project_id']}_channel"
   end
 
