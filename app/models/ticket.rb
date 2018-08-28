@@ -55,4 +55,12 @@ class Ticket < ApplicationRecord
   def get_nr_of_comments
     comments.count
   end
+
+  def get_deadline_date
+    deadline.strftime("%d/%m/%Y")
+  end
+
+  def get_deadline_time
+    deadline.strftime("%H")
+  end
 end

@@ -16,7 +16,7 @@
 //= require jquery3
 //= require_tree .
 //= require cable
-//= require toastr
+
 
 //-----> DASHBOARD - _TABS.HTML.ERB
 function filter_change() {
@@ -30,6 +30,7 @@ function filter_change() {
       // }
     })
 }
+
 
 //-----> DASHBOARD - INDEX.HTML.ERB
 //to put scroll at the bottom when chat loads
@@ -51,3 +52,20 @@ function scrollFunction() {
 function topFunction() {
   document.body.scrollTop = 0;
 }
+
+
+//-----> TICKETS - FORM.HTML.ERB
+$( function() {
+  $( "#ticket-datepicker" ).datepicker(
+    { minDate: 0 }
+  );
+
+  $( "#ticket-timepicker" ).timepicker(
+    {
+      timeFormat: 'G',
+      step: 60,
+      minTime: '07',
+      maxTime: '22'
+    }
+  );
+});

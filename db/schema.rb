@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_20_095748) do
+ActiveRecord::Schema.define(version: 2018_08_28_072547) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "filename"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2018_08_20_095748) do
     t.integer "owner"
     t.integer "parent_ticket"
     t.integer "type"
+    t.datetime "deadline"
     t.index ["employee_id"], name: "index_tickets_on_employee_id"
     t.index ["project_id"], name: "index_tickets_on_project_id"
   end
