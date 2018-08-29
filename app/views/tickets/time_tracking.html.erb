@@ -20,17 +20,19 @@
             <td>
               <% if @deadline %>
                 <%= @ticket.remaining_time(@deadline) %>
-              <% end %><br><br>
+              <% end %>
             </td>
           </tr>
           <tr>
             <td><b>Passed time:</b></td>
             <td>
-              <div class="progress" style="width: 60%">
-                <div id="progresss" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="color:  #f1c40f">
-                  <%= @ticket.remaining_time_precent(@deadline) %> %
+              <% if @ticket.remaining_time_precent(@deadline) %>
+                <div class="progress" style="width: 60%">
+                  <div id="progresss" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="color: #f1c40f">
+                      <%= @ticket.remaining_time_precent(@deadline) %> %
+                  </div>
                 </div>
-              </div>
+              <% end %>
             </td>
           </tr>
           <tr>
