@@ -20,7 +20,17 @@
             <td>
               <% if @deadline %>
                 <%= @ticket.remaining_time(@deadline) %>
-              <% end %>
+              <% end %><br><br>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Passed time:</b></td>
+            <td>
+              <div class="progress" style="width: 60%">
+                <div id="progresss" class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="color:  #f1c40f">
+                  <%= @ticket.remaining_time_precent(@deadline) %> %
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
@@ -45,3 +55,13 @@
     </div>
   </div>
 </div>
+
+<script>
+$(function() {
+  //i let this script here because i can't work with ruby in application.js. also, will @ticket be visible there?
+  var progress_bar_width = <%= @ticket.remaining_time_precent(@ticket.deadline) %>
+  $("#progresss").css("width", progress_bar_width + '%' );
+});
+</script>
+
+<!-- this here only to make sure last commit was saved -->
