@@ -38,6 +38,9 @@ Rails.application.routes.draw do
   delete 'tickets/:id/attachment/:attachment_id' => 'tickets#delete_attachment', as: :ticket_delete_attachment
   delete 'tickets/:ticket_id/comments/:id/attachment/:attachment_id' => 'comments#delete_attachment', as: :comment_delete_attachment
 
+  #tickets details
+  get '/projects/:project_id/tickets/:id/time_tracking' => 'tickets#time_tracking', as: :ticket_time_tracking
+
   #for realtime chat
   mount ActionCable.server => '/cable'
 

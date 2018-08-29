@@ -55,7 +55,7 @@ function topFunction() {
 
 
 //-----> TICKETS - FORM.HTML.ERB
-$( function() {
+$(document).on('mouseover', function() {
   $( "#ticket-datepicker" ).datepicker(
     { minDate: 0 }
   );

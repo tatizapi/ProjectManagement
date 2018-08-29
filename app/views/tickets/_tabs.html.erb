@@ -1,0 +1,5 @@
+<div class="main">
+    <ul class="nav nav-tabs">
+      <li><%= link_to 'Details', project_ticket_path(@ticket.project, @ticket) %></li>
+      <li><%= link_to 'Time tracking', ticket_time_tracking_path(@ticket.project, @ticket) %></li>
+    </ul>

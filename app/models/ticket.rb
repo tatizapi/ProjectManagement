@@ -63,4 +63,16 @@ class Ticket < ApplicationRecord
   def get_deadline_time
     deadline.strftime("%H")
   end
+
+  #time_tracking tab
+  def format_date(date)
+    date.strftime("%d/%m/%Y %H:%M")
+  end
+
+  def remaining_time(deadline)
+    remaining_time = (deadline - Time.now).to_i #difference between two dates is in seconds
+    nr_of_days = remaining_time / 86400
+    nr_of_minutes = (remaining_time % 86400) / 60
+    "#{nr_of_days} days, #{nr_of_minutes} minutes"
+  end
 end

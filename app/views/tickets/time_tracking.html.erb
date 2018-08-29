@@ -1,0 +1,47 @@
+<%= render 'projects/left_sidebar' %>
+<%= render 'tabs' %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-7 col-lg-7">
+
+      <table class="table table-user-information">
+        <tbody>
+          <tr>
+            <td><b>Estimated deadline:<b></td>
+            <td>
+              <% if @deadline %>
+                <%= @ticket.format_date(@deadline) %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Remaining time:</b></td>
+            <td>
+              <% if @deadline %>
+                <%= @ticket.remaining_time(@deadline) %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Worked on since:</b></td>
+            <td>
+              <% if @ticket.started_at %>
+                <%= @ticket.format_date(@ticket.started_at) %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Finished:</b></td>
+            <td>
+              <% if @ticket.ended_at %>
+                <%= @ticket.format_date(@ticket.ended_at) %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
