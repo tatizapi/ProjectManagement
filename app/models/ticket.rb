@@ -75,6 +75,7 @@ class Ticket < ApplicationRecord
     nr_of_hours = (remaining_time % 86400) / 3600
     nr_of_minutes = ((remaining_time % 86400) % 3600) / 60
     "#{nr_of_days} days, #{nr_of_hours} hours, #{nr_of_minutes} minutes"
+<<<<<<< HEAD
   end
 
   def remaining_time_precent(deadline)
@@ -82,5 +83,7 @@ class Ticket < ApplicationRecord
     passed_time = (Time.now - created_at).to_i
     percent = (passed_time.to_f / total_time) * 100
     sprintf('%.2f', percent)
+=======
+>>>>>>> 6e49b707b49a8e15080bc296af8ce467a953e6a9
   end
 end
