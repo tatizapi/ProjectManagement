@@ -48,24 +48,12 @@
       <div class="col-sm-2">
         <div class='input-group date'>
           <% if @from_edit %>
-            <%= form.text_field :deadline_date, placeholder: @ticket.get_deadline_date, autocomplete: 'off', class: 'form-control', id: 'ticket-datepicker' %>
+            <%= form.text_field :deadline, autocomplete: 'off', class: 'form-control', id: 'datetimepicker', 'data-deadline': @ticket.format_deadline %>
           <% else %>
-            <%= form.text_field :deadline_date, placeholder: Time.now.strftime("%d/%m/%Y"),  autocomplete: 'off', class: 'form-control', id: 'ticket-datepicker' %>
+            <%= form.text_field :deadline, autocomplete: 'off', class: 'form-control', id: 'datetimepicker', 'data-deadline': Time.now.strftime("%Y-%m-%d %I:%M") %>
           <% end %>
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
-      </div>
-      <div class="col-sm-1">
-        <div class='input-group date'>
-          <% if @from_edit %>
-            <%= form.text_field :deadline_hour, placeholder: @ticket.get_deadline_time, autocomplete: 'off', class: 'form-control', id: 'ticket-timepicker' %>
-          <% else %>
-            <%= form.text_field :deadline_hour, placeholder: Time.now.strftime("%H"), autocomplete: 'off', class: 'form-control', id: 'ticket-timepicker' %>
-          <% end %>
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-time"></span>
           </span>
         </div>
       </div>

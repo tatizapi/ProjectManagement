@@ -56,12 +56,8 @@ class Ticket < ApplicationRecord
     comments.count
   end
 
-  def get_deadline_date
-    deadline.strftime("%d/%m/%Y")
-  end
-
-  def get_deadline_time
-    deadline.strftime("%H")
+  def format_deadline
+    deadline.strftime("%Y-%m-%d %I:%M")
   end
 
   #time_tracking tab

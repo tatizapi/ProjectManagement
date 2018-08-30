@@ -16,6 +16,8 @@
 //= require jquery3
 //= require_tree .
 //= require cable
+//= require moment
+//= require bootstrap-datetimepicker
 
 
 //-----> DASHBOARD - _TABS.HTML.ERB
@@ -56,16 +58,14 @@ function topFunction() {
 
 //-----> TICKETS - FORM.HTML.ERB
 $(document).on('mouseover', function() {
-  $( "#ticket-datepicker" ).datepicker(
-    { minDate: 0 }
-  );
+  console.log($("#datetimepicker").data('deadline'))
+  // $("#datetimepicker").data("DateTimePicker").date( $("#datetimepicker").data('deadline') )
 
-  $( "#ticket-timepicker" ).timepicker(
+  $( "#datetimepicker" ).datetimepicker(
     {
-      timeFormat: 'G',
-      step: 60,
-      minTime: '07',
-      maxTime: '22'
+      minDate: moment(), //to start only from today's date
+      format: 'YYYY-MM-DD hh:mm',
+      showClear: true,
     }
   );
 });

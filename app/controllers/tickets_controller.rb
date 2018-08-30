@@ -18,11 +18,11 @@ class TicketsController < ApplicationController
     #this does not work, why ?!?
     #ticket_params.merge!(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket])
     if (params[:ticket][:bug].empty?)
-      @ticket = Task.new(ticket_params.except(:deadline_date, :deadline_hour, :files)
-                                      .merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket], deadline: format_deadline))
+      @ticket = Task.new(ticket_params.except(:files)
+                                      .merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket]))
     else
-      @ticket = Bug.new(ticket_params.except(:deadline_date, :deadline_hour, :files)
-                                     .merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket], deadline: format_deadline))
+      @ticket = Bug.new(ticket_params.except(:files)
+                                     .merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket]))
     end
 
     if @ticket.save
@@ -41,7 +41,7 @@ class TicketsController < ApplicationController
   end
 
   def update
-    if @ticket.update(ticket_params.except(:deadline_date, :deadline_hour, :files).merge(deadline: format_deadline))
+    if @ticket.update(ticket_params.except(:files))
       add_files
       redirect_to project_dashboard_index_path(@project)
     else
@@ -67,7 +67,7 @@ class TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.require(:ticket).permit(:title, :description, :priority, :project_id, :developers, :employee_id, :owner, :deadline_date, :deadline_hour, {files: []})
+    params.require(:ticket).permit(:title, :description, :priority, :project_id, :developers, :employee_id, :owner, :deadline, {files: []})
   end
 
   def find_ticket_by_id
@@ -94,15 +94,5 @@ class TicketsController < ApplicationController
 
   def add_files
     save_files(@ticket, params[:ticket][:files]) #save_files is in ApplicationController
-  end
-
-  def format_deadline
-    unless params[:ticket][:deadline_date].empty?
-      unless params[:ticket][:deadline_hour].empty?
-        DateTime.strptime("#{params[:ticket][:deadline_date]} #{params[:ticket][:deadline_hour]} +3", '%m/%d/%Y %H %z')
-      else
-        DateTime.strptime("#{params[:ticket][:deadline_date]}", '%m/%d/%Y')
-      end
-    end
   end
 end

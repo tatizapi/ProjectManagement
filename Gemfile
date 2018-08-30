@@ -8,6 +8,8 @@ gem 'carrierwave'
 gem 'jquery-rails'
 gem 'redis', '~> 3.2'
 gem 'toastr-rails'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
