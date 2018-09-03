@@ -52,6 +52,15 @@ class Employee < User
     id == comment.user_id
   end
 
+#chat --------------------------------------------------------------------------
+  def can_see_chat?(project)
+    is_projectmanager?(project)
+  end
+
+  def can_chat?(project)
+    is_projectmanager?(project)
+  end
+
 #others ------------------------------------------------------------------------
   def self.get_employees_filtered_by_role(employee_id)
     projects_projectmanager_role = []
@@ -74,13 +83,5 @@ class Employee < User
 
   def get_role(project)
     Role.find_by(project_id: project.id, employee_id: id)
-  end
-
-  def can_see_chat?(project)
-    is_projectmanager?(project)
-  end
-
-  def can_chat?(project)
-    is_projectmanager?(project)
   end
 end
