@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_30_113031) do
+ActiveRecord::Schema.define(version: 2018_09_03_062046) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "filename"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 2018_08_30_113031) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.string "attachments"
     t.integer "user_id"
     t.integer "ticket_id"
     t.datetime "created_at"
@@ -50,7 +49,6 @@ ActiveRecord::Schema.define(version: 2018_08_30_113031) do
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.string "attachments"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -62,7 +60,6 @@ ActiveRecord::Schema.define(version: 2018_08_30_113031) do
   create_table "tickets", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.string "attachments"
     t.string "status"
     t.string "priority"
     t.datetime "created_at"
