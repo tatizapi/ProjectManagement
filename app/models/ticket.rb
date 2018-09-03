@@ -77,12 +77,14 @@ class Ticket < ApplicationRecord
     end
   end
 
-  def remaining_time_precent(deadline)
+  def passed_time_percent(deadline)
     total_time = (deadline - created_at).to_i
     passed_time = (Time.now - created_at).to_i
     percent = (passed_time.to_f / total_time) * 100
     if percent < 100
       sprintf('%.2f', percent)
+    else
+      "100"
     end
   end
 end

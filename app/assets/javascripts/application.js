@@ -58,14 +58,12 @@ function topFunction() {
 
 //-----> TICKETS - FORM.HTML.ERB
 $(document).on('mouseover', function() {
-  console.log($("#datetimepicker").data('deadline'))
-  // $("#datetimepicker").data("DateTimePicker").date( $("#datetimepicker").data('deadline') )
-
   $( "#datetimepicker" ).datetimepicker(
     {
-      minDate: moment(), //to start only from today's date
+      minDate: moment(), //to disable past dates
       format: 'YYYY-MM-DD hh:mm',
       showClear: true,
+      useCurrent: false
     }
   );
 });

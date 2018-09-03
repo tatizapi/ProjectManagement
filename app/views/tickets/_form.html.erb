@@ -47,7 +47,7 @@
       <%= form.label "Estimated deadline", class: 'control-label col-sm-1' %>
       <div class="col-sm-2">
         <div class='input-group date'>
-          <% if @from_edit %>
+          <% if @from_edit && @ticket.deadline %>
             <%= form.text_field :deadline, autocomplete: 'off', class: 'form-control', id: 'datetimepicker', 'data-deadline': @ticket.format_deadline %>
           <% else %>
             <%= form.text_field :deadline, autocomplete: 'off', class: 'form-control', id: 'datetimepicker', 'data-deadline': Time.now.strftime("%Y-%m-%d %I:%M") %>
