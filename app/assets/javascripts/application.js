@@ -18,7 +18,8 @@
 //= require cable
 //= require moment
 //= require bootstrap-datetimepicker
-
+//= require Chart.bundle
+//= require chartkick
 
 //-----> DASHBOARD - _TABS.HTML.ERB
 function filter_change() {

@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-7 col-lg-7">
+    <div class="col-md-6 col-lg-6">
 
       <table class="table table-user-information">
         <tbody>
@@ -84,6 +84,10 @@
         <% end %>
 
     </div>
-  </div>
 
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= pie_chart @project.tickets.group(:employee_id).count, donut: true, width: "700px" %>
+    </div>
+
+  </div>
 </div>
