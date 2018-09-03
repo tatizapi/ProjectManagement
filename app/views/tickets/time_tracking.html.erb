@@ -36,7 +36,7 @@
             </td>
           </tr>
           <tr>
-            <td><b>Worked on since:</b></td>
+            <td><b>Started:</b></td>
             <td>
               <% if @ticket.started_at %>
                 <%= @ticket.format_date(@ticket.started_at) %>
@@ -48,6 +48,14 @@
             <td>
               <% if @ticket.ended_at %>
                 <%= @ticket.format_date(@ticket.ended_at) %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Total working time: </b></td>
+            <td>
+              <% if @ticket.ended_at %>
+                <%= @ticket.worked_on_time %>
               <% end %>
             </td>
           </tr>

@@ -16,6 +16,14 @@
             <td><%= @ticket.description.capitalize %></td>
           </tr>
           <tr>
+            <td><b>Priority:</b></td>
+            <td><%= @ticket.priority.capitalize %></td>
+          </tr>
+          <tr>
+            <td><b>Status:</b></td>
+            <td><%= @ticket.status.capitalize %></td>
+          </tr>
+          <tr>
             <td><b>Assigned to:</b></td>
             <td><%= @ticket.get_employee.full_name %></td>
           </tr>
@@ -26,14 +34,6 @@
             <% else %>
               <td><%= @ticket.project.get_projectmanager.full_name %> (project manager) </td>
             <% end %>
-          </tr>
-          <tr>
-            <td><b>Priority:</b></td>
-            <td><%= @ticket.priority.capitalize %></td>
-          </tr>
-          <tr>
-            <td><b>Status:</b></td>
-            <td><%= @ticket.status.capitalize %></td>
           </tr>
           <tr>
             <% if (@ticket.parent_ticket) && (@ticket.type == 2) %>

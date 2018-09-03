@@ -87,4 +87,15 @@ class Ticket < ApplicationRecord
       "100"
     end
   end
+
+  def worked_on_time
+    nr_of_days = (started_at.to_datetime..ended_at.to_datetime).count {|date| (1..5).include?(date.wday) }
+
+    if nr_of_days > 1
+      "Aprox. #{nr_of_days} days"
+    elsif nr_of_days > 0
+      nr_of_hours = ((ended_at - started_at).to_i) / 3600
+      "Aprox. #{nr_of_hours} hours"
+    end
+  end
 end
