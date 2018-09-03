@@ -1,0 +1,52 @@
+<%= render 'projects/left_sidebar' %>
+<%= render 'tabs' %>
+
+<% images, audios, videos, pdfs, others = [], [], [], [], [] %>
+<% @ticket.attachments.each do |attachment| %>
+  <% images.push(attachment.file) if attachment.file.is_image? %>
+  <% audios.push(attachment.file) if attachment.file.is_audio? %>
+  <% videos.push(attachment.file) if attachment.file.is_video? %>
+  <% pdfs.push(attachment.file) if attachment.file.is_pdf? %>
+  <% others.push(attachment.file) if attachment.file.is_other? %>
+<% end %>
+
+<br>
+<div class="container-fluid">
+  <% unless images.empty? %> <p><b>Images:</b></p> <% end %>
+  <p>
+  <% images.each do |image| %>
+    <%= image_tag(image.url, size: "150", alt: "broke", id: "ticket-image") %>
+  <% end %>
+  <% unless images.empty? %> <br> <% end %>
+  </p>
+
+  <% unless audios.empty? %> <p><b>Audios:</b></p> <% end %>
+  <p>
+  <% audios.each do |audio| %>
+    <%= audio_tag(audio.url, controls: true, class: "ticket-audio") %>
+  <% end %>
+  <% unless audios.empty? %> <br> <% end %>
+  </p>
+
+  <% unless videos.empty? %> <p><b>Videos:</b></p> <% end %>
+  <p>
+  <% videos.each do |video| %>
+    <%= video_tag(video.url, controls: true, size: "330x250", class: "ticket-video") %>
+  <% end %>
+  <% unless videos.empty? %> <br> <% end %>
+  </p>
+
+  <% unless pdfs.empty? %> <p><b>PDFs:</b></p> <% end %>
+  <p>
+  <% pdfs.each do |pdf| %>
+    <%= link_to pdf.get_original_filename, pdf.url, target: :_blank %><br>
+  <% end %>
+  <% unless pdfs.empty? %> <br> <% end %>
+
+  <% unless others.empty? %> <p><b>Others:</b></p> <% end %>
+  <p>
+  <% others.each do |other| %>
+    <%= link_to other.get_original_filename, download_file_path(@ticket.project, other), target: :_blank %><br>
+  <% end %>
+  </p>
+</div>

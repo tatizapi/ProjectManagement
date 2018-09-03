@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   #tickets details
   get '/projects/:project_id/tickets/:id/time_tracking' => 'tickets#time_tracking', as: :ticket_time_tracking
+  get '/projects/:project_id/tickets/:id/attachments' => 'tickets#attachments', as: :ticket_attachments
 
   #for realtime chat
   mount ActionCable.server => '/cable'

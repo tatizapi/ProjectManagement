@@ -1,12 +1,12 @@
 class TicketsController < ApplicationController
-  before_action :find_ticket_by_id, only: [:show, :edit, :update, :destroy, :delete_attachment, :time_tracking]
+  before_action :find_ticket_by_id, only: [:show, :edit, :update, :destroy, :delete_attachment, :time_tracking, :attachments]
   before_action :find_current_project, only: [:new, :create, :show, :edit, :update, :destroy]
 
   #for developers dropdown
   before_action :get_developers, only: [:new, :create, :edit, :update]
 
   #index and show are common for admin and employee
-  before_action :setup_left_sidebar, only: [:new, :create, :show, :edit, :update, :time_tracking]
+  before_action :setup_left_sidebar, only: [:new, :create, :show, :edit, :update, :time_tracking, :attachments]
 
   def new
     @ticket = Ticket.new(owner: params[:owner], parent_ticket: params[:parent_ticket])
@@ -62,6 +62,9 @@ class TicketsController < ApplicationController
 
   def time_tracking
     @deadline = @ticket.deadline #i did this to reduce the number of calls on database on the time_tracking tab in Ticket model
+  end
+
+  def attachments
   end
 
   private
