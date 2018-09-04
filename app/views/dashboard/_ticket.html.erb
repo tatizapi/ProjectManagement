@@ -8,10 +8,15 @@
 
   <div class="panel-heading">
     <% if current_user.can_see_ticket_details? %>
-      <h5><b><%= link_to ticket.title, project_ticket_path(@project, ticket) %></b></h5>
-    <% else %>
-      <h5><b><%= ticket.title %></b></h5>
+      <% if ticket.priority == "high" %>
+        <h5><b><%= link_to ticket.title, project_ticket_path(@project, ticket), {:style=>'color:#FF0000;'} %></b></h5>
+      <% elsif ticket.priority == "medium" %>
+        <h5><b><%= link_to ticket.title, project_ticket_path(@project, ticket), {:style=>'color:#990066;'} %></b></h5>
+      <% else %>
+        <h5><b><%= link_to ticket.title, project_ticket_path(@project, ticket) %></b></h5>
+      <% end %>
     <% end %>
+
     <% if current_user.can_see_ticket_employee? %>
       <%= image_tag(ticket.get_employee.file.url, size: "30", alt: "broke", class: 'employee-avatar') %>
     <% end %>
@@ -19,35 +24,15 @@
   </div>
 
   <div class="panel-body fixed-ticket-panel">
-    <% if ticket.priority == "medium" %>
-      <h6 class="card-subtitle mb-2 text-muted" style="color:#990066;">
-        <b><%= ticket.priority.upcase %></b>
-      </h6><br>
-
-    <% elsif ticket.priority == "high" %>
-      <h6 class="card-subtitle mb-2 text-muted" style="color:#FF0000;">
-        <b><%= ticket.priority.upcase %></b>
-      </h6><br>
-
-    <% else %>
-      <h6 class="card-subtitle mb-2 text-muted">
-        <b><%= ticket.priority.upcase %></b>
-      </h6><br>
-    <% end %>
+    <p><%= ticket.description %></p>
 
     <% if ticket.owner %>
-      <% if ticket.type == "Bug" %>
-        <h5 style="color:#167FD2;"><b>From ticket:</b> <%= ticket.get_parent.title %> </h5>
-      <% else %>
-        <h5 style="color:#167FD2;"><b>Derived from:</b> <%= ticket.get_parent.title %> </h5>
-      <% end %>
+      <span class="label-wrapper"><b>Parent: </b> <%= ticket.get_parent.title %>&nbsp;</span>
     <% end %>
 
     <% if ticket.has_children? %>
-      <h5 style="color:#167FD2;"><b>Has subtickets</b></h5>
+      <span class="label-wrapper">Has subtickets&nbsp;</span>
     <% end %>
-
-    <p><%= ticket.description %></p>
   </div>
 
     <!-- BOTTOM BUTTONS -->

@@ -4,13 +4,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'devise'
-gem 'carrierwave'
+gem 'carrierwave' #for attachments
 gem 'jquery-rails'
-gem 'redis', '~> 3.2'
+gem 'redis', '~> 3.2' #for chat syncronization (probably unused tho)
 gem 'toastr-rails'
-gem 'momentjs-rails', '>= 2.9.0'
+gem 'momentjs-rails', '>= 2.9.0' #for datetimepicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
-gem 'chartkick'
+gem 'chartkick' #for piechart
+gem 'will_paginate' #for pagination on ticket -> comments
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'

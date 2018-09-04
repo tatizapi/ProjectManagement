@@ -35,6 +35,6 @@ class Project < ApplicationRecord
 
   def get_employee_hash_for_piechart
     hash = tickets.group(:employee_id).count
-    hash.transform_keys { |key| Employee.find(key).full_name }
+    hash.transform_keys { |key| Employee.find(key).full_name } #to replace employee_id with the employee's name
   end
 end
