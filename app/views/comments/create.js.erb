@@ -1,9 +1,8 @@
 var comments_id = '#comments-' + <%= @ticket.id %>
 
 $(comments_id).html("<%= j (render partial: 'comment', collection: @first_comments, locals: {modify: true}) %>");
+$('#comment_body').val('');
 
 var notification_id = '#notification-' + <%= @ticket.id %>
 var nr_of_comments = <%= @ticket.get_nr_of_comments %>
 $(notification_id).text(nr_of_comments);
-
-$('#comment_body').val('');

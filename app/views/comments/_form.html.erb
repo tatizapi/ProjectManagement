@@ -9,5 +9,10 @@
     <% end %>
   <% end %>
   <%= form.file_field :files, multiple: true %><br>
-  <%= form.submit "Submit" %>
+  <%= button_tag do %>
+    <span><i class="glyphicon glyphicon-ok"></i> Save</span>
+  <% end %>
+  <%= button_tag type: 'button', onclick: "slide_comment_form_up(#{@ticket.id})" do %>
+    <span><i class="glyphicon glyphicon-remove"></i> Cancel</span>
+  <% end %>
 <% end %>

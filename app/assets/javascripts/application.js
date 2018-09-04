@@ -68,3 +68,13 @@ $(document).on('mouseover', function() {
     }
   );
 });
+
+
+//-----> COMMENTS - _FORM.HTML.ERB
+function slide_comment_form_up(ticket_id) {
+  var new_comment_id = '#new-comment-' + ticket_id
+
+  if ($(new_comment_id).is(':visible')) {
+      $(new_comment_id).slideUp(350);
+  }
+}
