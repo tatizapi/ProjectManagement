@@ -1,16 +1,9 @@
 var comments_id = '#comments-' + <%= @ticket.id %>
 
-<% if @from_all_comments_form %>
-  $('.all-comments-panel').html("<%= j (render partial: 'comment', collection: @all_ticket_comments, locals: {modify: false}) %>");
-  $('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);
+$(comments_id).html("<%= j (render partial: 'comment', collection: @first_comments, locals: {modify: true}) %>");
 
-<% else %>
-  $(comments_id).html("<%= j (render partial: 'comment', collection: @first_comments, locals: {modify: true}) %>");
-
-  var notification_id = '#notification-' + <%= @ticket.id %>
-  var nr_of_comments = <%= @ticket.get_nr_of_comments %>
-  $(notification_id).text(nr_of_comments);
-<% end %>
+var notification_id = '#notification-' + <%= @ticket.id %>
+var nr_of_comments = <%= @ticket.get_nr_of_comments %>
+$(notification_id).text(nr_of_comments);
 
 $('#comment_body').val('');
-$('#comment_files').val('');

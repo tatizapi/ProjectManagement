@@ -1,12 +1,14 @@
 <br>
 <small class='form-text text-muted' style='font-size:10px;'><%= comment.date_time %></small><br>
 <b style="color:#167FD2"><%= comment.user.username %>:</b>
-<% if current_user.can_modify_comment?(comment) && modify %>
-  <%= link_to ticket_comment_path(comment.ticket, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'right', title: 'Delete comment' do %>
-    <i class="glyphicon glyphicon-remove"></i>
-  <% end %>
-  <%= link_to edit_ticket_comment_path(comment.ticket, comment), remote: true, class: 'right', title: 'Edit comment' do %>
-    <i class="glyphicon glyphicon-edit "></i>
+<% if modify %>
+  <% if current_user.can_modify_comment?(comment) %>
+    <%= link_to ticket_comment_path(comment.ticket, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'right', title: 'Delete comment' do %>
+      <i class="glyphicon glyphicon-remove"></i>
+    <% end %>
+    <%= link_to edit_ticket_comment_path(comment.ticket, comment), remote: true, class: 'right', title: 'Edit comment' do %>
+      <i class="glyphicon glyphicon-edit "></i>
+    <% end %>
   <% end %>
 <% end %><br>
 <%= comment.body %><br>

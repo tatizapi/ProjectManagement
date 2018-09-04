@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :get_current_ticket, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment]
   before_action :get_current_project, only: [:index]
   before_action :get_first_ticket_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
-  before_action :get_all_ticket_comments, only: [:index, :create]
+  before_action :get_all_ticket_comments, only: [:index]
   before_action :get_comment_by_id, only: [:edit, :update, :destroy, :delete_attachment]
   before_action :setup_left_sidebar, only: [:index]
 
@@ -15,7 +15,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @from_all_comments_form = params[:comment][:from_all_comments_form]
     @comment = Comment.new(comment_params.merge(user_id: current_user.id, ticket_id: @ticket.id))
     @comment.save
     add_files
