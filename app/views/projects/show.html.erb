@@ -86,7 +86,7 @@
     </div>
 
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-      <%= pie_chart @project.tickets.group(:employee_id).count, donut: true, width: "700px" %>
+      <%= pie_chart @project.get_employee_hash_for_piechart, donut: true, width: "700px" %>
     </div>
 
   </div>

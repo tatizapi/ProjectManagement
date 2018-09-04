@@ -33,4 +33,8 @@ class Project < ApplicationRecord
     testers
   end
 
+  def get_employee_hash_for_piechart
+    hash = tickets.group(:employee_id).count
+    hash.transform_keys { |key| Employee.find(key).full_name }
+  end
 end
