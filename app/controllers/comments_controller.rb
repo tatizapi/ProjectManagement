@@ -63,7 +63,7 @@ class CommentsController < ApplicationController
   end
 
   def get_first_ticket_comments
-    @first_comments = @ticket.comments.paginate(:page => params[:page], :per_page => 5).order('id DESC')
+    @first_comments = @ticket.comments.order(created_at: :desc).limit(5)
   end
 
   def get_all_ticket_comments
