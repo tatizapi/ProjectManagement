@@ -1,14 +1,14 @@
 var comments_id = '#comments-' + <%= @ticket.id %>
-var more_comments_button_id = '#more-comments-button-' + <%= @ticket.id %>
+var comments_options_id = '#comments-options-' + <%= @ticket.id %>
 
 if ($(comments_id).is(':visible')) {
     $(comments_id).slideUp(350);
-    $(more_comments_button_id).slideUp(700);
+    $(comments_options_id).slideUp(700);
 } else {
   $(comments_id).html("<%= j (render partial: 'comment', collection: @first_comments, locals: {modify: true}) %>");
   $(comments_id).slideDown(350);
 
   <% if @all_ticket_comments.count > 5 %>
-    $(more_comments_button_id).show();
+    $(comments_options_id).show();
   <% end %>
 }

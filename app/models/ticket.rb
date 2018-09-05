@@ -67,6 +67,7 @@ class Ticket < ApplicationRecord
 
   def remaining_time(deadline)
     remaining_time = (deadline - Time.now).to_i #difference between two dates is in seconds
+
     if remaining_time > 0
       nr_of_days = remaining_time / 86400
       nr_of_hours = (remaining_time % 86400) / 3600
@@ -81,6 +82,7 @@ class Ticket < ApplicationRecord
     total_time = (deadline - created_at).to_i
     passed_time = (Time.now - created_at).to_i
     percent = (passed_time.to_f / total_time) * 100
+
     if percent < 100
       sprintf('%.2f', percent)
     else

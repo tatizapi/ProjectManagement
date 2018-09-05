@@ -1,13 +1,16 @@
 class CommentsController < ApplicationController
-  before_action :get_current_ticket, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment]
+  before_action :get_current_ticket, only: [:index, :new, :create, :edit, :update, :destroy, :delete_attachment, :increase_step, :decrease_step]
   before_action :get_current_project, only: [:index]
   before_action :get_first_ticket_comments, only: [:index, :create, :update, :destroy, :delete_attachment]
   before_action :get_all_ticket_comments, only: [:index]
   before_action :get_comment_by_id, only: [:edit, :update, :destroy, :delete_attachment]
   before_action :setup_left_sidebar, only: [:index]
 
+  @@step = 0 #used for keeping track on which 5 records from comments to show in index
+
   def index
     @comment = Comment.new
+    @@step = 0
   end
 
   def new
@@ -40,6 +43,26 @@ class CommentsController < ApplicationController
     render 'create'
   end
 
+  def decrease_step
+    @@step -= 1
+
+    if @@step < 0
+      @@step = 0
+    end
+
+    get_first_ticket_comments
+    render 'create'
+  end
+
+  def increase_step
+    if @@step < (@ticket.comments.count / 5)
+      @@step += 1
+    end
+
+    get_first_ticket_comments
+    render 'create'
+  end
+
   private
 
   def comment_params
@@ -63,7 +86,7 @@ class CommentsController < ApplicationController
   end
 
   def get_first_ticket_comments
-    @first_comments = @ticket.comments.order(created_at: :desc).limit(5)
+    @first_comments = @ticket.comments.order(created_at: :desc).offset(5 * @@step).limit(5)
   end
 
   def get_all_ticket_comments

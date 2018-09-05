@@ -85,11 +85,20 @@
 
     <div id="new-comment-<%= ticket.id.to_s %>" style="display:none"></div>
 
-    <div id="more-comments-button-<%= ticket.id.to_s %>" style="display:none">
+    <div id="comments-options-<%= ticket.id.to_s %>" style="display:none">
       <%= link_to ticket_comments_path(ticket), title: 'Show all comments' do %>
         <br><i class="glyphicon glyphicon-option-horizontal"></i>
       <% end %>
+
+      <%= link_to decrease_step_path(ticket), method: :put, remote: true, title: "Previous 5 comments" do %>
+        <i class="glyphicon glyphicon-backward"></i>
+      <% end %>
+
+      <%= link_to increase_step_path(ticket), method: :put, remote: true, title: "Next 5 comments" do %>
+        <i class="glyphicon glyphicon-forward"></i>
+      <% end %>
     </div>
+
     <div id="comments-<%= ticket.id.to_s %>" style="display:none"></div>
 
   </div>

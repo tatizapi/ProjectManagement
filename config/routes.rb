@@ -42,6 +42,11 @@ Rails.application.routes.draw do
   get '/projects/:project_id/tickets/:id/time_tracking' => 'tickets#time_tracking', as: :ticket_time_tracking
   get '/projects/:project_id/tickets/:id/attachments' => 'tickets#attachments', as: :ticket_attachments
 
+  #cum pot sa accesez o actiune din controller fara sa creez o intreaga ruta pt asta?
+  #am incercat cu <%= link_to "", controller: "comments", action: "decrease_step" do %> dar nu a mers
+  put 'tickets/:ticket_id/decrease_step' => 'comments#decrease_step', as: :decrease_step
+  put 'tickets/:ticket_id/increase_step' => 'comments#increase_step', as: :increase_step
+
   #for realtime chat
   mount ActionCable.server => '/cable'
 
