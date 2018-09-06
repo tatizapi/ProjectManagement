@@ -22,10 +22,6 @@ jQuery(document).on 'turbolinks:load', ->
       send_comment: (comment, ticket_id) ->
         @perform 'send_comment', comment: comment, ticket_id: ticket_id
 
-      # send_notification: (ticket_id) ->
-      #   console.log(ticket_id)
-      #   @perform 'send_notification', ticket_id: ticket_id
-
     $('#new-comment-form').submit (e) ->
       $this = $(this)
       textarea = $this.find('#comment_body')
@@ -34,12 +30,3 @@ jQuery(document).on 'turbolinks:load', ->
         textarea.val('')
       e.preventDefault()
       return false
-
-  $('#ticket-new-comment-div').submit (e) ->
-    console.log("was here")
-    # $this = $(this)
-    # textarea = $this.find('#comment_body')
-    # if $.trim(textarea.val()).length > 0
-    #   App.global_chat.send_notification $('#ticket-new-comment-form').data('ticket-id')
-    e.preventDefault()
-    return false

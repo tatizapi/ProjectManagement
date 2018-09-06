@@ -1,20 +1,18 @@
-<div id="ticket-new-comment-div" data-ticket-id="<%= @ticket.id %>" >
-  <%= form_with model: [@ticket, @comment], id: 'ticket-new-comment-form' do |form| %>
-    <%= form.text_area :body %><br>
-    <% if @comment.attachments %>
-      <% @comment.attachments.each do |attachment| %>
-        <%= link_to comment_delete_attachment_path(@comment.ticket, @comment, attachment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
-          <i class="glyphicon glyphicon-remove"></i>
-        <% end %>
-        <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>
+<%= form_with model: [@ticket, @comment], id: 'ticket-new-comment-form' do |form| %>
+  <%= form.text_area :body %><br>
+  <% if @comment.attachments %>
+    <% @comment.attachments.each do |attachment| %>
+      <%= link_to comment_delete_attachment_path(@comment.ticket, @comment, attachment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, title: 'Delete attachment' do %>
+        <i class="glyphicon glyphicon-remove"></i>
       <% end %>
-    <% end %>
-    <%= form.file_field :files, multiple: true %><br>
-    <%= button_tag type: 'submit', id: 'new-comment-submit-button' do %>
-      <span><i class="glyphicon glyphicon-ok"></i> Save</span>
-    <% end %>
-    <%= button_tag type: 'button', onclick: "slide_comment_form_up(#{@ticket.id})" do %>
-      <span><i class="glyphicon glyphicon-remove"></i> Cancel</span>
+      <%= link_to attachment.filename, attachment.file.url, target: :_blank %><br>
     <% end %>
   <% end %>
-</div>
+  <%= form.file_field :files, multiple: true %><br>
+  <%= button_tag type: 'submit', id: 'new-comment-submit-button' do %>
+    <span><i class="glyphicon glyphicon-ok"></i> Save</span>
+  <% end %>
+  <%= button_tag type: 'button', onclick: "slide_comment_form_up(#{@ticket.id})" do %>
+    <span><i class="glyphicon glyphicon-remove"></i> Cancel</span>
+  <% end %>
+<% end %>

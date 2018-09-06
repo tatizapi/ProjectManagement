@@ -90,10 +90,6 @@
         <br><i class="glyphicon glyphicon-option-horizontal"></i>
       <% end %>
 
-      <%#= link_to iterate_through_comments_path(ticket, step: (@step - 1)), method: :put, remote: true, title: "Previous 5 comments" do %>
-        <!-- <i class="glyphicon glyphicon-backward"></i> -->
-      <%# end %>
-
       <%= link_to decrease_step_path(ticket), method: :put, remote: true, title: "Previous 5 comments" do %>
         <i class="glyphicon glyphicon-backward"></i>
       <% end %>
