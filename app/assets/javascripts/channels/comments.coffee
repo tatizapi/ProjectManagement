@@ -1,6 +1,5 @@
 jQuery(document).on 'turbolinks:load', ->
   comments = $('#comments')
-  file_input = $('#comment_files')
   if $('#comments').length > 0
     comments_to_bottom = -> $('.scroll-down').scrollTop($('.scroll-down')[0].scrollHeight);
 
@@ -23,8 +22,11 @@ jQuery(document).on 'turbolinks:load', ->
       send_comment: (comment, ticket_id) ->
         @perform 'send_comment', comment: comment, ticket_id: ticket_id
 
+      # send_notification: (ticket_id) ->
+      #   console.log(ticket_id)
+      #   @perform 'send_notification', ticket_id: ticket_id
+
     $('#new-comment-form').submit (e) ->
-      console.log (file_input)
       $this = $(this)
       textarea = $this.find('#comment_body')
       if $.trim(textarea.val()).length > 0
@@ -32,3 +34,12 @@ jQuery(document).on 'turbolinks:load', ->
         textarea.val('')
       e.preventDefault()
       return false
+
+  $('#ticket-new-comment-div').submit (e) ->
+    console.log("was here")
+    # $this = $(this)
+    # textarea = $this.find('#comment_body')
+    # if $.trim(textarea.val()).length > 0
+    #   App.global_chat.send_notification $('#ticket-new-comment-form').data('ticket-id')
+    e.preventDefault()
+    return false
