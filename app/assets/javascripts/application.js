@@ -21,6 +21,7 @@
 //= require Chart.bundle
 //= require chartkick
 //= require sync
+//= require bootstrap-multiselect
 
 //-----> DASHBOARD - _TABS.HTML.ERB
 function filter_change() {
@@ -78,4 +79,15 @@ function slide_comment_form_up(ticket_id) {
   if ($(new_comment_id).is(':visible')) {
       $(new_comment_id).slideUp(350);
   }
+}
+
+
+//-----> REPORTS - INDEX.HTML.ERB
+function show_projects_options() {
+  $('#select-projects-options').show();
+  $('#all_projects_dropdown').multiselect();
+}
+
+function show_employees_options() {
+  $('#select-projects-options').hide();
 }

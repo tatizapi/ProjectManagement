@@ -15,6 +15,7 @@ gem 'will_paginate' #for pagination on ticket -> comments
 gem 'faye' #for realtime
 gem 'thin', require: false #for realtime
 gem 'render_sync' #for realtime
+gem 'bootstrap-multiselect-rails' #used in reports
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
