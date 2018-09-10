@@ -20,6 +20,7 @@
 //= require bootstrap-datetimepicker
 //= require Chart.bundle
 //= require chartkick
+//= require sync
 
 //-----> DASHBOARD - _TABS.HTML.ERB
 function filter_change() {

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :tickets
     resources :dashboard, only: [:index]
     resources :chat, only: [:index, :create]
+    resources :reports, only: [:index]
   end
   resources :employees
 
