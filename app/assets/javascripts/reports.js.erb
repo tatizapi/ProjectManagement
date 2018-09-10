@@ -1,0 +1,24 @@
+//-----> REPORTS - INDEX.HTML.ERB
+function show_projects_dropdown() {
+  $('#projects-dropdown').show();
+  $('#select_projects').multiselect({
+    nonSelectedText: 'Projects',
+    onChange: function(option, checked) {
+      selected_projects = JSON.stringify($('#select_projects').val()),
+      $.ajax({
+        url: "reports",
+        type: "GET",
+        data: {"selected_projects": selected_projects}
+      });
+    }
+  });
+  $('#employees-dropdown').hide();
+}
+
+function show_employees_dropdown() {
+  $('#employees-dropdown').show()
+  $('#select_employees').multiselect({
+    nonSelectedText: 'Employees'
+  });
+  $('#projects-dropdown').hide();
+}

@@ -3,7 +3,10 @@ class ReportsController < ApplicationController
   before_action :get_current_project, only: [:index]
 
   def index
+    @employees = Employee.all
+    @projects = Project.all
 
+    puts params[:selected_projects]
   end
 
   private
