@@ -1,24 +1,39 @@
 //-----> REPORTS - INDEX.HTML.ERB
-function show_projects_dropdown() {
-  $('#projects-dropdown').show();
+document.addEventListener("turbolinks:load", function() {
+  set_up_dropdowns();
+})
+
+function set_up_dropdowns() {
+  $('#select_employees').multiselect({
+    nonSelectedText: 'Employees',
+  });
+
   $('#select_projects').multiselect({
     nonSelectedText: 'Projects',
     onChange: function(option, checked) {
-      selected_projects = JSON.stringify($('#select_projects').val()),
+      selected_projects = $('#select_projects').val().map(Number);
       $.ajax({
-        url: "reports",
-        type: "GET",
-        data: {"selected_projects": selected_projects}
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        url: "reports/refill_employees_dropdown",
+        type: "POST",
+        data: {"selected_projects": selected_projects},
+        success: function (data){
+          data = data["employees"].filter((v, i, a) => a.indexOf(v) === i); //to eliminate duplicates
+          var htm = '';
+          for(var i = 0; i < data.length; ++i) {
+            htm += '<option>' + data[i] + '</option>';
+            console.log(data[i]);
+            $('#select_employees').html(htm);
+            $('#select_employees').multiselect('rebuild');
+          }
+        }
       });
     }
   });
-  $('#employees-dropdown').hide();
-}
+};
 
-function show_employees_dropdown() {
-  $('#employees-dropdown').show()
-  $('#select_employees').multiselect({
-    nonSelectedText: 'Employees'
-  });
-  $('#projects-dropdown').hide();
-}
+      // $.ajax({
+      //   url: "reports/tickets_priority",
+      //   type: "POST",
+      //   data: {"selected_project": option.val()}
+      // });

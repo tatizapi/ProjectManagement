@@ -12,9 +12,9 @@ gem 'momentjs-rails', '>= 2.9.0' #for datetimepicker
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'chartkick' #for piechart
 gem 'will_paginate' #for pagination on ticket -> comments
-gem 'faye' #for realtime
-gem 'thin', require: false #for realtime
-gem 'render_sync' #for realtime
+# gem 'faye' #for realtime
+# gem 'thin', require: false #for realtime
+# gem 'render_sync' #for realtime
 gem 'bootstrap-multiselect-rails' #used in reports
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

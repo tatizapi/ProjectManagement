@@ -48,6 +48,10 @@ Rails.application.routes.draw do
   put 'tickets/:ticket_id/decrease_step' => 'comments#decrease_step', as: :decrease_step
   put 'tickets/:ticket_id/increase_step' => 'comments#increase_step', as: :increase_step
 
+  #for reports
+  post '/projects/:project_id/reports/tickets_priority' => 'reports#tickets_priority'
+  post '/projects/:project_id/reports/refill_employees_dropdown' => 'reports#refill_employees_dropdown'
+
   #for realtime chat
   mount ActionCable.server => '/cable'
 

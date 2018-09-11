@@ -5,8 +5,19 @@ class ReportsController < ApplicationController
   def index
     @employees = Employee.all
     @projects = Project.all
+  end
 
-    puts params[:selected_projects]
+  def refill_employees_dropdown
+    @employees = []
+    Role.where(project_id: params[:selected_projects]).each do |role|
+      @employees.push(Employee.find(role.employee_id))
+    end
+
+    render json: { employees: @employees.map{|e| e.full_name} }
+  end
+
+  def tickets_priority
+    puts params[:selected_project]
   end
 
   private

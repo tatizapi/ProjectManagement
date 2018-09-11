@@ -4,18 +4,12 @@
 <div class="container-fluid">
   <%= form_with class: 'reports-form' do |f| %>
     <br>
-    <div class="form-group">
-      <%= f.radio_button :proj_vs_emplys, "Projects", onClick: "show_projects_dropdown()" %>
-      <%= f.label :proj_vs_emplys, "Projects", value: "projects" %>
-      <%= f.radio_button :proj_vs_emplys, "Employees", onClick: "show_employees_dropdown()" %>
-      <%= f.label :proj_vs_emplys, "Employees", value: "employees" %>
-    </div>
 
-    <div id="projects-dropdown" style="display: none;">
+    <div id="projects-dropdown" class="display-inline">
       <%= f.select :select_projects, options_from_collection_for_select(@projects, "id", "title"), {}, { multiple: true } %>
     </div>
 
-    <div id="employees-dropdown" style="display: none;">
+    <div id="employees-dropdown" class="display-inline">
       <%= f.select :select_employees, options_from_collection_for_select(@employees, "id", "full_name"), {}, { multiple: true } %>
     </div>
   <% end %>

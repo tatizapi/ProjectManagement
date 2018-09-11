@@ -20,7 +20,6 @@
 //= require bootstrap-datetimepicker
 //= require Chart.bundle
 //= require chartkick
-//= require sync
 //= require bootstrap-multiselect
 
 //-----> DASHBOARD - _TABS.HTML.ERB
