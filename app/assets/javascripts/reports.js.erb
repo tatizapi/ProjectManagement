@@ -1,11 +1,22 @@
 //-----> REPORTS - INDEX.HTML.ERB
 document.addEventListener("turbolinks:load", function() {
   set_up_dropdowns();
+  set_up_datetimepickers();
 })
 
 function set_up_dropdowns() {
   $('#select_on_employees').multiselect({
     nonSelectedText: 'Employees',
+    includeSelectAllOption: true
+  });
+
+  $('#select_on_tickets').multiselect({
+    nonSelectedText: 'Tickets',
+    includeSelectAllOption: true
+  });
+
+  $('#select_on_tickets_status').multiselect({
+    nonSelectedText: 'Status',
     includeSelectAllOption: true
   });
 
@@ -33,8 +44,18 @@ function set_up_dropdowns() {
   });
 };
 
-      // $.ajax({
-      //   url: "reports/tickets_priority",
-      //   type: "POST",
-      //   data: {"selected_project": option.val()}
-      // });
+function set_up_datetimepickers() {
+  $( "#report-from-datetimepicker" ).datetimepicker(
+    {
+      minDate: moment(), //to disable past dates
+      format: 'YYYY-MM-DD'
+    }
+  );
+
+  $( "#report-to-datetimepicker" ).datetimepicker(
+    {
+      minDate: moment(), //to disable past dates
+      format: 'YYYY-MM-DD'
+    }
+  );
+}

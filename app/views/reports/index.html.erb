@@ -5,16 +5,46 @@
   <%= form_with url: project_reports_path, class: 'reports-form' do |f| %>
     <br>
 
-    <div id="projects-dropdown" class="display-inline">
-      <%= f.select :select_on_projects, options_from_collection_for_select(@projects, "id", "title"), {}, { multiple: true } %>
+    <div class="form-group col-sm-7">
+      <div id="projects-dropdown" class="display-inline">
+        <%= f.select :select_on_projects, options_from_collection_for_select(@projects, "id", "title"), {}, { multiple: true } %>
+      </div>
+
+      <div id="employees-dropdown" class="display-inline">
+        <%= f.select :select_on_employees, options_from_collection_for_select(@employees, "id", "full_name"), {}, { multiple: true } %>
+      </div>
+
+      <div id="tickets-dropdown" class="display-inline">
+        <%= f.select :select_on_tickets, options_for_select(["Tasks", "Bugs"]), {}, { multiple: true } %>
+      </div>
+
+      <div id="tickets-status-dropdown" class="display-inline">
+        <%= f.select :select_on_tickets_status, options_for_select(["TO DO", "In progress", "Complete", "Done"]), {}, { multiple: true } %>
+      </div>
     </div>
 
-    <div id="employees-dropdown" class="display-inline">
-      <%= f.select :select_on_employees, options_from_collection_for_select(@employees, "id", "full_name"), {}, { multiple: true } %>
+    <div class="form-group col-sm-4">
+      <div class='report-datetimepicker-wrapper input-group'>
+        <div class="input-group-addon">
+          <span class="input-group-text">From</span>
+        </div>
+        <%= f.text_field :report_from_date, autocomplete: 'off', class: 'form-control', id: 'report-from-datetimepicker' %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+
+        <div class="input-group-addon">
+          <span class="input-group-text">To</span>
+        </div>
+        <%= f.text_field :report_to_date, autocomplete: 'off', class: 'form-control', id: 'report-to-datetimepicker' %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
     </div>
 
-    <div>
-      <br><%= f.submit "Generate Reports" %>
+    <div class="form group col-sm-1">
+      <%= f.submit "Generate Reports" %>
     </div>
   <% end %>
 
@@ -22,7 +52,7 @@
   <% puts @tickets_priority_piechart %>
   <%= pie_chart @tickets_priority_piechart, donut: true, width: "1000px" %>
 
-  <div id="piechart_div"></div>
+  <div class="piechart_div"><div>
 
 </div>
 
