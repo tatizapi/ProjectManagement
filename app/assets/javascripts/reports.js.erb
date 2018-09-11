@@ -6,10 +6,12 @@ document.addEventListener("turbolinks:load", function() {
 function set_up_dropdowns() {
   $('#select_on_employees').multiselect({
     nonSelectedText: 'Employees',
+    includeSelectAllOption: true
   });
 
   $('#select_on_projects').multiselect({
     nonSelectedText: 'Projects',
+    includeSelectAllOption: true,
     onChange: function(option, checked) {
       selected_projects = $('#select_on_projects').val().map(Number);
       $.ajax({
