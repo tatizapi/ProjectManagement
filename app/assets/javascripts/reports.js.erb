@@ -4,14 +4,14 @@ document.addEventListener("turbolinks:load", function() {
 })
 
 function set_up_dropdowns() {
-  $('#select_employees').multiselect({
+  $('#select_on_employees').multiselect({
     nonSelectedText: 'Employees',
   });
 
-  $('#select_projects').multiselect({
+  $('#select_on_projects').multiselect({
     nonSelectedText: 'Projects',
     onChange: function(option, checked) {
-      selected_projects = $('#select_projects').val().map(Number);
+      selected_projects = $('#select_on_projects').val().map(Number);
       $.ajax({
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
         url: "reports/refill_employees_dropdown",
@@ -22,9 +22,8 @@ function set_up_dropdowns() {
           var htm = '';
           for(var i = 0; i < data.length; ++i) {
             htm += '<option>' + data[i] + '</option>';
-            console.log(data[i]);
-            $('#select_employees').html(htm);
-            $('#select_employees').multiselect('rebuild');
+            $('#select_on_employees').html(htm);
+            $('#select_on_employees').multiselect('rebuild');
           }
         }
       });

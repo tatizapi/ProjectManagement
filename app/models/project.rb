@@ -37,16 +37,4 @@ class Project < ApplicationRecord
     hash = tickets.group(:employee_id).count
     hash.transform_keys { |key| Employee.find(key).full_name } #to replace employee_id with the employee's name
   end
-
-  def get_nr_of_high_priority_tickets
-    tickets.where(priority: 'high').count
-  end
-
-  def get_nr_of_medium_priority_tickets
-    tickets.where(priority: 'medium').count
-  end
-
-  def get_nr_of_low_priority_tickets
-    tickets.where(priority: 'low').count
-  end
 end
