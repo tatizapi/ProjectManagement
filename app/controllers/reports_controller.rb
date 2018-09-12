@@ -1,26 +1,25 @@
 class ReportsController < ApplicationController
-  before_action :setup_left_sidebar, only: [:index, :create]
-  before_action :get_current_project, only: [:index, :create]
+  before_action :setup_left_sidebar, only: [:show, :new, :create]
+  before_action :get_current_project, only: [:show, :new, :create]
+  before_action :get_entities_for_dropdowns, only: [:show, :new]
 
-  def index
-    @employees = Employee.all
-    @projects = Project.all
+  def show
+    @report = Report.find(params[:id])
 
-    @tickets_priority_piechart = {"high"=>2, "low"=>4, "medium"=>7}
-    @nr_of_high_priority_tickets = 3
-    @nr_of_medium_priority_tickets = 4
-    @nr_of_low_priority_tickets = 2
+    tickets_priority_piechart
+  end
+
+  def new
   end
 
   def create
-    @employees = Employee.all
-    @projects = Project.all
+    report = Report.new(settings: report_params)
 
-    @tickets_priority_piechart = Ticket.where(project_id: params[:select_on_projects]).group(:priority).count
-    @nr_of_high_priority_tickets = 3
-    @nr_of_medium_priority_tickets = 4
-    @nr_of_low_priority_tickets = 2
-    render 'index'
+    if report.save
+      redirect_to project_report_path(@project, report)
+    else
+      render 'new'
+    end
   end
 
   def refill_employees_dropdown
@@ -35,10 +34,23 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.permit(:select_on_projects, :select_on_employees)
+    params.require(:report).permit(:tickets, :statuses, :from_date, :to_date, :projects => [], :employees => [])
+    # ':array => []' -> syntax has to be like this when working with arrays (and always at the end of the method !)
   end
 
   def get_current_project
     @project = Project.find(params[:project_id])
+  end
+
+  def get_entities_for_dropdowns
+    @employees = Employee.all
+    @projects = Project.all
+  end
+
+  def tickets_priority_piechart
+    tickets_by_priority = Ticket.where(project_id: @report.settings['projects']).group(:priority).count
+    @nr_of_high_priority_tickets = tickets_by_priority['high']
+    @nr_of_medium_priority_tickets = tickets_by_priority['medium']
+    @nr_of_low_priority_tickets = tickets_by_priority['low']
   end
 end

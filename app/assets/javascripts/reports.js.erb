@@ -5,29 +5,29 @@ document.addEventListener("turbolinks:load", function() {
 })
 
 function set_up_dropdowns() {
-  $('#select_on_employees').multiselect({
+  $('#report_employees').multiselect({
     nonSelectedText: 'Employees',
     includeSelectAllOption: true
   });
 
-  $('#select_on_tickets').multiselect({
+  $('#report_tickets').multiselect({
     nonSelectedText: 'Tickets',
     includeSelectAllOption: true
   });
 
-  $('#select_on_tickets_status').multiselect({
+  $('#report_statuses').multiselect({
     nonSelectedText: 'Status',
     includeSelectAllOption: true
   });
 
-  $('#select_on_projects').multiselect({
+  $('#report_projects').multiselect({
     nonSelectedText: 'Projects',
     includeSelectAllOption: true,
     onChange: function(option, checked) {
-      selected_projects = $('#select_on_projects').val().map(Number);
+      selected_projects = $('#report_projects').val().map(Number);
       $.ajax({
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        url: "reports/refill_employees_dropdown",
+        url: "refill_employees_dropdown",
         type: "POST",
         data: {"selected_projects": selected_projects},
         success: function (data){
@@ -35,8 +35,8 @@ function set_up_dropdowns() {
           var htm = '';
           for(var i = 0; i < data.length; ++i) {
             htm += '<option>' + data[i] + '</option>';
-            $('#select_on_employees').html(htm);
-            $('#select_on_employees').multiselect('rebuild');
+            $('#report_employees').html(htm);
+            $('#report_employees').multiselect('rebuild');
           }
         }
       });
