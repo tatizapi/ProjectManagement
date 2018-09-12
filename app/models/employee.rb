@@ -25,23 +25,23 @@ class Employee < User
   end
 
   def can_add_subticket?(ticket)
-    (ticket.employee_id == id) && (ticket.status != "complete") && (ticket.status != "done")
+    (ticket.employee_id == id) && (ticket.status != "Complete") && (ticket.status != "Done")
   end
 
   def can_modify_ticket?(project, ticket)
-    (ticket.status != "done") && (is_projectmanager?(project) || (ticket.owner && ticket.owner == id))
+    (ticket.status != "Done") && (is_projectmanager?(project) || (ticket.owner && ticket.owner == id))
   end
 
   def can_add_bug?(project, task)
-    (is_tester?(project)) && (task.status == "complete") && (task.type != "Bug")
+    (is_tester?(project)) && (task.status == "Complete") && (task.type != "Bug")
   end
 
   def can_send_ticket_back?(project, ticket)
-    (is_developer?(project) && has_ticket?(ticket) && (ticket.status == "inprogress" || ticket.status == "complete")) || (is_tester?(project) && (ticket.status == "complete" || ticket.status == "done"))
+    (is_developer?(project) && has_ticket?(ticket) && (ticket.status == "In progress" || ticket.status == "Complete")) || (is_tester?(project) && (ticket.status == "Complete" || ticket.status == "Done"))
   end
 
   def can_send_ticket_forward?(project, ticket)
-    (is_developer?(project) && has_ticket?(ticket) && (ticket.status == "todo" || ticket.status == "inprogress")) || (is_tester?(project) && ticket.status == "complete")
+    (is_developer?(project) && has_ticket?(ticket) && (ticket.status == "To do" || ticket.status == "In progress")) || (is_tester?(project) && ticket.status == "Complete")
   end
 
   def has_ticket?(ticket)

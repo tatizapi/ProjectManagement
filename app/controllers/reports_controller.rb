@@ -14,6 +14,8 @@ class ReportsController < ApplicationController
 
   def create
     report = Report.new(settings: report_params)
+    report.settings['employees'].map!{ |e| Employee.find_by(first_name: e.split()[0], last_name: e.split()[1]).id } if report.settings['employees']
+    # ^ because in employees dropdown i only have employees's full names, not employees entities form DB
 
     if report.save
       redirect_to project_report_path(@project, report)
@@ -34,7 +36,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:tickets, :statuses, :from_date, :to_date, :projects => [], :employees => [])
+    params.require(:report).permit(:from_date, :to_date, :projects => [], :employees => [], :tickets => [], :statuses => [])
     # ':array => []' -> syntax has to be like this when working with arrays (and always at the end of the method !)
   end
 
@@ -48,7 +50,9 @@ class ReportsController < ApplicationController
   end
 
   def tickets_priority_piechart
-    tickets_by_priority = Ticket.where(project_id: @report.settings['projects']).group(:priority).count
+    conditions = { project_id: @report.settings['projects'], employee_id: @report.settings['employees'], type: @report.settings['tickets'], status: @report.settings['statuses'] }
+    conditions.delete_if {|k, v| v.blank? }
+    tickets_by_priority = Ticket.where(conditions).group(:priority).count
     @nr_of_high_priority_tickets = tickets_by_priority['high']
     @nr_of_medium_priority_tickets = tickets_by_priority['medium']
     @nr_of_low_priority_tickets = tickets_by_priority['low']

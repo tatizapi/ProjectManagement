@@ -7,15 +7,15 @@
     </div>
 
     <div id="employees-dropdown" class="display-inline">
-      <%= f.select :employees, options_from_collection_for_select(@employees, "id", "full_name"), { include_hidden: false }, { multiple: true } %>
+      <%= f.select :employees, options_from_collection_for_select(@employees, "full_name", "full_name"), { include_hidden: false }, { multiple: true } %>
     </div>
 
     <div id="tickets-dropdown" class="display-inline">
-      <%= f.select :tickets, options_for_select(["Tasks", "Bugs"]), { include_hidden: false }, { multiple: true } %>
+      <%= f.select :tickets, options_for_select(["Task", "Bug"]), { include_hidden: false }, { multiple: true } %>
     </div>
 
     <div id="tickets-status-dropdown" class="display-inline">
-      <%= f.select :statuses, options_for_select(["TO DO", "In progress", "Complete", "Done"]), { include_hidden: false }, { multiple: true } %>
+      <%= f.select :statuses, options_for_select(["To do", "In progress", "Complete", "Done"]), { include_hidden: false }, { multiple: true } %>
     </div>
   </div>
 

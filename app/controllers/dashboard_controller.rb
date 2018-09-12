@@ -19,23 +19,23 @@ class DashboardController < ApplicationController
     ticket = Ticket.find(params[:ticket_id])
 
     case ticket.status
-    when "todo"
-      #started_at is set only once, first time it goes to "inprogress"
-      (ticket.started_at.nil?) ? ticket.update(status: "inprogress", started_at: Time.now) : ticket.update(status: "inprogress")
-    when "inprogress"
-      params[:back] ? status = "todo" : status = "complete"
-      (status == "complete") ? ticket.update(status: status, completed_at: Time.now) : ticket.update(status: status)
-    when "complete"
+    when "To do"
+      #started_at is set only once, first time it goes to "In progress"
+      (ticket.started_at.nil?) ? ticket.update(status: "In progress", started_at: Time.now) : ticket.update(status: "In progress")
+    when "In progress"
+      params[:back] ? status = "To do" : status = "Complete"
+      (status == "Complete") ? ticket.update(status: status, Completed_at: Time.now) : ticket.update(status: status)
+    when "Complete"
       if (params[:back]) && (current_user.is_developer?(@project) || current_user.type == "Admin")
-        status = "inprogress"
+        status = "In progress"
       elsif (params[:back]) && (current_user.is_tester?(@project))
-        status = "todo"
+        status = "To do"
       else
-        status = "done"
+        status = "Done"
       end
-      (status == "done") ? ticket.update(status: status, ended_at: Time.now) : ticket.update(status: status)
-    when "done"
-      ticket.update(status: "complete")
+      (status == "Done") ? ticket.update(status: status, ended_at: Time.now) : ticket.update(status: status)
+    when "Done"
+      ticket.update(status: "Complete")
     end
   end
 

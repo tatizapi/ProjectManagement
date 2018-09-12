@@ -10,28 +10,28 @@
   <tbody>
     <tr>
       <td>
-        <% @tickets.filter_by_status("todo").each do |ticket| %>
+        <% @tickets.filter_by_status("To do").each do |ticket| %>
           <div class="row">
             <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>
       <td>
-        <% @tickets.filter_by_status("inprogress").each do |ticket| %>
+        <% @tickets.filter_by_status("In progress").each do |ticket| %>
           <div class="row">
             <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>
       <td>
-        <% @tickets.filter_by_status("complete").each do |ticket| %>
+        <% @tickets.filter_by_status("Complete").each do |ticket| %>
           <div class="row">
             <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>
         <% end %>
       </td>
       <td>
-        <% @tickets.filter_by_status("done").each do |ticket| %>
+        <% @tickets.filter_by_status("Done").each do |ticket| %>
           <div class="row">
             <%= render partial: 'ticket', locals: {ticket: ticket} %>
           </div>

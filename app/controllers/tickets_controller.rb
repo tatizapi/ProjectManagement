@@ -16,13 +16,13 @@ class TicketsController < ApplicationController
 
   def create
     #this does not work, why ?!?
-    #ticket_params.merge!(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket])
+    #ticket_params.merge!(project_id: params[:project_id], status: "To do", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket])
     if (params[:ticket][:bug].empty?)
       @ticket = Task.new(ticket_params.except(:files)
-                                      .merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket]))
+                                      .merge(project_id: params[:project_id], status: "To do", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket]))
     else
       @ticket = Bug.new(ticket_params.except(:files)
-                                     .merge(project_id: params[:project_id], status: "todo", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket]))
+                                     .merge(project_id: params[:project_id], status: "To do", created_at: DateTime.current, parent_ticket: params[:ticket][:parent_ticket]))
     end
 
     if @ticket.save
