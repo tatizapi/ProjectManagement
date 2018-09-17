@@ -57,6 +57,16 @@ class Admin < User
     true
   end
 
+#chat ------------------------------------------------------
+  def can_see_chat?(project)
+    true
+  end
+
+#reports ----------------------------------------------------
+  def can_see_reports?(project)
+    true
+  end
+
 #others ----------------------------------------------------
   def can_see_his_profile?
     false
@@ -64,9 +74,5 @@ class Admin < User
 
   def can_see_project_roles?
     false
-  end
-
-  def can_see_chat?(project)
-    true
   end
 end

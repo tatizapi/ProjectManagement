@@ -122,6 +122,20 @@ class User < ApplicationRecord
     false
   end
 
+#chat ------------------------------------------------------
+  def can_chat?(project)
+    false
+  end
+
+  def can_see_chat?(project)
+    false
+  end
+
+#reports ----------------------------------------------------
+  def can_see_reports?(project)
+    false
+  end
+
 #others ----------------------------------------------------
   def can_see_his_profile?
     true
@@ -131,11 +145,5 @@ class User < ApplicationRecord
     true
   end
 
-  def can_chat?(project)
-    false
-  end
 
-  def can_see_chat?(project)
-    false
-  end
 end

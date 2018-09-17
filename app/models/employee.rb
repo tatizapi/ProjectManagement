@@ -62,6 +62,10 @@ class Employee < User
   end
 
 #reports -----------------------------------------------------------------------
+  def can_see_reports?(project)
+    is_projectmanager?(project)
+  end
+
   def get_nr_of_tickets(conditions)
     tickets.where(conditions).count
   end
