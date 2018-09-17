@@ -24,7 +24,7 @@ class DashboardController < ApplicationController
       (ticket.started_at.nil?) ? ticket.update(status: "In progress", started_at: Time.now) : ticket.update(status: "In progress")
     when "In progress"
       params[:back] ? status = "To do" : status = "Complete"
-      (status == "Complete") ? ticket.update(status: status, Completed_at: Time.now) : ticket.update(status: status)
+      (status == "Complete") ? ticket.update(status: status, completed_at: Time.now) : ticket.update(status: status)
     when "Complete"
       if (params[:back]) && (current_user.is_developer?(@project) || current_user.type == "Admin")
         status = "In progress"

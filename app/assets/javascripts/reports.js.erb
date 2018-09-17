@@ -47,15 +47,15 @@ function set_up_dropdowns() {
 function set_up_datetimepickers() {
   $( "#report-from-datetimepicker" ).datetimepicker(
     {
-      minDate: moment(), //to disable past dates
-      format: 'YYYY-MM-DD'
+      format: 'YYYY-MM-DD', //without time
+      useCurrent: false
     }
   );
 
   $( "#report-to-datetimepicker" ).datetimepicker(
     {
-      minDate: moment(), //to disable past dates
-      format: 'YYYY-MM-DD'
+      format: 'YYYY-MM-DD', //without time
+      useCurrent: false
     }
   );
 }
