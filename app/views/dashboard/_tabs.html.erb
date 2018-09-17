@@ -4,17 +4,19 @@
       <li><%= link_to 'Project details', project_path(@project) %></li>
       <li><%= link_to 'Dashboard', project_dashboard_index_path(@project) %></li>
 
-      <div class="right-buttons-wrapper">
-        <% if current_user.can_see_chat?(@project) %>
-          <%= link_to image_tag("chat.png", size: "20"), project_chat_index_path(@project), class: 'btn btn-info open-chat-button', title: 'Open chat' %>
-        <% end %>
+      <% if current_user.can_see_chat?(@project) %>
+        <li><%= link_to 'Chat', project_chat_index_path(@project) %></li>
+      <% end %>
 
+      <% if current_user.is_projectmanager?(@project) %>
+        <li><%= link_to 'Reports', new_project_report_path(@project) %></li>
+      <% end %>
+
+      <div class="right-buttons-wrapper">
         <% if current_user.can_modify_project? || current_user.is_projectmanager?(@project) %>
           <%= link_to new_project_ticket_path(@project), method: :get, class: 'btn btn-info new-task-button', title: 'New task' do %>
             <i class="glyphicon glyphicon-tasks"></i>
           <% end %>
-
-        <%= link_to image_tag("chart.png", size: "20"), new_project_report_path(@project), class: 'btn btn-info show-reports-button', title: 'Reports' %>
         <% end %>
       </div>
 
