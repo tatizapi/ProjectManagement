@@ -61,6 +61,11 @@ class Employee < User
     is_projectmanager?(project)
   end
 
+#reports -----------------------------------------------------------------------
+  def get_nr_of_tickets(conditions)
+    tickets.where(conditions).count
+  end
+
 #others ------------------------------------------------------------------------
   def self.get_employees_filtered_by_role(employee_id)
     projects_projectmanager_role = []

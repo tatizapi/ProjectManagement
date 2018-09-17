@@ -6,7 +6,10 @@ class ReportsController < ApplicationController
   def show
     @report = Report.find(params[:id])
 
+    set_up_conditions
     tickets_priority_piechart
+    tickets_status_piechart
+    nr_tickets_per_employee_columnchart
   end
 
   def new
@@ -46,18 +49,34 @@ class ReportsController < ApplicationController
 
   def get_entities_for_dropdowns
     @employees = Employee.all
-    @projects = Project.all
+    @projects = Project.all #although should be only the projects in which the current user is project manager
+  end
+
+  def set_up_conditions
+    @conditions = { project_id: @report.settings['projects'], employee_id: @report.settings['employees'], type: @report.settings['tickets'], status: @report.settings['statuses'] }
+    @conditions[:created_at] = (@report.settings['from_date']..@report.settings['to_date']) unless (@report.settings['from_date'].empty? || @report.settings['to_date'].empty?)
+    @conditions.delete_if { |k, v| v.blank? }
   end
 
   def tickets_priority_piechart
-    conditions = { project_id: @report.settings['projects'], employee_id: @report.settings['employees'], type: @report.settings['tickets'], status: @report.settings['statuses'] }
-    conditions[:created_at] = (@report.settings['from_date']..@report.settings['to_date']) unless (@report.settings['from_date'].empty? || @report.settings['to_date'].empty?)
-
-    conditions.delete_if { |k, v| v.blank? }
-    tickets_by_priority = Ticket.where(conditions).group(:priority).count
-    @nr_of_high_priority_tickets = tickets_by_priority['high']
-    @nr_of_medium_priority_tickets = tickets_by_priority['medium']
-    @nr_of_low_priority_tickets = tickets_by_priority['low']
+    tickets_by_priority = Ticket.where(@conditions).group(:priority).count
+    @nr_of_high_priority_tickets, @nr_of_medium_priority_tickets, @nr_of_low_priority_tickets = tickets_by_priority['high'], tickets_by_priority['medium'], tickets_by_priority['low']
     #puts @nr_of_low_priority_tickets, @nr_of_medium_priority_tickets, @nr_of_high_priority_tickets
+  end
+
+  def tickets_status_piechart
+    tickets_by_status = Ticket.where(@conditions).group(:status).count
+    @nr_of_todo_tickets, @nr_of_inprogress_tickets, @nr_of_complete_tickets, @nr_of_done_tickets = tickets_by_status['To do'], tickets_by_status['In progress'], tickets_by_status['Complete'], tickets_by_status['Done']
+  end
+
+  def nr_tickets_per_employee_columnchart
+    @employees_for_columnchart = []
+
+    unless @report.settings['employees'].nil?
+      @report.settings['employees'].each do |employee_id|
+        @employees_for_columnchart.push(Employee.find(employee_id))
+      end
+    end
+    
   end
 end

@@ -4,15 +4,27 @@
 <div class="container-fluid">
   <%= render 'reports_settings' %>
 
-  <div id="priority_piechart"></div>
+  <table>
+    <tr>
+      <td><div id="priority_piechart"></div></td>
+      <td><div id="nr_tickets_per_employee_columnchart"></div></td>
+    </tr>
+  </table>
+
+  <div id="status_piechart"></div>
+
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawPriorityPiechart);
+    google.charts.setOnLoadCallback(drawStatusPiechart);
+    <% unless @report.settings['employees'].nil? %>
+      google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
+    <% end %>
 
-    function drawChart() {
+    function drawPriorityPiechart() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'Priority');
       data.addColumn('number', 'Tickets');
@@ -22,12 +34,53 @@
         ['Low', <%= @nr_of_low_priority_tickets %>],
       ]);
 
-      var options = {'title':'Tasks by priority',
+      var options = {'title':'Tickets by priority',
                      'width':400,
                      'height':300,
                     }
       var chart = new google.visualization.PieChart(document.getElementById('priority_piechart'));
       chart.draw(data, options);
     }
+
+    function drawStatusPiechart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Status');
+      data.addColumn('number', 'Tickets');
+      data.addRows([
+        ['To do', <%= @nr_of_todo_tickets %>],
+        ['In progress', <%= @nr_of_inprogress_tickets %>],
+        ['Complete', <%= @nr_of_complete_tickets %>],
+        ['Done', <%= @nr_of_done_tickets %>],
+      ]);
+
+      var options = {
+        'title':'Tickets by status',
+        'width':400,
+        'height':300,
+      }
+      var chart = new google.visualization.PieChart(document.getElementById('status_piechart'));
+      chart.draw(data, options);
+    }
+
+    function drawNrTicketPerEmployeeColumnchart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Employee');
+      data.addColumn('number', 'Nr of tickets');
+
+      <% @employees_for_columnchart.each do |employee| %>
+      <% puts "#{employee.full_name} #{employee.get_nr_of_tickets(@report.settings['projects'])}" %>
+        data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
+      <% end %>
+
+      var options = {
+        title: 'Number of tickets per employee',
+        width: 800,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("nr_tickets_per_employee_columnchart"));
+      chart.draw(data, options);
+  }
 
   </script>
