@@ -7,11 +7,13 @@
   <table>
     <tr>
       <td><div id="priority_piechart"></div></td>
+      <td><div id="status_piechart"></div></td>
       <td><div id="nr_tickets_per_employee_columnchart"></div></td>
     </tr>
+    <tr>
+      <td colspan="3"><div id="curve_chart"></div></td>
+    </tr>
   </table>
-
-  <div id="status_piechart"></div>
 
 </div>
 
@@ -23,6 +25,7 @@
     <% unless @report.settings['employees'].nil? %>
       google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
     <% end %>
+    google.charts.setOnLoadCallback(drawTicketsStartAndEndLinechart);
 
     function drawPriorityPiechart() {
       var data = new google.visualization.DataTable();
@@ -68,7 +71,6 @@
       data.addColumn('number', 'Nr of tickets');
 
       <% @employees_for_columnchart.each do |employee| %>
-      <% puts "#{employee.full_name} #{employee.get_nr_of_tickets(@report.settings['projects'])}" %>
         data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
       <% end %>
 
@@ -81,6 +83,24 @@
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("nr_tickets_per_employee_columnchart"));
       chart.draw(data, options);
-  }
+    }
+
+    function drawTicketsStartAndEndLinechart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Date', 'Number of created tickets', 'Number of finished tickets'],
+        <% @tickets_by_week.each do |end_of_week, nr_of_tickets| %>
+          ['<%= end_of_week %>',  <%= nr_of_tickets[0] %>, <%= nr_of_tickets[1] %>],
+        <% end %>
+      ]);
+
+      var options = {
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        width: 1500,
+        height: 300,
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+      chart.draw(data, options);
+    }
 
   </script>

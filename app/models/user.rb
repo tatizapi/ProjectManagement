@@ -144,6 +144,4 @@ class User < ApplicationRecord
   def can_see_dashboard?
     true
   end
-
-
 end

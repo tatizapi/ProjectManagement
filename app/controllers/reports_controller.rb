@@ -10,6 +10,7 @@ class ReportsController < ApplicationController
     tickets_priority_piechart
     tickets_status_piechart
     nr_tickets_per_employee_columnchart
+    ticket_start_and_end_date_linechart
   end
 
   def new
@@ -77,6 +78,16 @@ class ReportsController < ApplicationController
         @employees_for_columnchart.push(Employee.find(employee_id))
       end
     end
-    
+  end
+
+  def ticket_start_and_end_date_linechart
+    @tickets_created_at_by_week = Ticket.where(@conditions).group_by{ |t| t.created_at.end_of_week.strftime("%Y-%m-%d") }
+    @tickets_ended_at_by_week = Ticket.where(@conditions).reject{ |t| t.ended_at.nil? }.group_by{ |t| t.ended_at.end_of_week.strftime("%Y-%m-%d") }
+
+    @tickets_by_week = {}
+    @tickets_created_at_by_week.each do |k, v|
+      @tickets_by_week[k] = [v.length]
+      @tickets_ended_at_by_week[k] ? @tickets_by_week[k].push(@tickets_ended_at_by_week[k].length) : @tickets_by_week[k].push(0)
+    end #@tickets_by_week has: key -> end of week date, value -> [nr_of_created_tickets, nr_of_ended_tickets]
   end
 end
