@@ -11,6 +11,7 @@ class ReportsController < ApplicationController
     tickets_status_piechart
     nr_tickets_per_employee_columnchart
     ticket_start_and_end_date_linechart
+    tickets_for_calendar
   end
 
   def new
@@ -89,5 +90,9 @@ class ReportsController < ApplicationController
       @tickets_by_week[k] = [v.length]
       @tickets_ended_at_by_week[k] ? @tickets_by_week[k].push(@tickets_ended_at_by_week[k].length) : @tickets_by_week[k].push(0)
     end #@tickets_by_week has: key -> end of week date, value -> [nr_of_created_tickets, nr_of_ended_tickets]
+  end
+
+  def tickets_for_calendar
+    @tickets_for_calendar = Ticket.where(@conditions)
   end
 end

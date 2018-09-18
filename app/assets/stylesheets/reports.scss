@@ -6,11 +6,28 @@
   width: 500px;
 }
 
-#priority_piechart {
+.simple-calendar {
+  margin-left: 35px;
+  width: 1500px;
 }
 
-#status_piechart {
+.calendar-ticket {
+  padding: 2px;
+  color: white;
+  border-radius: 5px;
 }
 
-#nr_tickets_per_employee_columnchart {
+.calendar-title {
+  float: left;
+  margin-left: 600px;
+  font-weight: 900;
+  text-decoration: underline;
+}
+
+.calendar-legend {
+  margin-left: 580px;
+}
+
+.calendar-legend-todo, .calendar-legend-inprogress, .calendar-legend-complete, .calendar-legend-done {
+  float: left;
 }

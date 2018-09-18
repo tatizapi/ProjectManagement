@@ -60,7 +60,7 @@ class Ticket < ApplicationRecord
     deadline.strftime("%Y-%m-%d %I:%M")
   end
 
-  #time_tracking tab
+#time_tracking tab -------------------------------------------------------------
   def format_date(date)
     date.strftime("%d/%m/%Y %H:%M")
   end
