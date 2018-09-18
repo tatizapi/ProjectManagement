@@ -16,7 +16,7 @@
     <tr style="height: 50px"></tr> <!-- did this to add space between line chart and calendar -->
     <tr>
       <td colspan="3">
-        <%= month_calendar events: @tickets_for_calendar, attribute: :deadline do |date, tickets| %>
+        <%= month_calendar events: @tickets, attribute: :deadline do |date, tickets| %>
           <%= date.day %><br>
 
           <% if tickets.length != 0 %>
@@ -66,7 +66,15 @@
             <span>Done</span>
           </div>
         </div>
-        
+
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <div class="timeline-wrapper">
+          <span style>Tickets timeline</span>
+          <div id="tickets_after_statuses_timeline"></div>
+        </div>
       </td>
     </tr>
   </table>
@@ -83,6 +91,9 @@
       google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
     <% end %>
     google.charts.setOnLoadCallback(drawTicketsStartAndEndLinechart);
+
+    google.charts.load("current", {packages:["timeline"]});
+    google.charts.setOnLoadCallback(drawTicketsStatusesTimeline);
 
     function drawPriorityPiechart() {
       var data = new google.visualization.DataTable();
@@ -162,6 +173,34 @@
       };
       var chart = new google.visualization.LineChart(document.getElementById('tickets_start_and_end_date_line_chart'));
       chart.draw(data, options);
+    }
+
+    function drawTicketsStatusesTimeline() {
+      var container = document.getElementById('tickets_after_statuses_timeline');
+      var chart = new google.visualization.Timeline(container);
+      var dataTable = new google.visualization.DataTable();
+      dataTable.addColumn({ type: 'string', id: 'Status' });
+      dataTable.addColumn({ type: 'string', id: 'Ticket' });
+      dataTable.addColumn({ type: 'date', id: 'Started' });
+      dataTable.addColumn({ type: 'date', id: 'Ended' });
+
+      <% @tickets.each do |ticket| %>
+        <% if ticket.started_at %>
+          dataTable.addRow([ 'To do', '<%= ticket.title %>', new Date("<%= ticket.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+        <% end %>
+        <% if ticket.completed_at %>
+          dataTable.addRow([ 'Worked on', '<%= ticket.title %>', new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+        <% end %>
+        <% if ticket.ended_at %>
+          dataTable.addRow([ 'Tested', '<%= ticket.title %>', new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.ended_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+        <% end %>
+      <% end %>
+
+      var options = {
+        width: 1500,
+        height: 500,
+      };
+      chart.draw(dataTable, options);
     }
 
   </script>

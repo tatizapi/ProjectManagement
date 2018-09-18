@@ -33,9 +33,9 @@ class DashboardController < ApplicationController
       else
         status = "Done"
       end
-      (status == "Done") ? ticket.update(status: status, ended_at: Time.now) : ticket.update(status: status)
-    when "Done"
-      ticket.update(status: "Complete")
+      (status == "Done") ? ticket.update(status: status, ended_at: Time.now) : ticket.update(status: status, completed_at: nil)
+    when "Done" #only back to 'Complete' possible here
+      ticket.update(status: "Complete", ended_at: nil)
     end
   end
 
