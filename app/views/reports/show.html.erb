@@ -11,7 +11,7 @@
       <td><div id="nr_tickets_per_employee_columnchart"></div></td>
     </tr>
     <tr>
-      <td colspan="3"><div id="curve_chart"></div></td>
+      <td colspan="3"><div id="tickets_start_and_end_date_line_chart"></div></td>
     </tr>
   </table>
 
@@ -96,10 +96,14 @@
       var options = {
         curveType: 'function',
         legend: { position: 'bottom' },
+        series: {
+            0: { color: '#1c91c0' },
+            1: { color: '#6f9654' },
+          },
         width: 1500,
         height: 300,
       };
-      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+      var chart = new google.visualization.LineChart(document.getElementById('tickets_start_and_end_date_line_chart'));
       chart.draw(data, options);
     }
 
