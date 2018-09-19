@@ -6,10 +6,28 @@
   width: 500px;
 }
 
+.chart-title {
+  margin-left: 35px;
+  margin-top: 30px;
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+//calendar ---------------------------------------------------------------------
 .simple-calendar {
   margin-left: 35px;
-  margin-top: 70px;
+  margin-top: 10px;
   width: 1500px;
+}
+
+.simple-calendar table td {
+  border: 1px solid green;
+}
+
+.calendar-heading {
+  display: flex;
+  justify-content: space-between;
 }
 
 .calendar-ticket {
@@ -19,8 +37,6 @@
 }
 
 .calendar-title {
-  float: left;
-  margin-left: 600px;
   font-weight: 900;
   text-decoration: underline;
 }
@@ -33,13 +49,11 @@
   float: left;
 }
 
+//timeline ---------------------------------------------------------------------
 .timeline-wrapper {
-  margin-left: 35px;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
-.timeline-wrapper span {
-  font-family: Arial;
-  font-size: 13px;
-  font-weight: bold;
+#tickets_after_statuses_timeline {
+  margin-left: 35px;
 }

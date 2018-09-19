@@ -12,6 +12,15 @@ class ReportsController < ApplicationController
     nr_tickets_per_employee_columnchart
     ticket_start_and_end_date_linechart
     tickets_for_calendar_and_timeline
+
+    respond_to do |format|
+     format.html
+     format.pdf do
+       render pdf: "some_filename_idk",
+       template: "reports/_charts.html.erb",
+       layout: 'pdf.html'
+     end
+    end
   end
 
   def new

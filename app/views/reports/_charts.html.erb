@@ -1,0 +1,203 @@
+<table>
+  <tr>
+    <td><div id="priority_piechart"></div></td>
+    <td><div id="status_piechart"></div></td>
+    <td><div id="nr_tickets_per_employee_columnchart"></div></td>
+  </tr>
+  <tr>
+    <td colspan="3"><div id="tickets_start_and_end_date_line_chart"></div></td>
+  </tr>
+  <tr style="height: 50px"></tr> <!-- did this to add space between line chart and calendar -->
+  <tr>
+    <td colspan="3">
+      <span class="chart-title">Deadlines calendar</span>
+      <%= month_calendar events: @tickets, attribute: :deadline do |date, tickets| %>
+        <%= date.day %><br>
+
+        <% if tickets.length != 0 %>
+          <% if tickets.length == 1 %>
+            <div><%= tickets.length %> ticket</div>
+          <% else %>
+            <div><%= tickets.length %> tickets</div>
+          <% end %>
+        <% end %>
+        <% tickets.each do |ticket| %>
+          <% case ticket.status %>
+          <% when "To do" %>
+            <span style="background-color: #dc3912" class="calendar-ticket"><%= ticket.title %></span>
+          <% when "In progress" %>
+            <span style="background-color: #ff9900" class="calendar-ticket"><%= ticket.title %></span>
+          <% when "Complete" %>
+            <span style="background-color: #fc3" class="calendar-ticket"><%= ticket.title %></span>
+          <% when "Done" %>
+            <span style="background-color: #109618" class="calendar-ticket"><%= ticket.title %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <div class="calendar-legend">
+        <span style="float: left">Statuses: &nbsp</span>
+        <div class="calendar-legend-todo">
+          <svg width="15" height="15">
+            <rect width="300" height="100" style="fill:#dc3912" />
+          </svg>
+          <span>In progress &nbsp</span>
+        </div>
+
+        <div class="calendar-legend-inprogress">
+          <svg width="15" height="15">
+            <rect width="300" height="100" style="fill:#ff9900" />
+          </svg>
+          <span>In progress &nbsp</span>
+        </div>
+
+        <div class="calendar-legend-complete">
+          <svg width="15" height="15">
+            <rect width="300" height="100" style="fill:#fc3" />
+          </svg>
+          <span>Complete&nbsp</span>
+        </div>
+
+        <div class="calendar-legend-done">
+          <svg width="15" height="15">
+            <rect width="300" height="100" style="fill:#109618" />
+          </svg>
+          <span>Done</span>
+        </div>
+      </div>
+
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3">
+      <div class="timeline-wrapper">
+        <span class="chart-title">Tickets timeline</span>
+        <div id="tickets_after_statuses_timeline"></div>
+      </div>
+    </td>
+  </tr>
+</table>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawPriorityPiechart);
+    google.charts.setOnLoadCallback(drawStatusPiechart);
+    <% unless @report.settings['employees'].nil? %>
+      google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
+    <% end %>
+    google.charts.setOnLoadCallback(drawTicketsStartAndEndLinechart);
+
+    google.charts.load("current", {packages:["timeline"]});
+    google.charts.setOnLoadCallback(drawTicketsStatusesTimeline);
+
+    function drawPriorityPiechart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Priority');
+      data.addColumn('number', 'Tickets');
+      data.addRows([
+        ['High', <%= @nr_of_high_priority_tickets %>],
+        ['Medium', <%= @nr_of_medium_priority_tickets %>],
+        ['Low', <%= @nr_of_low_priority_tickets %>],
+      ]);
+
+      var options = {'title':'Tickets by priority',
+                     'width':400,
+                     'height':300,
+                    }
+      var chart = new google.visualization.PieChart(document.getElementById('priority_piechart'));
+      chart.draw(data, options);
+    }
+
+    function drawStatusPiechart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Status');
+      data.addColumn('number', 'Tickets');
+      data.addRows([
+        ['To do', <%= @nr_of_todo_tickets %>],
+        ['In progress', <%= @nr_of_inprogress_tickets %>],
+        ['Complete', <%= @nr_of_complete_tickets %>],
+        ['Done', <%= @nr_of_done_tickets %>],
+      ]);
+
+      var options = {
+        'title':'Tickets by status',
+        'width':400,
+        'height':300,
+      }
+      var chart = new google.visualization.PieChart(document.getElementById('status_piechart'));
+      chart.draw(data, options);
+    }
+
+    function drawNrTicketPerEmployeeColumnchart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Employee');
+      data.addColumn('number', 'Nr of tickets');
+
+      <% @employees_for_columnchart.each do |employee| %>
+        data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
+      <% end %>
+
+      var options = {
+        title: 'Number of tickets per employee',
+        width: 800,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("nr_tickets_per_employee_columnchart"));
+      chart.draw(data, options);
+    }
+
+    function drawTicketsStartAndEndLinechart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Date', 'Number of created tickets', 'Number of finished tickets'],
+        <% @tickets_by_week.each do |end_of_week, nr_of_tickets| %>
+          ['<%= end_of_week %>',  <%= nr_of_tickets[0] %>, <%= nr_of_tickets[1] %>],
+        <% end %>
+      ]);
+
+      var options = {
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        series: {
+            0: { color: '#1c91c0' },
+            1: { color: '#6f9654' },
+          },
+        width: 1500,
+        height: 300,
+      };
+      var chart = new google.visualization.LineChart(document.getElementById('tickets_start_and_end_date_line_chart'));
+      chart.draw(data, options);
+    }
+
+    function drawTicketsStatusesTimeline() {
+      var container = document.getElementById('tickets_after_statuses_timeline');
+      var chart = new google.visualization.Timeline(container);
+      var dataTable = new google.visualization.DataTable();
+      dataTable.addColumn({ type: 'string', id: 'Status' });
+      dataTable.addColumn({ type: 'string', id: 'Ticket' });
+      dataTable.addColumn({ type: 'date', id: 'Started' });
+      dataTable.addColumn({ type: 'date', id: 'Ended' });
+
+      <% @tickets.each do |ticket| %>
+        <% if ticket.started_at %>
+          dataTable.addRow([ 'To do', '<%= ticket.title %>', new Date("<%= ticket.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+        <% end %>
+        <% if ticket.completed_at %>
+          dataTable.addRow([ 'Worked on', '<%= ticket.title %>', new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+        <% end %>
+        <% if ticket.ended_at %>
+          dataTable.addRow([ 'Tested', '<%= ticket.title %>', new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.ended_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+        <% end %>
+      <% end %>
+
+      var options = {
+        width: 1500,
+        height: 800,
+      };
+      chart.draw(dataTable, options);
+    }
+
+  </script>

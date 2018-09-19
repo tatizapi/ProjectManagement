@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PDF</title>
+  <%= csrf_meta_tags %>
+  <%= wicked_pdf_stylesheet_link_tag "reports" %>
+  <%= wicked_pdf_javascript_include_tag 'jquery' %>
+  <%#= wicked_pdf_stylesheet_link_tag "print" %>
+  <%= wicked_pdf_javascript_include_tag 'https://www.gstatic.com/charts/loader.js' %>
+</head>
+<body>
+
+  <div class='container'>
+    <%= yield %>
+  </div>
+
+</body>
+</html>

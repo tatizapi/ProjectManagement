@@ -17,6 +17,8 @@ gem 'will_paginate' #for pagination on ticket -> comments
 # gem 'render_sync' #for realtime
 gem 'bootstrap-multiselect-rails' #used in reports
 gem "simple_calendar", "~> 2.0" #calendar in reports
+gem 'wicked_pdf', '~> 1.1' #for pdf download in reports
+gem 'wkhtmltopdf-binary' #for pdf download in reports
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
