@@ -12,6 +12,7 @@ class ReportsController < ApplicationController
     nr_tickets_per_employee_columnchart
     ticket_start_and_end_date_linechart
     tickets_for_calendar_and_timeline
+<<<<<<< HEAD
 
     respond_to do |format|
      format.html
@@ -21,6 +22,8 @@ class ReportsController < ApplicationController
        layout: 'pdf.html.erb'
      end
     end
+=======
+>>>>>>> parent of 130b658... pdf generation works for calendar only
   end
 
   def new

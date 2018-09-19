@@ -6,28 +6,15 @@
   width: 500px;
 }
 
-.chart-title {
-  margin-left: 35px;
-  margin-top: 30px;
-  font-family: Arial;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-//calendar ---------------------------------------------------------------------
 .simple-calendar {
   margin-left: 35px;
+<<<<<<< HEAD
   margin-top: 10px;
   width: 95%;
-}
-
-.simple-calendar table td {
-  border: 1px solid green;
-}
-
-.calendar-heading {
-  display: flex;
-  justify-content: space-between;
+=======
+  margin-top: 70px;
+  width: 1500px;
+>>>>>>> parent of 130b658... pdf generation works for calendar only
 }
 
 .calendar-ticket {
@@ -37,6 +24,8 @@
 }
 
 .calendar-title {
+  float: left;
+  margin-left: 600px;
   font-weight: 900;
   text-decoration: underline;
 }
@@ -49,11 +38,13 @@
   float: left;
 }
 
-//timeline ---------------------------------------------------------------------
 .timeline-wrapper {
-  margin-top: 50px;
+  margin-left: 35px;
+  margin-top: 100px;
 }
 
-#tickets_after_statuses_timeline {
-  margin-left: 35px;
+.timeline-wrapper span {
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
 }

@@ -1,44 +1,41 @@
 <%= form_with model: [@project, Report.new], class: 'reports-form' do |f| %>
   <br>
 
-  <div class="row">
-    <div class="form-group col-sm-7">
-      <div id="projects-dropdown" class="display-inline">
-        <%= f.select :projects, options_from_collection_for_select(@projects, "id", "title"), { include_hidden: false }, { multiple: true } %>
-      </div>
-
-      <div id="employees-dropdown" class="display-inline">
-        <%= f.select :employees, options_from_collection_for_select(@employees, "full_name", "full_name"), { include_hidden: false }, { multiple: true } %>
-      </div>
-
-      <div id="tickets-dropdown" class="display-inline">
-        <%= f.select :tickets, options_for_select(["Task", "Bug"]), { include_hidden: false }, { multiple: true } %>
-      </div>
-
-      <div id="tickets-status-dropdown" class="display-inline">
-        <%= f.select :statuses, options_for_select(["To do", "In progress", "Complete", "Done"]), { include_hidden: false }, { multiple: true } %>
-      </div>
+  <div class="form-group col-sm-7">
+    <div id="projects-dropdown" class="display-inline">
+      <%= f.select :projects, options_from_collection_for_select(@projects, "id", "title"), { include_hidden: false }, { multiple: true } %>
     </div>
 
-    <div class="form-group col-sm-4">
-      <div class='report-datetimepicker-wrapper input-group'>
-        <div class="input-group-addon">
-          <span class="input-group-text">From</span>
-        </div>
-        <%= f.text_field :from_date, autocomplete: 'off', class: 'form-control', id: 'report-from-datetimepicker' %>
-        <div class="input-group-addon">
-          <span class="input-group-text">To</span>
-        </div>
-        <%= f.text_field :to_date, autocomplete: 'off', class: 'form-control', id: 'report-to-datetimepicker' %>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-      </div>
+    <div id="employees-dropdown" class="display-inline">
+      <%= f.select :employees, options_from_collection_for_select(@employees, "full_name", "full_name"), { include_hidden: false }, { multiple: true } %>
     </div>
 
-    <div class="form group col-sm-1">
-      <%= f.submit 'Generate &#x00A; Report'.html_safe %>
+    <div id="tickets-dropdown" class="display-inline">
+      <%= f.select :tickets, options_for_select(["Task", "Bug"]), { include_hidden: false }, { multiple: true } %>
+    </div>
+
+    <div id="tickets-status-dropdown" class="display-inline">
+      <%= f.select :statuses, options_for_select(["To do", "In progress", "Complete", "Done"]), { include_hidden: false }, { multiple: true } %>
     </div>
   </div>
 
+  <div class="form-group col-sm-4">
+    <div class='report-datetimepicker-wrapper input-group'>
+      <div class="input-group-addon">
+        <span class="input-group-text">From</span>
+      </div>
+      <%= f.text_field :from_date, autocomplete: 'off', class: 'form-control', id: 'report-from-datetimepicker' %>
+      <div class="input-group-addon">
+        <span class="input-group-text">To</span>
+      </div>
+      <%= f.text_field :to_date, autocomplete: 'off', class: 'form-control', id: 'report-to-datetimepicker' %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="form group col-sm-1">
+    <%= f.submit 'Generate &#x00A; Report'.html_safe %>
+  </div>
 <% end %>
