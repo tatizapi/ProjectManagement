@@ -41,7 +41,7 @@
           <svg width="15" height="15">
             <rect width="300" height="100" style="fill:#dc3912" />
           </svg>
-          <span>In progress &nbsp</span>
+          <span>To do &nbsp</span>
         </div>
 
         <div class="calendar-legend-inprogress">
@@ -81,6 +81,7 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
+    console.log("loading charts..");
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawPriorityPiechart);
     google.charts.setOnLoadCallback(drawStatusPiechart);

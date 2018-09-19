@@ -16,9 +16,9 @@ class ReportsController < ApplicationController
     respond_to do |format|
      format.html
      format.pdf do
-       render pdf: "some_filename_idk",
+       render pdf: "file_name",
        template: "reports/_charts.html.erb",
-       layout: 'pdf.html'
+       layout: 'pdf.html.erb'
      end
     end
   end
