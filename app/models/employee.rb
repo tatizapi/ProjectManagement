@@ -19,6 +19,16 @@ class Employee < User
     end
   end
 
+  def get_projectmanager_role_projects
+    projects = []
+
+    roles.where(role: 'projectmanager').each do |role|
+      projects.push(Project.find(role.project_id))
+    end
+
+    projects
+  end
+
 #ticket --------------------------------------------------------------------------
   def can_add_ticket?(project)
     is_projectmanager?(project)
@@ -72,9 +82,7 @@ class Employee < User
 
 #others ------------------------------------------------------------------------
   def self.get_employees_filtered_by_role(employee_id)
-    projects_projectmanager_role = []
-    projects_developer_role = []
-    projects_tester_role = []
+    projects_projectmanager_role, projects_developer_role, projects_tester_role = [], [], []
 
     Employee.find(employee_id).roles.each do |role|
       case role.role

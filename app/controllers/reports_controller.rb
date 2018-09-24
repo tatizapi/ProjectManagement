@@ -51,7 +51,8 @@ class ReportsController < ApplicationController
 
   def get_entities_for_dropdowns
     @employees = Employee.all
-    @projects = Project.all #although should be only the projects in which the current user is project manager
+
+    current_user.is_projectmanager?(@project) ? @projects = current_user.get_projectmanager_role_projects : @projects = Project.all
   end
 
   def set_up_conditions
@@ -62,13 +63,19 @@ class ReportsController < ApplicationController
 
   def tickets_priority_piechart
     tickets_by_priority = Ticket.where(@conditions).group(:priority).count
-    @nr_of_high_priority_tickets, @nr_of_medium_priority_tickets, @nr_of_low_priority_tickets = tickets_by_priority['high'], tickets_by_priority['medium'], tickets_by_priority['low']
-    #puts @nr_of_low_priority_tickets, @nr_of_medium_priority_tickets, @nr_of_high_priority_tickets
+    tickets_by_priority['high'].nil? ? @nr_of_high_priority_tickets = 0 : @nr_of_high_priority_tickets = tickets_by_priority['high']
+    tickets_by_priority['medium'].nil? ? @nr_of_medium_priority_tickets = 0 : @nr_of_medium_priority_tickets = tickets_by_priority['medium']
+    tickets_by_priority['low'].nil? ? @nr_of_low_priority_tickets = 0 : @nr_of_low_priority_tickets = tickets_by_priority['low']
+    return @nr_of_high_priority_tickets, @nr_of_medium_priority_tickets, @nr_of_low_priority_tickets
   end
 
   def tickets_status_piechart
     tickets_by_status = Ticket.where(@conditions).group(:status).count
-    @nr_of_todo_tickets, @nr_of_inprogress_tickets, @nr_of_complete_tickets, @nr_of_done_tickets = tickets_by_status['To do'], tickets_by_status['In progress'], tickets_by_status['Complete'], tickets_by_status['Done']
+    tickets_by_status['To do'].nil? ? @nr_of_todo_tickets = 0 : @nr_of_todo_tickets = tickets_by_status['To do']
+    tickets_by_status['In progress'].nil? ? @nr_of_inprogress_tickets = 0 : @nr_of_inprogress_tickets = tickets_by_status['In progress']
+    tickets_by_status['Complete'].nil? ? @nr_of_complete_tickets = 0 : @nr_of_complete_tickets = tickets_by_status['Complete']
+    tickets_by_status['Done'].nil? ? @nr_of_done_tickets = 0 : @nr_of_done_tickets = tickets_by_status['Done']
+    return @nr_of_todo_tickets, @nr_of_inprogress_tickets, @nr_of_complete_tickets, @nr_of_done_tickets
   end
 
   def nr_tickets_per_employee_columnchart
