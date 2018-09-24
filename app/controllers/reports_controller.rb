@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   before_action :get_entities_for_dropdowns, only: [:show, :new]
 
   def index
-
+    @reports = Report.all
   end
 
   def show

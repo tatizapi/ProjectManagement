@@ -2,5 +2,19 @@
 <%= render 'dashboard/tabs' %>
 
 <div class="container-fluid">
-  
+  <table>
+    <tr>
+      <th>Crt. No.</th>
+      <th>Title</th>
+      <th>Created at</th>
+    </tr>
+    <% @reports.each do |report| %>
+    <tr>
+      <td><%= report.id %></td>
+      <td><%= report.title %></td>
+      <td><%= report.format_date(report.created_at) unless report.created_at.nil? %></td>
+    <tr>
+    <% end %>
+
+  </table>
 </div>
