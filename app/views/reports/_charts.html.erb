@@ -1,5 +1,8 @@
 <table>
   <tr>
+    <td><%= button_tag "Save as PDF", id: 'save-pdf', class: 'btn btn-primary' %></td>
+  </tr>
+  <tr>
     <td><div id="priority_piechart"></div></td>
     <td><div id="status_piechart"></div></td>
     <td><div id="nr_tickets_per_employee_columnchart"></div></td>
@@ -80,18 +83,22 @@
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
   <script type="text/javascript">
     console.log("loading charts..");
     google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', {'packages':['timeline']});
     google.charts.setOnLoadCallback(drawPriorityPiechart);
     google.charts.setOnLoadCallback(drawStatusPiechart);
     <% unless @report.settings['employees'].nil? %>
       google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
     <% end %>
     google.charts.setOnLoadCallback(drawTicketsStartAndEndLinechart);
-
-    google.charts.load("current", {packages:["timeline"]});
     google.charts.setOnLoadCallback(drawTicketsStatusesTimeline);
+
+    var doc = new jsPDF(); // for pdf downloading
 
     function drawPriorityPiechart() {
       var data = new google.visualization.DataTable();
@@ -109,7 +116,11 @@
                     }
       var chart = new google.visualization.PieChart(document.getElementById('priority_piechart'));
       chart.draw(data, options);
+
+      doc.setPage(1);
+      doc.addImage(chart.getImageURI(), 10, 0, 100, 80);
     }
+
 
     function drawStatusPiechart() {
       var data = new google.visualization.DataTable();
@@ -129,6 +140,8 @@
       }
       var chart = new google.visualization.PieChart(document.getElementById('status_piechart'));
       chart.draw(data, options);
+
+      doc.addImage(chart.getImageURI(), 100, 0, 100, 80);
     }
 
     function drawNrTicketPerEmployeeColumnchart() {
@@ -149,6 +162,8 @@
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("nr_tickets_per_employee_columnchart"));
       chart.draw(data, options);
+
+      doc.addImage(chart.getImageURI(), 0, 70, 200, 100);
     }
 
     function drawTicketsStartAndEndLinechart() {
@@ -171,26 +186,30 @@
       };
       var chart = new google.visualization.LineChart(document.getElementById('tickets_start_and_end_date_line_chart'));
       chart.draw(data, options);
+
+      doc.addImage(chart.getImageURI(), 0, 180, 220, 70);
     }
 
+    doc.addPage();
+    doc.setPage(2);
+    doc.addHTML($('.simple-calendar'), 15, 15, {width: 2000});
+
     function drawTicketsStatusesTimeline() {
-      var container = document.getElementById('tickets_after_statuses_timeline');
-      var chart = new google.visualization.Timeline(container);
-      var dataTable = new google.visualization.DataTable();
-      dataTable.addColumn({ type: 'string', id: 'Status' });
-      dataTable.addColumn({ type: 'string', id: 'Ticket' });
-      dataTable.addColumn({ type: 'date', id: 'Started' });
-      dataTable.addColumn({ type: 'date', id: 'Ended' });
+      var data = new google.visualization.DataTable();
+      data.addColumn({ type: 'string', id: 'Status' });
+      data.addColumn({ type: 'string', id: 'Ticket' });
+      data.addColumn({ type: 'date', id: 'Started' });
+      data.addColumn({ type: 'date', id: 'Ended' });
 
       <% @tickets.each do |ticket| %>
         <% if ticket.started_at %>
-          dataTable.addRow([ 'To do', '<%= ticket.title %>', new Date("<%= ticket.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+          data.addRow([ 'To do', '<%= ticket.title %>', new Date("<%= ticket.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
         <% end %>
         <% if ticket.completed_at %>
-          dataTable.addRow([ 'Worked on', '<%= ticket.title %>', new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+          data.addRow([ 'Worked on', '<%= ticket.title %>', new Date("<%= ticket.started_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
         <% end %>
         <% if ticket.ended_at %>
-          dataTable.addRow([ 'Tested', '<%= ticket.title %>', new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.ended_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
+          data.addRow([ 'Tested', '<%= ticket.title %>', new Date("<%= ticket.completed_at.strftime('%Y-%m-%d %H:%M:%S') %>"), new Date("<%= ticket.ended_at.strftime('%Y-%m-%d %H:%M:%S') %>") ]);
         <% end %>
       <% end %>
 
@@ -198,7 +217,16 @@
         width: 1500,
         height: 800,
       };
-      chart.draw(dataTable, options);
+      var chart = new google.visualization.Timeline(document.getElementById('tickets_after_statuses_timeline'));
+      chart.draw(data, options);
+
+      doc.setPage(2);
+      doc.addHTML($('#tickets_after_statuses_timeline'), 15, 100);
     }
+
+    var btnSave = document.getElementById('save-pdf');
+    btnSave.addEventListener('click', function () {
+      doc.save('chart.pdf');
+    }, false);
 
   </script>

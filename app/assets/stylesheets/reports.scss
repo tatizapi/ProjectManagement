@@ -9,7 +9,8 @@
 .simple-calendar {
   margin-left: 35px;
   margin-top: 10px;
-  width: 95%;
+  width: 1500px;
+  background-color: #ffffff; //for pdf
 }
 
 .calendar-ticket {
@@ -19,14 +20,15 @@
 }
 
 .calendar-title {
-  float: left;
-  margin-left: 600px;
+  display: flex;
+  justify-content: center;
   font-weight: 900;
   text-decoration: underline;
 }
 
 .calendar-legend {
-  margin-left: 580px;
+  display: flex;
+  justify-content: center;
 }
 
 .calendar-legend-todo, .calendar-legend-inprogress, .calendar-legend-complete, .calendar-legend-done {
@@ -42,4 +44,8 @@
   font-family: Arial;
   font-size: 13px;
   font-weight: bold;
+}
+
+#save-pdf {
+  margin-left: 15px;
 }
