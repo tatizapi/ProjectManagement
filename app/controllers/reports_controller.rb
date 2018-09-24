@@ -1,7 +1,11 @@
 class ReportsController < ApplicationController
-  before_action :setup_left_sidebar, only: [:show, :new, :create]
-  before_action :get_current_project, only: [:show, :new, :create]
+  before_action :setup_left_sidebar, only: [:index, :show, :new, :create]
+  before_action :get_current_project, only: [:index, :show, :new, :create]
   before_action :get_entities_for_dropdowns, only: [:show, :new]
+
+  def index
+
+  end
 
   def show
     @report = Report.find(params[:id])
@@ -18,7 +22,7 @@ class ReportsController < ApplicationController
   end
 
   def create
-    report = Report.new(settings: report_params)
+    report = Report.new(title: report_params['title'], settings: report_params.except('title'))
     report.settings['employees'].map!{ |e| Employee.find_by(first_name: e.split()[0], last_name: e.split()[1]).id } if report.settings['employees']
     # ^ because in employees dropdown I only have employees's full names, not employees entities or ids
 
@@ -41,7 +45,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:from_date, :to_date, :projects => [], :employees => [], :tickets => [], :statuses => [])
+    params.require(:report).permit(:from_date, :to_date, :title, :projects => [], :employees => [], :tickets => [], :statuses => [])
     # ':array => []' -> syntax has to be like this when working with arrays (and always at the end of the method !)
   end
 

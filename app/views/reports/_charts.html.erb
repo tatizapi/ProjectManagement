@@ -1,6 +1,7 @@
 <table>
   <tr>
-    <td><%= button_tag "Save as PDF", id: 'save-pdf', class: 'btn btn-primary' %></td>
+    <td colspan="3"><%= button_tag "Save as PDF", id: 'save-pdf', class: 'btn btn-secondary', style: 'float: left' %>
+    <%= button_to "Show all reports", project_reports_path(@project), method: :get, class: 'btn' %></td>
   </tr>
   <tr>
     <td><div id="priority_piechart"></div></td>
@@ -163,7 +164,7 @@
       var chart = new google.visualization.ColumnChart(document.getElementById("nr_tickets_per_employee_columnchart"));
       chart.draw(data, options);
 
-      doc.addImage(chart.getImageURI(), 0, 70, 200, 100);
+      doc.addImage(chart.getImageURI(), 0, 80, 200, 100);
     }
 
     function drawTicketsStartAndEndLinechart() {
@@ -187,7 +188,7 @@
       var chart = new google.visualization.LineChart(document.getElementById('tickets_start_and_end_date_line_chart'));
       chart.draw(data, options);
 
-      doc.addImage(chart.getImageURI(), 0, 180, 220, 70);
+      doc.addImage(chart.getImageURI(), 0, 200, 220, 60);
     }
 
     doc.addPage();
@@ -215,7 +216,7 @@
 
       var options = {
         width: 1500,
-        height: 800,
+        height: 750,
       };
       var chart = new google.visualization.Timeline(document.getElementById('tickets_after_statuses_timeline'));
       chart.draw(data, options);
