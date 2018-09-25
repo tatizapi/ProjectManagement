@@ -6,6 +6,8 @@ class ApplicationRecord < ActiveRecord::Base
       date.strftime("%H:%M")
     elsif date.to_date == Date.yesterday
       "yesterday"
+    elsif date.to_date.year != Date.current.year
+      date.strftime("%d / %m / %Y")
     else
       date.strftime("%d %^b")
     end
