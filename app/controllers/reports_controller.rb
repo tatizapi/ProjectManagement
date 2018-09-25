@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   before_action :setup_left_sidebar, only: [:index, :show, :new, :create]
+  before_action :find_report_by_id, only: [:show, :destroy]
   before_action :get_current_project, only: [:index, :show, :new, :create]
   before_action :get_entities_for_dropdowns, only: [:show, :new]
 
@@ -8,8 +9,6 @@ class ReportsController < ApplicationController
   end
 
   def show
-    @report = Report.find(params[:id])
-
     set_up_conditions
     tickets_priority_piechart
     tickets_status_piechart
@@ -33,6 +32,11 @@ class ReportsController < ApplicationController
     end
   end
 
+  def destroy
+    @report.destroy
+    redirect_to project_reports_path
+  end
+
   def refill_employees_dropdown
     @employees = []
     Role.where(project_id: params[:selected_projects]).each do |role|
@@ -47,6 +51,10 @@ class ReportsController < ApplicationController
   def report_params
     params.require(:report).permit(:from_date, :to_date, :title, :projects => [], :employees => [], :tickets => [], :statuses => [])
     # ':array => []' -> syntax has to be like this when working with arrays (and always at the end of the method !)
+  end
+
+  def find_report_by_id
+    @report = Report.find(params[:id])
   end
 
   def get_current_project
