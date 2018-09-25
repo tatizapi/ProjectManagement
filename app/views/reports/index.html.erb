@@ -2,19 +2,25 @@
 <%= render 'dashboard/tabs' %>
 
 <div class="container-fluid">
-  <table>
+  <table class="reports-table table table-borderless">
+  <thead>
     <tr>
-      <th>Crt. No.</th>
-      <th>Title</th>
-      <th>Created at</th>
+      <th class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Crt. No.</th>
+      <th class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Title</th>
+      <th class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Created at</th>
     </tr>
+  </thead>
+  <tbody>
     <% @reports.each do |report| %>
-    <tr>
-      <td><%= report.id %></td>
-      <td><%= report.title %></td>
-      <td><%= report.format_date(report.created_at) unless report.created_at.nil? %></td>
-    <tr>
+      <tr>
+        <td><%= link_to report.id, project_report_path(@project, report), data: { turbolinks: false } %></td>
+        <td><%= link_to report.title, project_report_path(@project, report), data: { turbolinks: false } unless report.title.nil? %></td>
+        <td><%= report.format_date(report.created_at) unless report.created_at.nil? %></td>
+      </tr>
     <% end %>
-
+  </tbody>
   </table>
+  <div style="text-align: center;">
+    <%= will_paginate @products %>
+  <div>
 </div>
