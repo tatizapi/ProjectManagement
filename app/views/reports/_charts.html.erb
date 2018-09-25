@@ -82,8 +82,7 @@
   </tr>
   <tr>
     <td colspan="3">
-      <!-- <canvas id="canvas" width=800 height=600> -->
-      <div id="buttons"></div>
+      <canvas id="please_work_canvas" style="width: 500px; height: 500px;"></canvas>
     </td>
   </tr>
 </table>
@@ -93,7 +92,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-<script src="http://www.cloudformatter.com/Resources/Pages/CSS2Pdf/Script/xepOnline.jqPlugin.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script> <!-- Required to convert named colors to RGB -->
   <script type="text/javascript">
     console.log("loading charts..");
     google.charts.load('current', {'packages':['corechart']});
@@ -202,12 +202,6 @@
     doc.setPage(2);
     doc.addHTML($('.simple-calendar'), 15, 15, {width: 2000});
 
-    function AddNamespace(){
-      var svg = jQuery('#tickets_after_statuses_timeline svg');
-      svg.attr("xmlns", "http://www.w3.org/2000/svg");
-      svg.css('overflow','visible');
-    }
-
     function drawTicketsStatusesTimeline() {
       var data = new google.visualization.DataTable();
       data.addColumn({ type: 'string', id: 'Status' });
@@ -232,59 +226,19 @@
         height: 750,
       };
       var chart = new google.visualization.Timeline(document.getElementById('tickets_after_statuses_timeline'));
-      google.visualization.events.addListener(chart, 'ready', AddNamespace);
 
-    //  doc.setPage(2);
-//       google.visualization.events.addListener(chart, 'ready', function () {
-//         function drawInlineSVG(ctx, rawSVG, callback) {
-//             var svg = new Blob([rawSVG], {type:"image/svg+xml;charset=utf-8"}),
-//                 domURL = self.URL || self.webkitURL || self,
-//                 url = domURL.createObjectURL(svg),
-//                 img = new Image();
-//
-//                 img.src = url;
-//                 console.log(url)
-//                 // img.onload = function() {
-//                   ctx.drawImage(img, 0, 0);
-//                   domURL.revokeObjectURL(url);
-//                   callback(img);
-//                 // }
-// //
-// // //           //  img.onload = function () {
-// // //                 ctx.drawImage(this, 0, 0);
-// // //                 domURL.revokeObjectURL(url);
-// // //                 //callback(this);
-// // //             // };
-// // //
-// // //             var img = new Image();
-// // // img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUh...";
-// // // img.onload = function() {
-// // //     ctx.drawImage(img, 0, 0);
-// // // }
-//          }
-
-
-        // var container = document.getElementById('tickets_after_statuses_timeline');
-        // var getSVG = container.getElementsByTagName("svg")[0]; // Gets the graph
-        // console.log(getSVG);
-        // getSVG.setAttribute('xmlns', "http://www.w3.org/2000/svg"); // Add attr to svg
-        // getSVG.setAttribute('xmlns:svg', "http://www.w3.org/2000/svg"); // Add attr to svg
-        // console.log(getSVG);
-        //
-        // var myCanvas = document.getElementById("canvas");
-        // var ctxt = myCanvas.getContext("2d");
-
-      //   drawInlineSVG(ctxt, getSVG.outerHTML, function() {
-      //       console.log("back");
-      //       console.log(canvas.toDataURL());  // -> PNG
-      //   });
-      // });
+      google.visualization.events.addListener(chart, 'ready', function () {
+        var container = document.getElementById('tickets_after_statuses_timeline');
+        var svg = container.getElementsByTagName("svg")[0]; // Gets the graph
+        var serializer = new XMLSerializer();
+        var svgString = serializer.serializeToString(svg);
+        var canvas = document.getElementById("please_work_canvas");
+        console.log(svgString);
+        canvg(canvas, svgString);
+      });
 
       chart.draw(data, options);
     }
-
-    var click="return xepOnline.Formatter.Format('tickets_after_statuses_timeline', {render:'download', srctype:'svg'})";
-    jQuery('#buttons').append('<button onclick="'+ click +'">PDF</button>');
 
     var btnSave = document.getElementById('save-pdf');
     btnSave.addEventListener('click', function () {
