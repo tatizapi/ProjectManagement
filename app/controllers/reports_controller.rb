@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
   before_action :get_entities_for_dropdowns, only: [:show, :new]
 
   def index
-    @reports = Report.paginate(:page => params[:page], :per_page => 15)
+    @reports = current_user.get_reports.paginate(:page => params[:page], :per_page => 15)
   end
 
   def show
@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
   end
 
   def create
-    report = Report.new(title: report_params['title'], settings: report_params.except('title'))
+    report = Report.new(title: report_params['title'], user_id: current_user.id, settings: report_params.except('title'))
     report.settings['employees'].map!{ |e| Employee.find_by(first_name: e.split()[0], last_name: e.split()[1]).id } if report.settings['employees']
     # ^ because in employees dropdown I only have employees's full names, not employees entities or ids
 

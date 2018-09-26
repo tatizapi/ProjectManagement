@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :comments
   has_many :messages, dependent: :destroy
+  has_many :reports, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -134,6 +135,14 @@ class User < ApplicationRecord
 #reports ----------------------------------------------------
   def can_see_reports?(project)
     false
+  end
+
+  def get_reports
+    if type == 'Admin'
+      Report.all
+    else
+      reports
+    end
   end
 
 #others ----------------------------------------------------
