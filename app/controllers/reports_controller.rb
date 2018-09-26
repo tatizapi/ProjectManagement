@@ -62,9 +62,12 @@ class ReportsController < ApplicationController
   end
 
   def get_entities_for_dropdowns
-    @employees = Employee.all
-
-    current_user.is_projectmanager?(@project) ? @projects = current_user.get_projectmanager_role_projects : @projects = Project.all
+    if current_user.is_projectmanager?(@project)
+      @employees = @project.employees - [current_user]
+    else
+      @projects = Project.all
+      @employees = Employee.all
+    end
   end
 
   def set_up_conditions

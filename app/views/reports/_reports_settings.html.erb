@@ -8,9 +8,11 @@
 
     <tr>
       <td>
-        <div id="projects-dropdown" class="display-inline">
-          <%= f.select :projects, options_from_collection_for_select(@projects, "id", "title"), { include_hidden: false }, { multiple: true } %>
-        </div>
+        <% if current_user.type == "Admin" %>
+          <div id="projects-dropdown" class="display-inline">
+            <%= f.select :projects, options_from_collection_for_select(@projects, "id", "title"), { include_hidden: false }, { multiple: true } %>
+          </div>
+        <% end %>
       </td>
 
       <td>
