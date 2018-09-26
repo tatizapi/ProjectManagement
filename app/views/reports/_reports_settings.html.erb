@@ -1,7 +1,11 @@
 <%= form_with model: [@project, Report.new], class: 'reports-form' do |f| %>
-  <br>
-
   <table>
+    <tr>
+      <td colspan="7">
+        <%= link_to "All reports", project_reports_path(@project), class: "btn", id: 'show-all-reports' %>
+      </td>
+    </tr>
+
     <tr>
       <td>
         <div id="projects-dropdown" class="display-inline">
