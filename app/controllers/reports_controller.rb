@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
   before_action :get_entities_for_dropdowns, only: [:show, :new]
 
   def index
-    @reports = current_user.get_reports.paginate(:page => params[:page], :per_page => 15)
+    @reports = current_user.get_reports(@project.id).paginate(:page => params[:page], :per_page => 15)
   end
 
   def show
@@ -21,9 +21,11 @@ class ReportsController < ApplicationController
   end
 
   def create
-    report = Report.new(title: report_params['title'], user_id: current_user.id, settings: report_params.except('title'))
+    report = Report.new(title: report_params['title'], show_to_client: report_params['show_to_client'], user_id: current_user.id, project_id: @project.id, settings: report_params.except('title', 'show_to_client'))
     report.settings['employees'].map!{ |e| Employee.find_by(first_name: e.split()[0], last_name: e.split()[1]).id } if report.settings['employees']
     # ^ because in employees dropdown I only have employees's full names, not employees entities or ids
+    report.settings.merge!(projects: [@project.id.to_s]) if current_user.is_projectmanager?(@project)
+    # ^ when project manager creates a report, settings['projects'] must include report's project 
 
     if report.save
       redirect_to project_report_path(@project, report)
@@ -49,7 +51,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:from_date, :to_date, :title, :projects => [], :employees => [], :tickets => [], :statuses => [])
+    params.require(:report).permit(:from_date, :to_date, :title, :show_to_client, :projects => [], :employees => [], :tickets => [], :statuses => [])
     # ':array => []' -> syntax has to be like this when working with arrays (and always at the end of the method !)
   end
 
@@ -98,16 +100,12 @@ class ReportsController < ApplicationController
 
     if !@report.settings['employees'].nil?                                         #used ' if ! ' instead of 'unless' because 'unless' doesn't support elsif
       Employee.get_selected_employees_for_columnchart(@employees_for_columnchart, @report.settings['employees'])
-      puts "employees are selected"
     elsif !@report.settings['projects'].nil?                                       #when no employee is selected but some projects are
       Project.get_employees_from_selected_projects_for_columnchart(@employees_for_columnchart, @report.settings['projects'])
-      puts "projects are selected"
     elsif !@report.settings['tickets'].nil? || !@report.settings['statuses'].nil?  #when only tickets or statuses is selected
       Ticket.get_employees_from_selected_tickets_for_columnchart(@employees_for_columnchart, @conditions)
-      puts "tickets are selected"
     else
       @employees_for_columnchart = Employee.all
-      puts "tickets are selected"
     end
   end
 

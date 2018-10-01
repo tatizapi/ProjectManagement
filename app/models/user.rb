@@ -137,11 +137,19 @@ class User < ApplicationRecord
     false
   end
 
-  def get_reports
+  def get_reports(project_id)
     if type == 'Admin'
-      Report.all
+      Report.where(project_id: project_id) #admin can see all reports
+    elsif type == 'Client'
+      reports_result = []
+
+      Report.where(show_to_client: true, project_id: project_id).each do |report|
+        reports_result.push(report) if has_projects?(report.settings['projects'])
+      end
+
+      reports_result
     else
-      reports
+      reports.where(project_id: project_id)
     end
   end
 

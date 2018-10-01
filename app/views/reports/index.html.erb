@@ -16,7 +16,7 @@
       <tr>
         <td>
           <%= link_to project_report_path(@project, report), method: :delete, data: { confirm: 'Are you sure?' }, title: 'Delete report' do %>
-            <i class="glyphicon glyphicon-remove"></i>
+            <i class="glyphicon glyphicon-remove pull-right"></i>
           <% end %>
         </td>
         <td><%= link_to report.id, project_report_path(@project, report), data: { turbolinks: false } %></td>
@@ -27,6 +27,6 @@
   </tbody>
   </table>
   <div style="text-align: center;">
-    <%= will_paginate @products %>
+    <%= will_paginate @reports %>
   <div>
 </div>

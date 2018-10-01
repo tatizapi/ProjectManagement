@@ -56,6 +56,17 @@
       </td>
 
       <td>
+        <% if current_user.is_projectmanager?(@project) %>
+          <div id="report-check-box" class="checkbox-inline">
+            <%= f.label :show_to_client do %>
+              <%= f.check_box :show_to_client %>
+              Show to client
+              <% end %>
+          </div>
+        <% end %>
+      </td>
+
+      <td>
         <div class="display-inline report-generation-button">
           <%= f.submit 'Generate Report', class: 'btn btn-primary' %>
         </div>

@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   has_many :employees, :through => :roles
   has_many :tickets, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :reports, dependent: :destroy
 
   has_many :attachments, as: :container, dependent: :destroy
 

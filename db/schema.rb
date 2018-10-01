@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_26_084656) do
+ActiveRecord::Schema.define(version: 2018_10_01_133934) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "filename"
@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(version: 2018_09_26_084656) do
     t.datetime "created_at"
     t.string "title"
     t.integer "user_id"
+    t.boolean "show_to_client"
+    t.integer "project_id"
+    t.index ["project_id"], name: "index_reports_on_project_id"
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 

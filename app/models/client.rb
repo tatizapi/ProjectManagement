@@ -43,7 +43,7 @@ class Client < User
     false
   end
 
-  #others ----------------------------------------------------
+  #chat ----------------------------------------------------
   def can_see_chat?(project)
     true
   end
@@ -52,4 +52,14 @@ class Client < User
     true
   end
 
+  #reports ------------------------------------------------
+  def can_see_reports?(project)
+    true
+  end
+
+  def has_projects?(report_projects)
+    projects_ids = projects.map{ |project| project.id }
+    report_projects_integer = report_projects.map{ |project_id| project_id.to_i }
+    (report_projects_integer - projects_ids).empty?
+  end
 end
