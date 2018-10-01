@@ -80,6 +80,12 @@ class Employee < User
     tickets.where(conditions).count
   end
 
+  def self.get_selected_employees_for_columnchart(container, employees_ids)
+    employees_ids.each do |employee_id|
+      container.push(Employee.find(employee_id))
+    end
+  end
+
 #others ------------------------------------------------------------------------
   def self.get_employees_filtered_by_role(employee_id)
     projects_projectmanager_role, projects_developer_role, projects_tester_role = [], [], []

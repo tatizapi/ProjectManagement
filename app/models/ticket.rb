@@ -100,4 +100,14 @@ class Ticket < ApplicationRecord
       "Aprox. #{nr_of_hours} hours"
     end
   end
+
+#reports -----------------------------------------------------------------------
+  def self.get_employees_from_selected_tickets_for_columnchart(container, conditions)
+    where(conditions).each do |ticket|
+      employee = Employee.find(ticket.employee_id)
+      unless container.include?(employee)   # to eliminate duplicates
+        container.push(employee)
+      end
+    end
+  end
 end

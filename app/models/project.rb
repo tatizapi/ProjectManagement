@@ -33,8 +33,21 @@ class Project < ApplicationRecord
     testers
   end
 
+#reports -----------------------------------------------------------------------
   def get_employee_hash_for_piechart
     hash = tickets.group(:employee_id).count
     hash.transform_keys { |key| Employee.find(key).full_name } #to replace employee_id with the employee's name
+  end
+
+  def self.get_employees_from_selected_projects_for_columnchart(container, projects_ids)
+    projects_ids.each do |project_id|
+      Project.find(project_id).employees.each do |employee|
+        unless container.include?(employee)   # to eliminate duplicates
+          container.push(employee)
+        end
+      end
+      #@employees_for_columnchart.push(Project.find(project_id).employees) - couldn't do this because Project.find(project_id).employees returns a CollectionProxy object
+      #                                                                      which doesn't allow me to acces full_name method on its array objects
+    end
   end
 end

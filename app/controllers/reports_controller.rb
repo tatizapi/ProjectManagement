@@ -96,18 +96,18 @@ class ReportsController < ApplicationController
   def nr_tickets_per_employee_columnchart
     @employees_for_columnchart = []
 
-    if @report.settings['employees'].nil?
-      @report.settings['projects'].each do |project_id|
-        Project.find(project_id).employees.each do |employee|
-          @employees_for_columnchart.push(employee)
-        end
-        #@employees_for_columnchart.push(Project.find(project_id).employees) - couldn't do this because Project.find(project_id).employees returns a CollectionProxy object
-        #                                                                      which doesn't allow me to acces full_name method on its array objects
-      end
+    if !@report.settings['employees'].nil?                                         #used ' if ! ' instead of 'unless' because 'unless' doesn't support elsif
+      Employee.get_selected_employees_for_columnchart(@employees_for_columnchart, @report.settings['employees'])
+      puts "employees are selected"
+    elsif !@report.settings['projects'].nil?                                       #when no employee is selected but some projects are
+      Project.get_employees_from_selected_projects_for_columnchart(@employees_for_columnchart, @report.settings['projects'])
+      puts "projects are selected"
+    elsif !@report.settings['tickets'].nil? || !@report.settings['statuses'].nil?  #when only tickets or statuses is selected
+      Ticket.get_employees_from_selected_tickets_for_columnchart(@employees_for_columnchart, @conditions)
+      puts "tickets are selected"
     else
-      @report.settings['employees'].each do |employee_id|
-        @employees_for_columnchart.push(Employee.find(employee_id))
-      end
+      @employees_for_columnchart = Employee.all
+      puts "tickets are selected"
     end
   end
 

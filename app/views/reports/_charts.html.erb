@@ -150,7 +150,6 @@
 
       <% @employees_for_columnchart.each do |employee| %>
         data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
-        <% puts "#{employee.full_name} -> #{employee.get_nr_of_tickets(@conditions)}" %>
       <% end %>
 
       var options = {
