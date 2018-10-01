@@ -1,4 +1,11 @@
 //-----> REPORTS - INDEX.HTML.ERB
+$(document).on('turbolinks:before-cache', function() {
+    $('#report_employees').multiselect('destroy');
+    $('#report_projects').multiselect('destroy');
+    $('#report_tickets').multiselect('destroy');
+    $('#report_statuses').multiselect('destroy');
+} );
+
 document.addEventListener("turbolinks:load", function() {
   set_up_dropdowns();
   set_up_datetimepickers();
