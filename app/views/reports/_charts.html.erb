@@ -93,9 +93,7 @@
     google.charts.load('current', {'packages':['timeline']});
     google.charts.setOnLoadCallback(drawPriorityPiechart);
     google.charts.setOnLoadCallback(drawStatusPiechart);
-    <% unless @report.settings['employees'].nil? %>
-      google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
-    <% end %>
+    google.charts.setOnLoadCallback(drawNrTicketPerEmployeeColumnchart);
     google.charts.setOnLoadCallback(drawTicketsStartAndEndLinechart);
     google.charts.setOnLoadCallback(drawTicketsStatusesTimeline);
 
@@ -152,6 +150,7 @@
 
       <% @employees_for_columnchart.each do |employee| %>
         data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
+        <% puts "#{employee.full_name} -> #{employee.get_nr_of_tickets(@conditions)}" %>
       <% end %>
 
       var options = {

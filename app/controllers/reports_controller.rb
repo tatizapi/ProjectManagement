@@ -96,7 +96,15 @@ class ReportsController < ApplicationController
   def nr_tickets_per_employee_columnchart
     @employees_for_columnchart = []
 
-    unless @report.settings['employees'].nil?
+    if @report.settings['employees'].nil?
+      @report.settings['projects'].each do |project_id|
+        Project.find(project_id).employees.each do |employee|
+          @employees_for_columnchart.push(employee)
+        end
+        #@employees_for_columnchart.push(Project.find(project_id).employees) - couldn't do this because Project.find(project_id).employees returns a CollectionProxy object
+        #                                                                      which doesn't allow me to acces full_name method on its array objects
+      end
+    else
       @report.settings['employees'].each do |employee_id|
         @employees_for_columnchart.push(Employee.find(employee_id))
       end
