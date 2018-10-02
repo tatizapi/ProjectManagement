@@ -167,7 +167,7 @@
 
     function drawTicketsStartAndEndLinechart() {
       var data = google.visualization.arrayToDataTable([
-        ['Date', 'Number of created tickets', 'Number of finished tickets'],
+        ['Date', 'Number of assigned tickets', 'Number of finished tickets'],
         <% @tickets_by_week.each do |end_of_week, nr_of_tickets| %>
           ['<%= end_of_week %>',  <%= nr_of_tickets[0] %>, <%= nr_of_tickets[1] %>],
         <% end %>

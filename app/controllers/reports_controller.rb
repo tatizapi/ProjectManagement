@@ -113,11 +113,12 @@ class ReportsController < ApplicationController
     @tickets_created_at_by_week = Ticket.where(@conditions).group_by{ |t| t.created_at.end_of_week.strftime("%Y-%m-%d") }
     @tickets_ended_at_by_week = Ticket.where(@conditions).reject{ |t| t.ended_at.nil? }.group_by{ |t| t.ended_at.end_of_week.strftime("%Y-%m-%d") }
 
-    @tickets_by_week = {}
-    @tickets_created_at_by_week.each do |k, v|
-      @tickets_by_week[k] = [v.length]
-      @tickets_ended_at_by_week[k] ? @tickets_by_week[k].push(@tickets_ended_at_by_week[k].length) : @tickets_by_week[k].push(0)
-    end #@tickets_by_week has: key -> end of week date, value -> [nr_of_created_tickets, nr_of_ended_tickets]
+    @tickets_by_week = {}.merge(@tickets_created_at_by_week).merge(@tickets_ended_at_by_week) #to have all end of weeks from both created_at and ended_at tickets
+    @tickets_by_week.keys.sort.each do |week|
+      @tickets_created_at_by_week[week] ? @tickets_by_week[week][0] = @tickets_created_at_by_week[week].length : @tickets_by_week[week][0] = 0
+      @tickets_ended_at_by_week[week] ? @tickets_by_week[week][1] = @tickets_ended_at_by_week[week].length : @tickets_by_week[week][1] = 0
+    end
+    #@tickets_by_week has: key -> end of week date, value -> [nr_of_created_tickets, nr_of_ended_tickets]
   end
 
   def tickets_for_calendar_and_timeline
