@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
     report.settings['employees'].map!{ |e| Employee.find_by(first_name: e.split()[0], last_name: e.split()[1]).id } if report.settings['employees']
     # ^ because in employees dropdown I only have employees's full names, not employees entities or ids
     report.settings.merge!(projects: [@project.id.to_s]) if current_user.is_projectmanager?(@project)
-    # ^ when project manager creates a report, settings['projects'] must include report's project 
+    # ^ when project manager creates a report, settings['projects'] must include report's project
 
     if report.save
       redirect_to project_report_path(@project, report)
@@ -98,14 +98,14 @@ class ReportsController < ApplicationController
   def nr_tickets_per_employee_columnchart
     @employees_for_columnchart = []
 
-    if !@report.settings['employees'].nil?                                         #used ' if ! ' instead of 'unless' because 'unless' doesn't support elsif
+    if !@report.settings['employees'].nil?          #used ' if ! ' instead of 'unless' because 'unless' doesn't support elsif
       Employee.get_selected_employees_for_columnchart(@employees_for_columnchart, @report.settings['employees'])
-    elsif !@report.settings['projects'].nil?                                       #when no employee is selected but some projects are
+    elsif !@report.settings['projects'].nil?        #when no employee is selected but some projects are
       Project.get_employees_from_selected_projects_for_columnchart(@employees_for_columnchart, @report.settings['projects'])
-    elsif !@report.settings['tickets'].nil? || !@report.settings['statuses'].nil?  #when only tickets or statuses is selected
+    elsif !@report.settings['tickets'].nil? || !@report.settings['statuses'].nil?       #when only tickets or statuses is selected
       Ticket.get_employees_from_selected_tickets_for_columnchart(@employees_for_columnchart, @conditions)
     else
-      @employees_for_columnchart = Employee.all
+      @employees_for_columnchart = Employee.all     #when nothing is selected
     end
   end
 

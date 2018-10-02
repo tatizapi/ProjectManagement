@@ -15,6 +15,8 @@
       <% else %>
         <h5><b><%= link_to ticket.title, project_ticket_path(@project, ticket) %></b></h5>
       <% end %>
+    <% else %>
+      <h5><b><%= ticket.title %></b></h5>
     <% end %>
 
     <% if current_user.can_see_ticket_employee? %>

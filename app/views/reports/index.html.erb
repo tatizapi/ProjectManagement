@@ -8,7 +8,8 @@
       <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></th>
       <th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Crt. No.</th>
       <th class="col-xs-5 col-sm-5 col-md-5 col-lg-5">Title</th>
-      <th class="col-xs-5 col-sm-5 col-md-5 col-lg-5">Created at</th>
+      <th class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Created at</th>
+      <th class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Shown to client</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +23,7 @@
         <td><%= link_to report.id, project_report_path(@project, report), data: { turbolinks: false } %></td>
         <td><%= link_to report.title, project_report_path(@project, report), data: { turbolinks: false } unless report.title.nil? %></td>
         <td><%= report.format_date(report.created_at) unless report.created_at.nil? %></td>
+        <td><% if report.show_to_client %><i class="glyphicon glyphicon-ok"></i> <% end %> </td>
       </tr>
     <% end %>
   </tbody>
