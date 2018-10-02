@@ -86,6 +86,19 @@
   </tr>
 </table>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="tickets-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Tickets</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <script type="text/javascript">
     console.log("loading charts..");
@@ -138,6 +151,47 @@
         'height':300,
       }
       var chart = new google.visualization.PieChart(document.getElementById('status_piechart'));
+
+      function showTicketsModal() {
+        var selectedItem = chart.getSelection()[0];
+        var status = data.getValue(selectedItem.row, 0);
+
+        var html = '';
+        switch(status) {
+          case "To do":
+            {
+              <% @tickets_by_status['To do'].each do |ticket| %>
+                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+              <% end %>
+            }
+            break;
+          case "In progress":
+            {
+              <% @tickets_by_status['In progress'].each do |ticket| %>
+                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+              <% end %>
+            }
+            break;
+          case "Complete":
+            {
+              <% @tickets_by_status['Complete'].each do |ticket| %>
+                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+              <% end %>
+            }
+            break;
+          case "Done":
+            {
+              <% @tickets_by_status['Done'].each do |ticket| %>
+                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+              <% end %>
+            }
+            break;
+        }
+        $("#tickets-modal .modal-body").html(html)
+        $('#tickets-modal').modal('show');
+      }
+
+      google.visualization.events.addListener(chart, 'select', showTicketsModal);
       chart.draw(data, options);
 
       doc.addImage(chart.getImageURI(), 100, 0, 100, 80);
