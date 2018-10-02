@@ -21,7 +21,8 @@ class ReportsController < ApplicationController
   end
 
   def create
-    report = Report.new(title: report_params['title'], show_to_client: report_params['show_to_client'], user_id: current_user.id, project_id: @project.id, settings: report_params.except('title', 'show_to_client'))
+    report = Report.new(title: report_params['title'], user_id: current_user.id, project_id: @project.id, show_to_client: report_params['show_to_client'], save_as_template: report_params['save_as_template'],
+                        settings: report_params.except('title', 'show_to_client', 'save_as_template'))
     report.settings['employees'].map!{ |e| Employee.find_by(first_name: e.split()[0], last_name: e.split()[1]).id } if report.settings['employees']
     # ^ because in employees dropdown I only have employees's full names, not employees entities or ids
     report.settings.merge!(projects: [@project.id.to_s]) if current_user.is_projectmanager?(@project)
@@ -51,7 +52,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:from_date, :to_date, :title, :show_to_client, :projects => [], :employees => [], :tickets => [], :statuses => [])
+    params.require(:report).permit(:from_date, :to_date, :title, :show_to_client, :save_as_template, :projects => [], :employees => [], :tickets => [], :statuses => [])
     # ':array => []' -> syntax has to be like this when working with arrays (and always at the end of the method !)
   end
 

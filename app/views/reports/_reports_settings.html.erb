@@ -1,8 +1,12 @@
 <%= form_with model: [@project, Report.new], class: 'reports-form' do |f| %>
   <table>
     <tr>
-      <td colspan="7">
+      <td>
         <%= link_to "All reports", project_reports_path(@project), class: "btn", id: 'show-all-reports' %>
+      </td>
+
+      <td>
+        <span class="chart-title-design">Templates:</span>
       </td>
     </tr>
 
@@ -56,10 +60,19 @@
       </td>
 
       <td>
-        <div id="report-check-box" class="checkbox-inline">
+        <div id="report-send-to-client-checkbox" class="checkbox-inline">
         <%= f.label :show_to_client do %>
           <%= f.check_box :show_to_client %>
           Show to client
+          <% end %>
+        </div>
+      </td>
+
+      <td>
+        <div id="report-save-as-template-checkbox" class="checkbox-inline" >
+        <%= f.label :save_as_template do %>
+          <%= f.check_box :save_as_template %>
+          Save as template
           <% end %>
         </div>
       </td>

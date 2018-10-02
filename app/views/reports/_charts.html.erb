@@ -13,7 +13,7 @@
   <tr style="height: 50px"></tr> <!-- did this to add space between line chart and calendar -->
   <tr>
     <td colspan="3">
-      <span class="calendar-chart-title">Deadlines calendar</span>
+      <span class="chart-title-design">Deadlines calendar</span>
       <%= month_calendar events: @tickets, attribute: :deadline do |date, tickets| %>
         <%= date.day %><br>
 
@@ -87,7 +87,7 @@
 </table>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="tickets-modal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
