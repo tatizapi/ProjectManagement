@@ -28,6 +28,18 @@
     <% end %>
   </tbody>
   </table>
+
+  <hr>
+  <div class="display-inline">
+    <%= link_to 'New', new_project_report_path(@project), class: 'chart-title-design' %>
+  </div> |
+  <div class="display-inline">
+    <span class="chart-title-design">Templates:</span>
+    <% @reports.select { |report| report.save_as_template }.each do |report| %>
+      <%= link_to report.title, '#', onclick: "something();" %>
+    <% end %>
+  </div>
+
   <div style="text-align: center;">
     <%= will_paginate @reports %>
   <div>

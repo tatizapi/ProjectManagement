@@ -9,11 +9,7 @@
       <% end %>
 
       <% if current_user.can_see_reports?(@project) %>
-        <% if current_user.type == "Client" %>
-          <li><%= link_to 'Reports', project_reports_path(@project) %></li>
-        <% else %>
-          <li><%= link_to 'Reports', new_project_report_path(@project) %></li>
-        <% end %>
+        <li><%= link_to 'Reports', project_reports_path(@project) %></li>
       <% end %>
 
       <div class="right-buttons-wrapper">
