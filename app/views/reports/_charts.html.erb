@@ -117,9 +117,9 @@
       data.addColumn('string', 'Priority');
       data.addColumn('number', 'Tickets');
       data.addRows([
-        ['High', <%= @nr_of_high_priority_tickets %>],
-        ['Medium', <%= @nr_of_medium_priority_tickets %>],
-        ['Low', <%= @nr_of_low_priority_tickets %>],
+        ['High', <%= @tickets_by_priority['high'].length %>],
+        ['Medium', <%= @tickets_by_priority['medium'].length %>],
+        ['Low', <%= @tickets_by_priority['low'].length %>],
       ]);
 
       var options = {'title':'Tickets by priority',
@@ -127,6 +127,42 @@
                      'height':300,
                     }
       var chart = new google.visualization.PieChart(document.getElementById('priority_piechart'));
+
+      function showTicketsModal() {
+        var selectedItem = chart.getSelection()[0];
+        if (selectedItem) {
+          var priority = data.getValue(selectedItem.row, 0);
+
+          var html = '';
+          switch(priority) {
+            case "Low":
+              {
+                <% @tickets_by_priority['low'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+            case "Medium":
+              {
+                <% @tickets_by_priority['medium'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+            case "High":
+              {
+                <% @tickets_by_priority['high'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+          }
+          $("#tickets-modal .modal-body").html(html)
+          $('#tickets-modal').modal('show');
+        }
+      }
+
+      google.visualization.events.addListener(chart, 'select', showTicketsModal);
       chart.draw(data, options);
 
       doc.setPage(1);
@@ -139,10 +175,10 @@
       data.addColumn('string', 'Status');
       data.addColumn('number', 'Tickets');
       data.addRows([
-        ['To do', <%= @nr_of_todo_tickets %>],
-        ['In progress', <%= @nr_of_inprogress_tickets %>],
-        ['Complete', <%= @nr_of_complete_tickets %>],
-        ['Done', <%= @nr_of_done_tickets %>],
+        ['To do', <%= @tickets_by_status['To do'].length %>],
+        ['In progress', <%= @tickets_by_status['In progress'].length %>],
+        ['Complete', <%= @tickets_by_status['Complete'].length %>],
+        ['Done', <%= @tickets_by_status['Done'].length %>],
       ]);
 
       var options = {
@@ -154,41 +190,43 @@
 
       function showTicketsModal() {
         var selectedItem = chart.getSelection()[0];
-        var status = data.getValue(selectedItem.row, 0);
+        if (selectedItem) {
+          var status = data.getValue(selectedItem.row, 0);
 
-        var html = '';
-        switch(status) {
-          case "To do":
-            {
-              <% @tickets_by_status['To do'].each do |ticket| %>
-                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
-              <% end %>
-            }
-            break;
-          case "In progress":
-            {
-              <% @tickets_by_status['In progress'].each do |ticket| %>
-                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
-              <% end %>
-            }
-            break;
-          case "Complete":
-            {
-              <% @tickets_by_status['Complete'].each do |ticket| %>
-                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
-              <% end %>
-            }
-            break;
-          case "Done":
-            {
-              <% @tickets_by_status['Done'].each do |ticket| %>
-                html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
-              <% end %>
-            }
-            break;
+          var html = '';
+          switch(status) {
+            case "To do":
+              {
+                <% @tickets_by_status['To do'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+            case "In progress":
+              {
+                <% @tickets_by_status['In progress'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+            case "Complete":
+              {
+                <% @tickets_by_status['Complete'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+            case "Done":
+              {
+                <% @tickets_by_status['Done'].each do |ticket| %>
+                  html += '<%= link_to ticket.title, project_ticket_path(@project, ticket) %><br>'
+                <% end %>
+              }
+              break;
+          }
+          $("#tickets-modal .modal-body").html(html)
+          $('#tickets-modal').modal('show');
         }
-        $("#tickets-modal .modal-body").html(html)
-        $('#tickets-modal').modal('show');
       }
 
       google.visualization.events.addListener(chart, 'select', showTicketsModal);

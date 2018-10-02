@@ -79,18 +79,18 @@ class ReportsController < ApplicationController
   end
 
   def tickets_priority_piechart
-    @tickets_by_priority = Ticket.where(@conditions).group(:priority).count
-    @tickets_by_priority['high'].nil? ? @nr_of_high_priority_tickets = 0 : @nr_of_high_priority_tickets = @tickets_by_priority['high']
-    @tickets_by_priority['medium'].nil? ? @nr_of_medium_priority_tickets = 0 : @nr_of_medium_priority_tickets = @tickets_by_priority['medium']
-    @tickets_by_priority['low'].nil? ? @nr_of_low_priority_tickets = 0 : @nr_of_low_priority_tickets = @tickets_by_priority['low']
+    @tickets_by_priority = Ticket.where(@conditions).group_by(&:priority)
+    @tickets_by_priority['low'] = [] if @tickets_by_priority['low'].nil?
+    @tickets_by_priority['medium'] = [] if @tickets_by_priority['medium'].nil?
+    @tickets_by_priority['high'] = [] if @tickets_by_priority['high'].nil?
   end
 
   def tickets_status_piechart
     @tickets_by_status = Ticket.where(@conditions).group_by(&:status)
-    @tickets_by_status['To do'].nil? ? @nr_of_todo_tickets = 0 : @nr_of_todo_tickets = @tickets_by_status['To do'].length
-    @tickets_by_status['In progress'].nil? ? @nr_of_inprogress_tickets = 0 : @nr_of_inprogress_tickets = @tickets_by_status['In progress'].length
-    @tickets_by_status['Complete'].nil? ? @nr_of_complete_tickets = 0 : @nr_of_complete_tickets = @tickets_by_status['Complete'].length
-    @tickets_by_status['Done'].nil? ? @nr_of_done_tickets = 0 : @nr_of_done_tickets = @tickets_by_status['Done'].length
+    @tickets_by_status['To do'] = [] if @tickets_by_status['To do'].nil?
+    @tickets_by_status['In progress'] = [] if @tickets_by_status['In progress'].nil?
+    @tickets_by_status['Complete'] = [] if @tickets_by_status['Complete'].nil?
+    @tickets_by_status['Done'] = [] if @tickets_by_status['Done'].nil?
   end
 
   def nr_tickets_per_employee_columnchart
