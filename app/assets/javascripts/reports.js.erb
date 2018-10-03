@@ -1,4 +1,7 @@
 //-----> REPORTS - INDEX.HTML.ERB
+var template;
+var template_projects, template_employees, template_tickets, template_statuses;
+
 $(document).on('turbolinks:before-cache', function() {
     $('#report_employees').multiselect('destroy');
     $('#report_projects').multiselect('destroy');
@@ -9,6 +12,26 @@ $(document).on('turbolinks:before-cache', function() {
 document.addEventListener("turbolinks:load", function() {
   set_up_dropdowns();
   set_up_datetimepickers();
+
+  if (template) {
+    $("#report_projects").val(template_projects.split(" "));
+    $('#report_projects').multiselect( 'rebuild' );
+
+    splitted_employees = template_employees.split(" ");
+    for (var i = 0; i < splitted_employees.length; i += 2) {
+      splitted_employees[i] = splitted_employees[i] + " " + splitted_employees[i+1];
+    } //because values from employees dropdown are employees' full names, also 'split' function splits first name from last name
+    $("#report_employees").val(splitted_employees);
+    $('#report_employees').multiselect( 'rebuild' );
+
+    $("#report_tickets").val(template_tickets.split(" "));
+    $('#report_tickets').multiselect( 'rebuild' );
+
+    $("#report_statuses").val(template_statuses.split(" "));
+    $("#report_statuses").multiselect( 'rebuild' );
+  }
+
+  template = false;
 })
 
 function set_up_dropdowns() {
@@ -67,6 +90,10 @@ function set_up_datetimepickers() {
   );
 }
 
-function something() {
-  console.log("ok");
+function template_setup(e) {
+  e.getAttribute("data-projects")  ? template_projects = e.getAttribute("data-projects") : template_projects = ""
+  e.getAttribute("data-employees") ? template_employees = e.getAttribute("data-employees") : template_employees = ""
+  e.getAttribute("data-tickets")   ? template_tickets = e.getAttribute("data-tickets") : template_tickets = ""
+  e.getAttribute("data-statuses")  ? template_statuses = e.getAttribute("data-statuses") : template_statuses = ""
+  template = true;
 }
