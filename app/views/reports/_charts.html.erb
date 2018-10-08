@@ -242,18 +242,39 @@
     function drawNrTicketPerEmployeeColumnchart() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'Employee');
-      data.addColumn('number', 'Nr of tickets');
+      <% if @report.settings['projects'].nil? %>
+        data.addColumn('number', 'Total number of tickets');
 
-      <% @employees_for_columnchart.each do |employee| %>
-        data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
+        <% @employees_for_columnchart.each do |employee| %>
+          data.addRow(['<%= employee.full_name %>', <%= employee.get_nr_of_tickets(@conditions) %>])
+        <% end %>
+      <% else %>
+        <% @report.settings['projects'].each do |project| %>
+          data.addColumn('number', '<%= Project.find(project).title %>');
+        <% end %>
+
+        var array;
+        <% @employees_for_columnchart.each do |employee| %>
+          array = ['<%= employee.full_name %>'];
+          <% if @report.settings['projects'].nil? %>
+            array.push(<%= employee.get_nr_of_tickets(@conditions) %>);
+          <% else %>
+            <% @report.settings['projects'].each do |project_id| %>
+              <% @conditions['project_id'] = project_id %>
+              array.push(<%= employee.get_nr_of_tickets(@conditions) %>);
+            <% end %>
+          <% end %>
+          console.log(array);
+          data.addRow(array);
+        <% end %>
       <% end %>
 
       var options = {
-        title: 'Number of tickets per employee',
-        width: 800,
-        height: 400,
-        bar: {groupWidth: "95%"},
-        legend: { position: "none" },
+          title: 'Number of tickets per employee',
+          width: 800,
+          height: 400,
+          bar: {groupWidth: "95%"},
+          legend: { position: "none" },
       };
       var chart = new google.visualization.ColumnChart(document.getElementById("nr_tickets_per_employee_columnchart"));
       chart.draw(data, options);

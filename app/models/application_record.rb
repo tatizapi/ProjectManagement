@@ -9,7 +9,7 @@ class ApplicationRecord < ActiveRecord::Base
     elsif date.to_date.year != Date.current.year
       date.strftime("%d / %m / %Y")
     else
-      date.strftime("%d %^b")
+      date.strftime("%-d %^b.")
     end
   end
 end
