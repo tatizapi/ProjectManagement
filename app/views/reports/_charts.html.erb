@@ -1,90 +1,94 @@
-<table>
-  <tr>
-    <td colspan="3"><%= button_tag "Save as PDF", id: 'save-pdf', class: 'btn btn-secondary'%></td>
-  </tr>
-  <tr>
-    <td><div id="priority_piechart"></div></td>
-    <td><div id="status_piechart"></div></td>
-    <td><div id="nr_tickets_per_employee_columnchart"></div></td>
-  </tr>
-  <tr>
-    <td colspan="3"><div id="tickets_start_and_end_date_line_chart"></div></td>
-  </tr>
-  <tr style="height: 50px"></tr> <!-- did this to add space between line chart and calendar -->
-  <tr>
-    <td colspan="3">
-      <span class="chart-title-design">Deadlines calendar</span>
-      <%= month_calendar events: @tickets, attribute: :deadline do |date, tickets| %>
-        <%= date.day %><br>
+<% if @tickets.empty? %>
+  <h2>There are no tickets</h2>
+<% else %>
+  <table>
+    <tr>
+      <td colspan="3"><%= button_tag "Save as PDF", id: 'save-pdf', class: 'btn btn-secondary'%></td>
+    </tr>
+    <tr>
+      <td><div id="priority_piechart"></div></td>
+      <td><div id="status_piechart"></div></td>
+      <td><div id="nr_tickets_per_employee_columnchart"></div></td>
+    </tr>
+    <tr>
+      <td colspan="3"><div id="tickets_start_and_end_date_line_chart"></div></td>
+    </tr>
+    <tr style="height: 50px"></tr> <!-- did this to add space between line chart and calendar -->
+    <tr>
+      <td colspan="3">
+        <span class="chart-title-design">Deadlines calendar</span>
+        <%= month_calendar events: @tickets, attribute: :deadline do |date, tickets| %>
+          <%= date.day %><br>
 
-        <% if tickets.length != 0 %>
-          <% if tickets.length == 1 %>
-            <div><%= tickets.length %> ticket</div>
-          <% else %>
-            <div><%= tickets.length %> tickets</div>
+          <% if tickets.length != 0 %>
+            <% if tickets.length == 1 %>
+              <div><%= tickets.length %> ticket</div>
+            <% else %>
+              <div><%= tickets.length %> tickets</div>
+            <% end %>
+          <% end %>
+          <% tickets.each do |ticket| %>
+            <% case ticket.status %>
+            <% when "To do" %>
+              <span style="background-color: #dc3912" class="calendar-ticket"><%= ticket.title %></span>
+            <% when "In progress" %>
+              <span style="background-color: #ff9900" class="calendar-ticket"><%= ticket.title %></span>
+            <% when "Complete" %>
+              <span style="background-color: #fc3" class="calendar-ticket"><%= ticket.title %></span>
+            <% when "Done" %>
+              <span style="background-color: #109618" class="calendar-ticket"><%= ticket.title %></span>
+            <% end %>
           <% end %>
         <% end %>
-        <% tickets.each do |ticket| %>
-          <% case ticket.status %>
-          <% when "To do" %>
-            <span style="background-color: #dc3912" class="calendar-ticket"><%= ticket.title %></span>
-          <% when "In progress" %>
-            <span style="background-color: #ff9900" class="calendar-ticket"><%= ticket.title %></span>
-          <% when "Complete" %>
-            <span style="background-color: #fc3" class="calendar-ticket"><%= ticket.title %></span>
-          <% when "Done" %>
-            <span style="background-color: #109618" class="calendar-ticket"><%= ticket.title %></span>
-          <% end %>
-        <% end %>
-      <% end %>
 
-      <div class="calendar-legend">
-        <span style="float: left">Statuses: &nbsp</span>
-        <div class="calendar-legend-todo">
-          <svg width="15" height="15">
-            <rect width="300" height="100" style="fill:#dc3912" />
-          </svg>
-          <span>To do &nbsp</span>
+        <div class="calendar-legend">
+          <span style="float: left">Statuses: &nbsp</span>
+          <div class="calendar-legend-todo">
+            <svg width="15" height="15">
+              <rect width="300" height="100" style="fill:#dc3912" />
+            </svg>
+            <span>To do &nbsp</span>
+          </div>
+
+          <div class="calendar-legend-inprogress">
+            <svg width="15" height="15">
+              <rect width="300" height="100" style="fill:#ff9900" />
+            </svg>
+            <span>In progress &nbsp</span>
+          </div>
+
+          <div class="calendar-legend-complete">
+            <svg width="15" height="15">
+              <rect width="300" height="100" style="fill:#fc3" />
+            </svg>
+            <span>Complete&nbsp</span>
+          </div>
+
+          <div class="calendar-legend-done">
+            <svg width="15" height="15">
+              <rect width="300" height="100" style="fill:#109618" />
+            </svg>
+            <span>Done</span>
+          </div>
         </div>
 
-        <div class="calendar-legend-inprogress">
-          <svg width="15" height="15">
-            <rect width="300" height="100" style="fill:#ff9900" />
-          </svg>
-          <span>In progress &nbsp</span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <div class="timeline-wrapper">
+          <span class="chart-title">Tickets timeline</span>
+          <div id="tickets_after_statuses_timeline"></div>
         </div>
-
-        <div class="calendar-legend-complete">
-          <svg width="15" height="15">
-            <rect width="300" height="100" style="fill:#fc3" />
-          </svg>
-          <span>Complete&nbsp</span>
-        </div>
-
-        <div class="calendar-legend-done">
-          <svg width="15" height="15">
-            <rect width="300" height="100" style="fill:#109618" />
-          </svg>
-          <span>Done</span>
-        </div>
-      </div>
-
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3">
-      <div class="timeline-wrapper">
-        <span class="chart-title">Tickets timeline</span>
-        <div id="tickets_after_statuses_timeline"></div>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="3">
-      <canvas id="please_work_canvas" width="1500" height="750" style="border:1px solid #d3d3d3;"></canvas>
-    </td>
-  </tr>
-</table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <canvas id="please_work_canvas" width="1500" height="750" style="border:1px solid #d3d3d3;"></canvas>
+      </td>
+    </tr>
+  </table>
+<% end %>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="tickets-modal">
   <div class="modal-dialog modal-sm" role="document">
