@@ -37,7 +37,8 @@
     <span class="chart-title-design">Templates:</span>
     <% @reports.select { |report| report.save_as_template }.each do |report| %>
       <%= link_to report.title, new_project_report_path(@project), onclick: "template_setup(this);",
-          'data-projects': report.settings['projects'], 'data-employees': report.from_ids_to_full_names, 'data-tickets': report.settings['tickets'], 'data-statuses': report.settings['statuses'] %>
+          'data-projects': report.settings['projects'], 'data-employees': report.from_ids_to_full_names, 'data-tickets': report.settings['tickets'], 'data-statuses': report.settings['statuses'],
+          'data-from-date': report.settings['from_date'], 'data-to-date': report.settings['to_date'], 'data-title': report.title, 'data-client': report.show_to_client %>
     <% end %>
   </div>
 

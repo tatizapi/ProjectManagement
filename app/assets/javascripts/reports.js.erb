@@ -1,6 +1,8 @@
 //-----> REPORTS - INDEX.HTML.ERB
 var template;
 var template_projects, template_employees, template_tickets, template_statuses;
+var template_from_date, template_to_date;
+var template_title, template_client;
 
 $(document).on('turbolinks:before-cache', function() {
     $('#report_employees').multiselect('destroy');
@@ -14,6 +16,7 @@ document.addEventListener("turbolinks:load", function() {
   set_up_datetimepickers();
 
   if (template) {
+    //dropdowns
     $("#report_projects").val(template_projects.split(" "));
     $('#report_projects').multiselect( 'rebuild' );
 
@@ -29,6 +32,19 @@ document.addEventListener("turbolinks:load", function() {
 
     $("#report_statuses").val(template_statuses.split(" "));
     $("#report_statuses").multiselect( 'rebuild' );
+
+    //calendars
+    $("#report-from-datetimepicker").data("DateTimePicker").date(template_from_date);
+    $("#report-to-datetimepicker").data("DateTimePicker").date(template_to_date);
+
+    //title
+    $("#report_title").val(template_title);
+
+    //checkboxes
+    $("#report_save_as_template").prop('checked', true);
+    if (template_client == "true") {
+      $("#report_show_to_client").prop('checked', true);
+    }
   }
 
   template = false;
@@ -91,9 +107,14 @@ function set_up_datetimepickers() {
 }
 
 function template_setup(e) {
-  e.getAttribute("data-projects")  ? template_projects = e.getAttribute("data-projects") : template_projects = ""
+  e.getAttribute("data-projects")  ? template_projects  = e.getAttribute("data-projects")  : template_projects = ""
   e.getAttribute("data-employees") ? template_employees = e.getAttribute("data-employees") : template_employees = ""
-  e.getAttribute("data-tickets")   ? template_tickets = e.getAttribute("data-tickets") : template_tickets = ""
-  e.getAttribute("data-statuses")  ? template_statuses = e.getAttribute("data-statuses") : template_statuses = ""
+  e.getAttribute("data-tickets")   ? template_tickets   = e.getAttribute("data-tickets")   : template_tickets = ""
+  e.getAttribute("data-statuses")  ? template_statuses  = e.getAttribute("data-statuses")  : template_statuses = ""
+  e.getAttribute("data-from-date") ? template_from_date = e.getAttribute("data-from-date") : template_from_date = ""
+  e.getAttribute("data-to-date")   ? template_to_date   = e.getAttribute("data-to-date")   : template_to_date = ""
+  e.getAttribute("data-title")     ? template_title     = e.getAttribute("data-title")     : template_title = ""
+  e.getAttribute("data-client")    ? template_client    = e.getAttribute("data-client")    : template_client = ""
+
   template = true;
 }
