@@ -51,4 +51,39 @@ class Project < ApplicationRecord
       #                                                                      which doesn't allow me to acces full_name method on its array objects
     end
   end
+
+  def self.nr_of_unsolved_tickets(project_list)
+    unsolved_tickets = 0
+
+    project_list.each do |project_id|
+      unsolved_tickets += Project.find(project_id).tickets.where(status: ["To do", "In progress", "Complete"]).count
+    end
+
+    unsolved_tickets
+  end
+
+  def self.nr_of_urgent_tickets(project_list)
+    pending_tickets = 0
+
+    project_list.each do |project_id|
+      Project.find(project_id).tickets.each do |ticket|
+        if (Time.now..Time.now + 7.days).include?(ticket.deadline)
+          pending_tickets += 1
+        end
+      end
+    end
+
+    pending_tickets
+  end
+
+  def tickets_bugs_report
+    nr_of_tickets = tickets.where(type: 1).count
+    nr_of_bugs    = tickets.where(type: 2).count
+
+    if nr_of_bugs != 0
+      (nr_of_tickets / nr_of_bugs.to_f).round(2)
+    else
+      "no bugs"
+    end
+  end
 end
